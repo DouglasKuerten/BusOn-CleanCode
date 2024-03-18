@@ -1,10 +1,9 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const LiberadoBloqueadoEnum = require('../../enum/enumOnibus/LiberadoBloqueadoEnum');
-const SituacaoEnum = require('../../enum/enumOnibus/SituacaoEnum');
+const SituacaoEnum = require('../enum/SituacaoEnum');
 
-const Associacao = sequelize.require('associacao', {
+const Associacao = sequelize.define('associacao', {
     cpf_cnpj: {
         type: DataTypes.INTEGER,
         allowNull: false,

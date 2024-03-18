@@ -1,10 +1,10 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const SituacaoEnum = require('../../enum/enumOnibus/SituacaoEnum');
-const TipoAcessoEnum = require('../../enum/enumOnibus/TIpoAcessoEnum');
+const SituacaoEnum = require('../enum/SituacaoEnum');
+const TipoAcessoEnum = require('../enum/TIpoAcessoEnum');
 
-const Usuario = sequelize.require('usuario', {
+const Usuario = sequelize.define('usuario', {
     nome: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -21,13 +21,21 @@ const Usuario = sequelize.require('usuario', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    curso: {
+    curso_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+            model: 'curso',
+            key: 'id'
+        }
     },
-    associacao: {
+    associacao_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
+        references: {
+            model: 'associacao',
+            key: 'id'
+        }
     },
     tipo_acesso: {
         type: DataTypes.ENUM(Object.keys(TipoAcessoEnum)),

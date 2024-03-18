@@ -1,8 +1,8 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const SituacaoPagamentoEnum = require('../../enum/enumOnibus/SituacaoPagamentoEnum');
-const TipoPagamentoEnum = require('../../enum/enumOnibus/TipoPagamentoEnum');
+const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
+const TipoPagamentoEnum = require('../enum//TipoPagamentoEnum');
 
 const Pagamento = sequelize.define('pagamento', {
     txid: {
@@ -13,9 +13,13 @@ const Pagamento = sequelize.define('pagamento', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    usuario: {
+    usuario_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: 'usuario',
+            key: 'id'
+        }
     },
     tipo: {
         type: DataTypes.ENUM(Object.keys(TipoPagamentoEnum)),

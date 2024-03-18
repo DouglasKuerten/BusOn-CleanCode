@@ -1,12 +1,16 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const LiberadoBloqueadoEnum = require('../../enum/enumOnibus/LiberadoBloqueadoEnum');
+const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
 
-const Parametro = sequelize.require('parametro', {
-    associacao: {
+const Parametro = sequelize.define('parametro', {
+    associacao_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: 'associacao',
+            key: 'id'
+        }
     },
     valor_1: {
         type: DataTypes.INTEGER,

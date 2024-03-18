@@ -7,9 +7,13 @@ const Curso = sequelize.define('curso', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    instituicao: {
+    instituicao_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        references: {
+            model: 'instituicao',
+            key: 'id'
+        }
     },
 })
 

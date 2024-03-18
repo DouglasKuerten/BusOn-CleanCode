@@ -8,18 +8,28 @@ const port = process.env.SERVER_PORT
 
 const routes = require('./src/routes/routes')
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerFile = require('./config/swagger-output.json');
 const sequelize = require('./databaseConnection')
 
 app.use(bodyParser.json());
 app.use(cors())
 
+const Associacao = require('./src/models/associacao');
+const Instituicao = require('./src/models/instituicao');
+const Curso = require('./src/models/curso');
 const Usuario = require('./src/models/usuario');
+const Pagamento = require('./src/models/pagamento');
+const Parametro = require('./src/models/parametro');
+const PixApi = require('./src/models/pixApi');
 
 sequelize.sync({ force: false }).then(() => {
     console.log('Todos os modelos foram sincronizados com sucesso');
 }).catch(error => {
     console.log('OCorreu um erro durante a sincronização dos modelos: ', error);
 })
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.use(
     bodyParser.urlencoded({

@@ -2,7 +2,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 
-const PixApi = sequelize.require('pixApi', {
+const PixApi = sequelize.define('pixApi', {
     dev_api_key: {
         type: DataTypes.INTEGER,
         allowNull: false,
