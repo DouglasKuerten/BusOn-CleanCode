@@ -3,12 +3,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
 
+
+const Associacao = require('./associacao');
+
 const Parametro = sequelize.define('parametro', {
     associacao_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'associacao',
+            model: Associacao,
             key: 'id'
         }
     },

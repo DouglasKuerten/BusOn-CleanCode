@@ -2,36 +2,29 @@ const express = require('express');
 const router = express.Router();
 
 const associacaoController = require('../controllers/associacaoController');
-const autenticacaoController = require('../controllers/autenticacaoController');
-const cursoController = require('../controllers/cursoController');
-const usuarioController = require('../controllers/usuarioController');
 const instituicaoController = require('../controllers/instituicaoController');
+const cursoController = require('../controllers/cursoController');/*
+const autenticacaoController = require('../controllers/autenticacaoController');
+const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
-const pixApiController = require('../controllers/pixApiController');
-
+const pixApiController = require('../controllers/pixApiController');*/
+/*
 // Rotas para cadastro de usuário
 router.post('/usuarios/cadastrar', usuarioController.criarUsuario);
 
 // Rota para autenticar o usuário e gerar um token JWT
 router.post('/usuarios/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/usuarioss/atualizar-token', autenticacaoController.refreshToken);
-
+*/
 // Rotas para obtenção de registros por ID
 
 // Rotas para Associação
-router.get('/associacoe/:id', associacaoController.obterAssociacaoPorId);
-router.get('/associacoe', associacaoController.obterTodasAssociacoes);
-router.post('/associacoe', associacaoController.criarAssociacao);
-router.put('/associacoe/:id', associacaoController.atualizarAssociacao);
-router.delete('/associacoe/:id', associacaoController.excluirAssociacao);
-
-// Rotas para Curso
-router.get('/curso/:id', cursoController.obterCursoPorId);
-router.get('/curso', cursoController.obterTodosCursos);
-router.post('/curso', cursoController.criarCurso);
-router.put('/curso/:id', cursoController.atualizarCurso);
-router.delete('/curso/:id', cursoController.excluirCurso);
+router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
+router.get('/associacao', associacaoController.obterTodasAssociacoes);
+router.post('/associacao', associacaoController.criarAssociacao);
+router.put('/associacao/:id', associacaoController.atualizarAssociacao);
+router.delete('/associacao/:id', associacaoController.excluirAssociacao);
 
 // Rotas para Instituição
 router.get('/instituicao/:id', instituicaoController.obterInstituicaoPorId);
@@ -40,6 +33,14 @@ router.post('/instituicao', instituicaoController.criarInstituicao);
 router.put('/instituicao/:id', instituicaoController.atualizarInstituicao);
 router.delete('/instituicao/:id', instituicaoController.excluirInstituicao);
 
+// Rotas para Curso
+router.get('/curso/:id', cursoController.obterCursoPorId);
+router.get('/curso', cursoController.obterTodosCursos);
+router.post('/curso', cursoController.criarCurso);
+router.put('/curso/:id', cursoController.atualizarCurso);
+router.delete('/curso/:id', cursoController.excluirCurso);
+
+/*
 // Rotas para Pagamento
 router.get('/pagamento/:id', pagamentoController.obterPagamentoPorId);
 router.get('/pagamento', pagamentoController.obterTodosPagamentos);
@@ -60,5 +61,5 @@ router.get('/pixapi', pixApiController.obterTodasPixApis);
 router.post('/pixapi', pixApiController.criarPixApi);
 router.put('/pixapi/:id', pixApiController.atualizarPixApi);
 router.delete('/pixapi/:id', pixApiController.excluirPixApi);
-
+*/
 module.exports = router;

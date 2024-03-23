@@ -3,6 +3,8 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const SituacaoEnum = require('../enum/SituacaoEnum');
 const TipoAcessoEnum = require('../enum/TIpoAcessoEnum');
+const Curso = require('./curso');
+const Associacao = require('./associacao');
 
 const Usuario = sequelize.define('usuario', {
     nome: {
@@ -23,17 +25,17 @@ const Usuario = sequelize.define('usuario', {
     },
     curso_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
-            model: 'curso',
+            model: Curso,
             key: 'id'
         }
     },
     associacao_id: {
         type: DataTypes.INTEGER,
-        allowNull: true,
+        allowNull: false,
         references: {
-            model: 'associacao',
+            model: Associacao,
             key: 'id'
         }
     },

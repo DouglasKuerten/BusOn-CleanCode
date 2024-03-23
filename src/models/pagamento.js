@@ -4,6 +4,9 @@ const sequelize = require('../../databaseConnection');
 const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
 const TipoPagamentoEnum = require('../enum//TipoPagamentoEnum');
 
+
+const usuario = require('./usuario');
+
 const Pagamento = sequelize.define('pagamento', {
     txid: {
         type: DataTypes.STRING,
@@ -17,7 +20,7 @@ const Pagamento = sequelize.define('pagamento', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: 'usuario',
+            model: usuario,
             key: 'id'
         }
     },
