@@ -1,3 +1,5 @@
+'use strict';
+
 const Instituicao = require('../models/instituicao');
 
 // Controller para obter uma instituição pelo ID
@@ -21,7 +23,7 @@ const obterTodasInstituicoes = async (req, res) => {
         res.status(200).json(instituicoes);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as instituições' });
+        res.status(500).json({ mensagem: 'Erro ao obter todas as instituições', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarInstituicao = async (req, res) => {
         res.status(201).json(novaInstituicao);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova instituição' });
+        res.status(500).json({ mensagem: 'Erro ao criar nova instituição', error: error.message });
     }
 };
 

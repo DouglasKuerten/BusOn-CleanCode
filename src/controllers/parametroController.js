@@ -1,3 +1,5 @@
+'use strict';
+
 const Parametro = require('../models/parametro');
 
 // Controller para obter um parâmetro pelo ID
@@ -21,7 +23,7 @@ const obterTodosParametros = async (req, res) => {
         res.status(200).json(parametros);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os parâmetros' });
+        res.status(500).json({ mensagem: 'Erro ao obter todos os parâmetros', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarParametro = async (req, res) => {
         res.status(201).json(novoParametro);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo parâmetro' });
+        res.status(500).json({ mensagem: 'Erro ao criar novo parâmetro', error: error.message });
     }
 };
 

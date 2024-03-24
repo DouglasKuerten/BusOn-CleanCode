@@ -3,20 +3,24 @@ const router = express.Router();
 
 const associacaoController = require('../controllers/associacaoController');
 const instituicaoController = require('../controllers/instituicaoController');
-const cursoController = require('../controllers/cursoController');/*
+const cursoController = require('../controllers/cursoController');
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
-const pixApiController = require('../controllers/pixApiController');*/
-/*
+const pixApiController = require('../controllers/pixApiController');
+
 // Rotas para cadastro de usuário
-router.post('/usuarios/cadastrar', usuarioController.criarUsuario);
+router.get('/usuarios/:id', usuarioController.obterUsuarioPorId);
+router.get('/usuarios', usuarioController.obterTodosUsuarios);
+router.post('/usuarios', usuarioController.criarUsuario);
+router.put('/usuarios/:id', usuarioController.atualizarUsuario);
+router.delete('/usuarios/:id', usuarioController.excluirUsuario);
 
 // Rota para autenticar o usuário e gerar um token JWT
 router.post('/usuarios/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/usuarioss/atualizar-token', autenticacaoController.refreshToken);
-*/
+
 // Rotas para obtenção de registros por ID
 
 // Rotas para Associação
@@ -40,7 +44,7 @@ router.post('/curso', cursoController.criarCurso);
 router.put('/curso/:id', cursoController.atualizarCurso);
 router.delete('/curso/:id', cursoController.excluirCurso);
 
-/*
+
 // Rotas para Pagamento
 router.get('/pagamento/:id', pagamentoController.obterPagamentoPorId);
 router.get('/pagamento', pagamentoController.obterTodosPagamentos);
@@ -61,5 +65,5 @@ router.get('/pixapi', pixApiController.obterTodasPixApis);
 router.post('/pixapi', pixApiController.criarPixApi);
 router.put('/pixapi/:id', pixApiController.atualizarPixApi);
 router.delete('/pixapi/:id', pixApiController.excluirPixApi);
-*/
+
 module.exports = router;

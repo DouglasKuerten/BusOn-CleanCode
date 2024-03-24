@@ -52,7 +52,7 @@ const Parametro = sequelize.define('parametro', {
         allowNull: false,
     },
     dia_tolerancia_multa: {
-        type: DataTypes.ENUM(Object.keys(LiberadoBloqueadoEnum)),
+        type: DataTypes.DATE,
         allowNull: false,
     },
     libera_pagamento: {

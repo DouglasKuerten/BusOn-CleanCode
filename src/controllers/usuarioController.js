@@ -1,10 +1,13 @@
-const UsuarioOnibus = require('../models/usuario');
+'use strict';
+
+const bcrypt = require('bcrypt');
+const Usuario = require('../models/usuario');
 
 // Controller para obter um usuário de ônibus pelo ID
 const obterUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuarioOnibus = await UsuarioOnibus.findByPk(id);
+        const usuarioOnibus = await Usuario.findByPk(id);
         if (usuarioOnibus) {
             return res.status(200).json(usuarioOnibus);
         }
@@ -17,22 +20,34 @@ const obterUsuarioPorId = async (req, res) => {
 // Controller para obter todos os usuários de ônibus
 const obterTodosUsuarios = async (req, res) => {
     try {
-        const usuariosOnibus = await UsuarioOnibus.findAll();
+        const usuariosOnibus = await Usuario.findAll();
         res.status(200).json(usuariosOnibus);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os usuários de ônibus' });
+        res.status(500).json({ mensagem: 'Erro ao obter todos os usuários de ônibus', error: error.message });
     }
 };
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
+    const { nome, email, telefone, endereco, curso, associacao, tipo_acesso, senha, situacao } = req.body;
     try {
-        const novoUsuarioOnibus = await UsuarioOnibus.create(req.body);
+        const hashedPassword = await bcrypt.hash(senha, 15);
+        const novoUsuarioOnibus = await Usuario.create({
+            nome,
+            email,
+            telefone,
+            endereco,
+            curso,
+            associacao,
+            tipo_acesso,
+            senha: hashedPassword,
+            situacao
+        });
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo usuário de ônibus' });
+        console.error('Erro ao cadastrar usuário', error);
+        res.status(500).json({ mensagem: 'Erro ao criar novo usuário de ônibus', error: error.message });
     }
 };
 
@@ -40,11 +55,11 @@ const criarUsuario = async (req, res) => {
 const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        const [atualizado] = await UsuarioOnibus.update(req.body, {
+        const [atualizado] = await Usuario.update(req.body, {
             where: { id: id }
         });
         if (atualizado) {
-            const usuarioOnibusAtualizado = await UsuarioOnibus.findByPk(id);
+            const usuarioOnibusAtualizado = await Usuario.findByPk(id);
             return res.status(200).json(usuarioOnibusAtualizado);
         }
         throw new Error('Usuário de ônibus não encontrado ou não atualizado.');
@@ -58,7 +73,7 @@ const atualizarUsuario = async (req, res) => {
 const excluirUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        const excluido = await UsuarioOnibus.destroy({
+        const excluido = await Usuario.destroy({
             where: { id: id }
         });
         if (excluido) {

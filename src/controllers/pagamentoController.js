@@ -1,3 +1,5 @@
+'use strict';
+
 const Pagamento = require('../models/pagamento');
 
 // Controller para obter um pagamento pelo ID
@@ -21,7 +23,7 @@ const obterTodosPagamentos = async (req, res) => {
         res.status(200).json(pagamentos);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os pagamentos' });
+        res.status(500).json({ mensagem: 'Erro ao obter todos os pagamentos', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarPagamento = async (req, res) => {
         res.status(201).json(novoPagamento);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo pagamento' });
+        res.status(500).json({ mensagem: 'Erro ao criar novo pagamento', error: error.message });
     }
 };
 

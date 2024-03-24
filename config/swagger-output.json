@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/associacoes/{id}": {
+    "/usuarios/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -76,7 +76,200 @@
         }
       }
     },
-    "/associacoes": {
+    "/usuarios": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nome": {
+                    "example": "any"
+                  },
+                  "email": {
+                    "example": "any"
+                  },
+                  "telefone": {
+                    "example": "any"
+                  },
+                  "endereco": {
+                    "example": "any"
+                  },
+                  "curso": {
+                    "example": "any"
+                  },
+                  "associacao": {
+                    "example": "any"
+                  },
+                  "tipo_acesso": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  },
+                  "situacao": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuarios/autenticar": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "example": "any"
+                  },
+                  "senha": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuarioss/atualizar-token": {
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "example": "any"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/associacao/{id}": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/associacao": {
       "get": {
         "description": "",
         "responses": {
@@ -100,7 +293,7 @@
         }
       }
     },
-    "/cursos/{id}": {
+    "/instituicao/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -165,7 +358,7 @@
         }
       }
     },
-    "/cursos": {
+    "/instituicao": {
       "get": {
         "description": "",
         "responses": {
@@ -189,7 +382,7 @@
         }
       }
     },
-    "/instituicoes/{id}": {
+    "/curso/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -254,7 +447,7 @@
         }
       }
     },
-    "/instituicoes": {
+    "/curso": {
       "get": {
         "description": "",
         "responses": {
@@ -278,7 +471,7 @@
         }
       }
     },
-    "/pagamentos/{id}": {
+    "/pagamento/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -343,7 +536,7 @@
         }
       }
     },
-    "/pagamentos": {
+    "/pagamento": {
       "get": {
         "description": "",
         "responses": {
@@ -367,7 +560,7 @@
         }
       }
     },
-    "/parametros/{id}": {
+    "/parametro/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -432,7 +625,7 @@
         }
       }
     },
-    "/parametros": {
+    "/parametro": {
       "get": {
         "description": "",
         "responses": {
@@ -456,7 +649,7 @@
         }
       }
     },
-    "/pixapis/{id}": {
+    "/pixapi/{id}": {
       "get": {
         "description": "",
         "parameters": [
@@ -521,7 +714,7 @@
         }
       }
     },
-    "/pixapis": {
+    "/pixapi": {
       "get": {
         "description": "",
         "responses": {

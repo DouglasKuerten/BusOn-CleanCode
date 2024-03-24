@@ -1,3 +1,5 @@
+'use strict';
+
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario');
@@ -6,10 +8,10 @@ const TokenAutenticacao = require('../models/TokenAutenticacao');
 // Função para autenticar o usuário e gerar um token JWT
 const authenticateUsuario = async (req, res) => {
     try {
-        const { usuario, senha } = req.body;
+        const { email, senha } = req.body;
 
         // Verificar se o usuário existe
-        const user = await Usuario.findOne({ where: { usuario } });
+        const user = await Usuario.findOne({ where: { email } });
         if (!user) {
             return res.status(404).json({ error: 'Usuário não encontrado' });
         }
@@ -21,7 +23,7 @@ const authenticateUsuario = async (req, res) => {
         }
 
         // Gerar token JWT
-        const token = jwt.sign({ usuario: user.usuario, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
             expiresIn: Number(process.env.JWT_EXPIRATION),
         });
 
@@ -31,9 +33,11 @@ const authenticateUsuario = async (req, res) => {
         res.status(200).json({
             id: user.id,
             nome: user.nome,
-            sobrenome: user.sobrenome,
             email: user.email,
-            telefone: user.email,
+            telefone: user.telefone,
+            endereco: user.endereco,
+            curso: user.curso,
+            associacao: user.associacao,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             accessToken: token,
@@ -41,7 +45,7 @@ const authenticateUsuario = async (req, res) => {
         });
     } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
-        res.status(500).json({ error: 'Erro ao autenticar usuário' });
+        res.status(500).json({ mensagem: 'Erro ao autenticar usuário', error: error.message });
     }
 };
 

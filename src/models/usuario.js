@@ -25,7 +25,7 @@ const Usuario = sequelize.define('usuario', {
     },
     curso_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Curso,
             key: 'id'
@@ -33,7 +33,7 @@ const Usuario = sequelize.define('usuario', {
     },
     associacao_id: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
         references: {
             model: Associacao,
             key: 'id'

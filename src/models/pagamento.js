@@ -42,7 +42,7 @@ const Pagamento = sequelize.define('pagamento', {
     },
     data_pagamento: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     situacao: {
         type: DataTypes.ENUM(Object.keys(SituacaoPagamentoEnum)),

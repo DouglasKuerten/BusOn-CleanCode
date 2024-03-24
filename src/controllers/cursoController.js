@@ -1,3 +1,5 @@
+'use strict';
+
 const Curso = require('../models/curso');
 
 // Controller para obter um curso pelo ID
@@ -21,7 +23,7 @@ const obterTodosCursos = async (req, res) => {
         res.status(200).json(cursos);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os cursos' });
+        res.status(500).json({ mensagem: 'Erro ao obter todos os cursos', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarCurso = async (req, res) => {
         res.status(201).json(novoCurso);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo curso' });
+        res.status(500).json({ mensagem: 'Erro ao criar novo curso', error: error.message });
     }
 };
 

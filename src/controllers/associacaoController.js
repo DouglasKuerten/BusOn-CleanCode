@@ -1,3 +1,5 @@
+'use strict';
+
 const Associacao = require('../models/associacao');
 
 // Controller para obter uma associação pelo ID
@@ -21,7 +23,7 @@ const obterTodasAssociacoes = async (req, res) => {
         res.status(200).json(associacoes);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as associações' });
+        res.status(500).json({ mensagem: 'Erro ao obter todas as associações', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarAssociacao = async (req, res) => {
         res.status(201).json(novaAssociacao);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova associação' });
+        res.status(500).json({ mensagem: 'Erro ao criar nova associação', error: error.message });
     }
 };
 

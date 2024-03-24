@@ -5,7 +5,7 @@ const SituacaoEnum = require('../enum/SituacaoEnum');
 
 const Associacao = sequelize.define('associacao', {
     cpf_cnpj: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         allowNull: false,
     },
     descricao: {

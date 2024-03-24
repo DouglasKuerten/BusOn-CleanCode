@@ -1,3 +1,5 @@
+'use strict';
+
 const PixApi = require('../models/pixApi');
 
 // Controller para obter uma PixApi pelo ID
@@ -21,7 +23,7 @@ const obterTodasPixApis = async (req, res) => {
         res.status(200).json(pixApis);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as PixApis' });
+        res.status(500).json({ mensagem: 'Erro ao obter todas as PixApis', error: error.message });
     }
 };
 
@@ -32,7 +34,7 @@ const criarPixApi = async (req, res) => {
         res.status(201).json(novaPixApi);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova PixApi' });
+        res.status(500).json({ mensagem: 'Erro ao criar nova PixApi', error: error.message });
     }
 };
 
