@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "swagger": "node config/swagger.js"
+    "swagger": "node config/swagger.js",
+    "docker": "docker compose up -d"
   },
   "author": "",
   "license": "ISC",
