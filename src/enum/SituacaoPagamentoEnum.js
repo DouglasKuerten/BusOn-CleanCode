@@ -1,7 +1,7 @@
 const SituacaoPagamentoEnum = {
-    ATIVO: "Ativo",
-    CANCELADO: "Cancelado",
-    FINALIZADO: "Finalizado"
+    ABERTO: "Aberto",
+    PAGO: "PAGO",
+    ATRASADO: "Atrasado"
 }
 
 module.exports = SituacaoPagamentoEnum;
