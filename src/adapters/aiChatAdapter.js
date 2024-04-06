@@ -1,7 +1,7 @@
 const { config } = require("dotenv");
 const OpenAI = require("openai");
 
-class OpenAiCompletion {
+class AiChatAdapter {
     constructor() {
         config();
         this.openai = new OpenAI({
@@ -19,4 +19,4 @@ class OpenAiCompletion {
     }
 }
 
-new OpenAiCompletion().createCompletion("What is the meaning of life?").then(console.log);
+module.exports = AiChatAdapter;
