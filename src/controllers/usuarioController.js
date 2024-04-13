@@ -13,7 +13,7 @@ const obterUsuarioPorId = async (req, res) => {
         }
         throw new Error('Usuário de ônibus não encontrado.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter usuário de ônibus', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter usuário de ônibus', error: error.message });
     }
 };
 
@@ -24,7 +24,7 @@ const obterTodosUsuarios = async (req, res) => {
         res.status(200).json(usuariosOnibus);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os usuários de ônibus', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todos os usuários de ônibus', error: error.message });
     }
 };
 
@@ -47,7 +47,7 @@ const criarUsuario = async (req, res) => {
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {
         console.error('Erro ao cadastrar usuário', error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo usuário de ônibus', error: error.message });
+        res.status(500).json({ message: 'Erro ao criar novo usuário de ônibus', error: error.message });
     }
 };
 
@@ -65,7 +65,7 @@ const atualizarUsuario = async (req, res) => {
         throw new Error('Usuário de ônibus não encontrado ou não atualizado.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar usuário de ônibus', error: error.message });
+        res.status(500).json({ message: 'Erro ao atualizar usuário de ônibus', error: error.message });
     }
 };
 
@@ -77,12 +77,12 @@ const excluirUsuario = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'Usuário de ônibus excluído com sucesso.' });
+            return res.status(200).json({ message: 'Usuário de ônibus excluído com sucesso.' });
         }
         throw new Error('Usuário de ônibus não encontrado ou não excluído.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir usuário de ônibus', error: error.message });
+        res.status(500).json({ message: 'Erro ao excluir usuário de ônibus', error: error.message });
     }
 };
 

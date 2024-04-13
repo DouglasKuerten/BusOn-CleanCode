@@ -4,10 +4,15 @@ const sequelize = require('../../databaseConnection');
 
 
 const instituicao = require('./instituicao');
+const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 
 const Curso = sequelize.define('curso', {
-    descricao: {
+    nome: {
         type: DataTypes.STRING,
+        allowNull: false,
+    },
+    situacao: {
+        type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
     },
     instituicao_id: {

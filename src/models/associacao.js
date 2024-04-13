@@ -1,14 +1,14 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const SituacaoEnum = require('../enum/SituacaoEnum');
+const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 
 const Associacao = sequelize.define('associacao', {
     cpf_cnpj: {
         type: DataTypes.BIGINT,
         allowNull: false,
     },
-    descricao: {
+    nome: {
         type: DataTypes.STRING,
         allowNull: false,
     },
@@ -21,7 +21,7 @@ const Associacao = sequelize.define('associacao', {
         allowNull: false,
     },
     situacao: {
-        type: DataTypes.ENUM(Object.keys(SituacaoEnum)),
+        type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
     },
 

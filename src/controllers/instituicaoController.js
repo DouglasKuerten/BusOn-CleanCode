@@ -1,6 +1,7 @@
 'use strict';
 
 const Instituicao = require('../models/instituicao');
+const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 
 // Controller para obter uma instituição pelo ID
 const obterInstituicaoPorId = async (req, res) => {
@@ -12,7 +13,7 @@ const obterInstituicaoPorId = async (req, res) => {
         }
         throw new Error('Instituição não encontrada.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter instituição', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter instituição', error: error.message });
     }
 };
 
@@ -23,7 +24,7 @@ const obterTodasInstituicoes = async (req, res) => {
         res.status(200).json(instituicoes);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as instituições', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todas as instituições', error: error.message });
     }
 };
 
@@ -33,8 +34,9 @@ const criarInstituicao = async (req, res) => {
         const novaInstituicao = await Instituicao.create(req.body);
         res.status(201).json(novaInstituicao);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova instituição', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao criar nova instituição', error: erro.message });
     }
 };
 
@@ -51,8 +53,9 @@ const atualizarInstituicao = async (req, res) => {
         }
         throw new Error('Instituição não encontrada ou não atualizada.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar instituição', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao atualizar instituição', error: erro.message });
     }
 };
 
@@ -64,12 +67,13 @@ const excluirInstituicao = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'Instituição excluída com sucesso.' });
+            return res.status(200).json({ message: 'Instituição excluída com sucesso.' });
         }
         throw new Error('Instituição não encontrada ou não excluída.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir instituição', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao excluir instituição', error: erro.message });
     }
 };
 

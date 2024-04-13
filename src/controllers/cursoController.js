@@ -12,7 +12,7 @@ const obterCursoPorId = async (req, res) => {
         }
         throw new Error('Curso não encontrado.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter curso', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter curso', error: error.message });
     }
 };
 
@@ -23,7 +23,7 @@ const obterTodosCursos = async (req, res) => {
         res.status(200).json(cursos);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os cursos', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todos os cursos', error: error.message });
     }
 };
 
@@ -34,7 +34,7 @@ const criarCurso = async (req, res) => {
         res.status(201).json(novoCurso);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo curso', error: error.message });
+        res.status(500).json({ message: 'Erro ao criar novo curso', error: error.message });
     }
 };
 
@@ -52,7 +52,7 @@ const atualizarCurso = async (req, res) => {
         throw new Error('Curso não encontrado ou não atualizado.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar curso', error: error.message });
+        res.status(500).json({ message: 'Erro ao atualizar curso', error: error.message });
     }
 };
 
@@ -64,12 +64,12 @@ const excluirCurso = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'Curso excluído com sucesso.' });
+            return res.status(200).json({ message: 'Curso excluído com sucesso.' });
         }
         throw new Error('Curso não encontrado ou não excluído.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir curso', error: error.message });
+        res.status(500).json({ message: 'Erro ao excluir curso', error: error.message });
     }
 };
 
