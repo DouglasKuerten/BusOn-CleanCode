@@ -1,7 +1,7 @@
 'use strict';
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
-const SituacaoEnum = require('../enum/SituacaoEnum');
+const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 const TipoAcessoEnum = require('../enum/TIpoAcessoEnum');
 const Curso = require('./curso');
 const Associacao = require('./associacao');
@@ -48,7 +48,7 @@ const Usuario = sequelize.define('usuario', {
         allowNull: false,
     },
     situacao: {
-        type: DataTypes.ENUM(Object.keys(SituacaoEnum)),
+        type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
     }
 })

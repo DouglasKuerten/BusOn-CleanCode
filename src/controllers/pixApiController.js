@@ -12,7 +12,7 @@ const obterPixApiPorId = async (req, res) => {
         }
         throw new Error('PixApi não encontrada.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter PixApi', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter PixApi', error: error.message });
     }
 };
 
@@ -23,7 +23,7 @@ const obterTodasPixApis = async (req, res) => {
         res.status(200).json(pixApis);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as PixApis', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todas as PixApis', error: error.message });
     }
 };
 
@@ -34,7 +34,7 @@ const criarPixApi = async (req, res) => {
         res.status(201).json(novaPixApi);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova PixApi', error: error.message });
+        res.status(500).json({ message: 'Erro ao criar nova PixApi', error: error.message });
     }
 };
 
@@ -52,7 +52,7 @@ const atualizarPixApi = async (req, res) => {
         throw new Error('PixApi não encontrada ou não atualizada.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar PixApi', error: error.message });
+        res.status(500).json({ message: 'Erro ao atualizar PixApi', error: error.message });
     }
 };
 
@@ -64,12 +64,12 @@ const excluirPixApi = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'PixApi excluída com sucesso.' });
+            return res.status(200).json({ message: 'PixApi excluída com sucesso.' });
         }
         throw new Error('PixApi não encontrada ou não excluída.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir PixApi', error: error.message });
+        res.status(500).json({ message: 'Erro ao excluir PixApi', error: error.message });
     }
 };
 

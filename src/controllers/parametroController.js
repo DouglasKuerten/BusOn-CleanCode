@@ -12,7 +12,7 @@ const obterParametroPorId = async (req, res) => {
         }
         throw new Error('Parâmetro não encontrado.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter parâmetro', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter parâmetro', error: error.message });
     }
 };
 
@@ -23,7 +23,7 @@ const obterTodosParametros = async (req, res) => {
         res.status(200).json(parametros);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todos os parâmetros', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todos os parâmetros', error: error.message });
     }
 };
 
@@ -34,7 +34,7 @@ const criarParametro = async (req, res) => {
         res.status(201).json(novoParametro);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar novo parâmetro', error: error.message });
+        res.status(500).json({ message: 'Erro ao criar novo parâmetro', error: error.message });
     }
 };
 
@@ -52,7 +52,7 @@ const atualizarParametro = async (req, res) => {
         throw new Error('Parâmetro não encontrado ou não atualizado.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar parâmetro', error: error.message });
+        res.status(500).json({ message: 'Erro ao atualizar parâmetro', error: error.message });
     }
 };
 
@@ -64,12 +64,12 @@ const excluirParametro = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'Parâmetro excluído com sucesso.' });
+            return res.status(200).json({ message: 'Parâmetro excluído com sucesso.' });
         }
         throw new Error('Parâmetro não encontrado ou não excluído.');
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir parâmetro', error: error.message });
+        res.status(500).json({ message: 'Erro ao excluir parâmetro', error: error.message });
     }
 };
 

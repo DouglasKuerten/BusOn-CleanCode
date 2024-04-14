@@ -1,6 +1,7 @@
 'use strict';
 
 const Associacao = require('../models/associacao');
+const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 
 // Controller para obter uma associação pelo ID
 const obterAssociacaoPorId = async (req, res) => {
@@ -12,18 +13,20 @@ const obterAssociacaoPorId = async (req, res) => {
         }
         throw new Error('Associação não encontrada.');
     } catch (error) {
-        return res.status(500).json({ mensagem: 'Erro ao obter associação', error: error.message });
+        return res.status(500).json({ message: 'Erro ao obter associação', error: error.message });
     }
 };
 
 // Controller para obter todas as associações
 const obterTodasAssociacoes = async (req, res) => {
     try {
+        const whereClause = buildWhereClause(req.query.filters);
+        const orderClause = buildOrderByClause(req.query.orderBy)
         const associacoes = await Associacao.findAll();
         res.status(200).json(associacoes);
     } catch (error) {
         console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao obter todas as associações', error: error.message });
+        res.status(500).json({ message: 'Erro ao obter todas as associações', error: error.message });
     }
 };
 
@@ -33,8 +36,9 @@ const criarAssociacao = async (req, res) => {
         const novaAssociacao = await Associacao.create(req.body);
         res.status(201).json(novaAssociacao);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao criar nova associação', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao criar nova associação', error: erro.message });
     }
 };
 
@@ -51,8 +55,9 @@ const atualizarAssociacao = async (req, res) => {
         }
         throw new Error('Associação não encontrada ou não atualizada.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao atualizar associação', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao atualizar associação', error: erro.message });
     }
 };
 
@@ -64,12 +69,13 @@ const excluirAssociacao = async (req, res) => {
             where: { id: id }
         });
         if (excluido) {
-            return res.status(200).json({ mensagem: 'Associação excluída com sucesso.' });
+            return res.status(200).json({ message: 'Associação excluída com sucesso.' });
         }
         throw new Error('Associação não encontrada ou não excluída.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ mensagem: 'Erro ao excluir associação', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ message: 'Erro ao excluir associação', error: erro.message });
     }
 };
 
