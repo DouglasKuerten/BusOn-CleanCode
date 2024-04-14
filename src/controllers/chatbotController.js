@@ -17,6 +17,21 @@ const getChatbotResponse = async (req, res) => {
     }
 };
 
+const messageAssistant = async (req, res) => {
+    try {
+        const prompt = req.body.prompt;
+
+        res.status(201).json({
+            message: prompt,
+            response: 'completion.message.content',
+        });
+
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao obter resposta do chatbot', error: error.message });
+    }
+};
+
 module.exports = {
-    getChatbotResponse
+    getChatbotResponse,
+    messageAssistant
 };
