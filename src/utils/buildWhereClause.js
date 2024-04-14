@@ -3,9 +3,7 @@ const { Op } = require('sequelize');
 exports.buildWhereClause = (filtros) => {
     let whereClause = {};
 
-    // Verifica se foram passados filtros
-    if (filtros) {
-        //console.log('filtrosss', JSON.stringify(filtros))
+    if (filtros != undefined && filtros != null && filtros != 'undefined') {
         const parsedFilters = JSON.parse(filtros);
         console.log(parsedFilters)
         // Função auxiliar para construir a cláusula where com base nos filtros fornecidos
@@ -47,7 +45,6 @@ exports.buildWhereClause = (filtros) => {
         if (parsedFilters.iLike) {
             whereClause = { ...whereClause, ...buildWhere(parsedFilters.iLike, Op.iLike) };
         }
-        console.log('parsedFilters ', parsedFilters.like)
     }
     console.log('whereClause', whereClause)
     return whereClause;

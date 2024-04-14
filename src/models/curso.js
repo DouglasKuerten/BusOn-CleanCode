@@ -2,9 +2,8 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 
-
-const instituicao = require('./instituicao');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+const Instituicao = require('./instituicao');
 
 const Curso = sequelize.define('curso', {
     nome: {
@@ -19,11 +18,12 @@ const Curso = sequelize.define('curso', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: instituicao,
+            model: Instituicao,
             key: 'id'
         }
     },
 })
 
+Curso.belongsTo(Instituicao, { foreignKey: 'instituicao_id' }); // Definir a associação
 
 module.exports = Curso;

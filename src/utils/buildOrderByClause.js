@@ -1,6 +1,5 @@
 exports.buildOrderByClause = (orderBy) => {
     let orderClause = [['id', 'ASC']];
-
     if (orderBy) {
         const orders = JSON.parse(orderBy);
         // Itera sobre cada critério de ordenação fornecido

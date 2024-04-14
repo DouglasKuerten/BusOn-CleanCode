@@ -1,6 +1,9 @@
 'use strict';
 
 const Curso = require('../models/curso');
+const Instituicao = require('../models/instituicao');
+const { buildOrderByClause } = require('../utils/buildOrderByClause');
+const { buildWhereClause } = require('../utils/buildWhereClause');
 
 // Controller para obter um curso pelo ID
 const obterCursoPorId = async (req, res) => {
@@ -19,7 +22,18 @@ const obterCursoPorId = async (req, res) => {
 // Controller para obter todos os cursos
 const obterTodosCursos = async (req, res) => {
     try {
-        const cursos = await Curso.findAll();
+        const whereClause = buildWhereClause(req.query.filters);
+        const orderClause = buildOrderByClause(req.query.orderBy)
+
+        const cursos = await Curso.findAll({
+            include: [{
+                model: Instituicao,
+                attributes: ['id', 'nome']
+            }],
+            attributes: ['id', 'nome', 'situacao'],
+            where: whereClause,
+            order: orderClause
+        });
         res.status(200).json(cursos);
     } catch (error) {
         console.error(error);

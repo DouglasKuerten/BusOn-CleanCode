@@ -2,6 +2,8 @@
 
 const Instituicao = require('../models/instituicao');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
+const { buildOrderByClause } = require('../utils/buildOrderByClause');
+const { buildWhereClause } = require('../utils/buildWhereClause');
 
 // Controller para obter uma instituição pelo ID
 const obterInstituicaoPorId = async (req, res) => {
@@ -20,7 +22,13 @@ const obterInstituicaoPorId = async (req, res) => {
 // Controller para obter todas as instituições
 const obterTodasInstituicoes = async (req, res) => {
     try {
-        const instituicoes = await Instituicao.findAll();
+        const whereClause = buildWhereClause(req.query.filters);
+        const orderClause = buildOrderByClause(req.query.orderBy)
+
+        const instituicoes = await Instituicao.findAll({
+            where: whereClause,
+            order: orderClause
+        });
         res.status(200).json(instituicoes);
     } catch (error) {
         console.error(error);
