@@ -14,11 +14,9 @@ class ThreadProvider {
     /**
      * Get thread to assistant.
      * 
-     * @param {string | null} threadId The id to the thread.
-     * 
-     * @returns {Promise<void>}
+     * @returns {Promise<import("openai/resources/beta/index.mjs").Thread>}
      */
-    async getThread(threadId) {
+    async getThread() {
 
         const dbThread = await Thread.findOne();
 

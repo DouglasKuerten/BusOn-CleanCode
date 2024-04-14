@@ -21,9 +21,8 @@ const getChatbotResponse = async (req, res) => {
 const postConversation = async (req, res) => {
     try {
         const message = req.body.message;
-        const conversationId = req.body.conversation_id;
         const chatService = new ChatService();
-        const response = await chatService.messageAssistant(message, conversationId);
+        const response = await chatService.messageAssistant(message);
 
         res.status(201).json({
             message: message,
