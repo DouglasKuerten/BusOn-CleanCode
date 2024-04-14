@@ -1,7 +1,7 @@
 const { config } = require("dotenv");
 const OpenAI = require("openai");
 const AssistantProvider = require('../providers/AssistantProvider');
-const Thread = require("../models/thread");
+const ThreadProvider = require("../providers/ThreadProvider");
 
 /**
  * Represents a chat service for a personal assistant.
@@ -19,6 +19,11 @@ class ChatService {
     assistantProvider;
 
     /**
+     * @var threadProvider: ThreadProvider
+     */
+    threadProvider;
+
+    /**
      * Constructor for the ChatService class.
      */
     constructor() {
@@ -27,6 +32,7 @@ class ChatService {
             apiKey: process.env.OPENAI_API_KEY
         });
         this.assistantProvider = new AssistantProvider(this.openai);
+        this.threadProvider = new ThreadProvider(this.openai);
     }
 
     /**
@@ -41,7 +47,7 @@ class ChatService {
 
         const assistant = await this.assistantProvider.getAssistant();
 
-        const thread = await this.getThread(conversationId);
+        const thread = await this.threadProvider.getThread(conversationId);
 
         return {
             message: message,
@@ -49,55 +55,6 @@ class ChatService {
             assistant: assistant,
             thread: thread
         };
-    }
-
-    /**
-     * Get thread to assistant.
-     * 
-     * @param {string | null} threadId The id to the thread.
-     * 
-     * @returns {Promise<void>}
-     */
-    async getThread(threadId) {
-
-        const dbThread = await Thread.findOne();
-
-        if (!dbThread) {
-            const newThread = await this.createNewThread();
-            return newThread;
-        }
-
-        const thread = await this.openai.beta.threads.retrieve(
-            dbThread.api_id
-        );
-
-        return thread;
-    }
-
-    /**
-     * Save thread.
-     * 
-     * @param {import("openai/resources/beta/index.mjs").Thread} thread
-     * 
-     * @returns {Promise<void>}
-     */
-    async saveThread(thread) {
-        await Thread.create({
-            api_id: thread.id,
-            created_at: thread.created_at,
-        });
-    }
-
-    /**
-     * 
-     * @returns {Promise<Assistant>}
-    */
-    async createNewThread() {
-        const thread = await this.openai.beta.threads.create();
-
-        this.saveThread(thread);
-
-        return thread;
     }
 
     /**
