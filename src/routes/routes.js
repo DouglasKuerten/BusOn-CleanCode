@@ -69,6 +69,6 @@ router.delete('/pixapi/:id', pixApiController.excluirPixApi);
 
 // Rotas para chatbot
 router.get('/chatbot/completion', chatbotController.getChatbotResponse);
-router.post('/chatbot/message', chatbotController.messageAssistant);
+router.post('/chatbot/conversation', chatbotController.postConversation);
 
 module.exports = router;

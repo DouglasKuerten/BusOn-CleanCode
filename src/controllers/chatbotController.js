@@ -18,7 +18,7 @@ const getChatbotResponse = async (req, res) => {
     }
 };
 
-const messageAssistant = async (req, res) => {
+const postConversation = async (req, res) => {
     try {
         const prompt = req.body.prompt;
         const chatService = new ChatService();
@@ -40,5 +40,5 @@ const messageAssistant = async (req, res) => {
 
 module.exports = {
     getChatbotResponse,
-    messageAssistant
+    postConversation
 };
