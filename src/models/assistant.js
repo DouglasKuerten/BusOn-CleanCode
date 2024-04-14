@@ -9,7 +9,7 @@ const Assistant = sequelize.define('assistant', {
         allowNull: false,
     },
     created_at: {
-        type: DataTypes.TIME,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
     name: {

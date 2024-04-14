@@ -1,5 +1,6 @@
 'use strict';
 const AiChatAdapter = require('../adapters/aiChatAdapter');
+const ChatService = require('../services/ChatService');
 
 // Controller para obter uma resposta do chatbot
 const getChatbotResponse = async (req, res) => {
@@ -20,14 +21,20 @@ const getChatbotResponse = async (req, res) => {
 const messageAssistant = async (req, res) => {
     try {
         const prompt = req.body.prompt;
+        const chatService = new ChatService();
+        const response = await chatService.messageAssistant(prompt);
 
         res.status(201).json({
             message: prompt,
-            response: 'completion.message.content',
+            response: response
         });
-
     } catch (error) {
-        return res.status(500).json({ message: 'Erro ao obter resposta do chatbot', error: error.message });
+        return res.status(500).json(
+            {
+                message: 'Erro ao obter resposta do chatbot',
+                error: error.message
+            }
+        );
     }
 };
 

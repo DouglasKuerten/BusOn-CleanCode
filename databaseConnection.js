@@ -1,10 +1,10 @@
 const { Sequelize } = require('sequelize');
 
 const config = {
-    "username": process.env.PG_USER,
-    "password": process.env.PG_PASSWORD,
-    "database": process.env.PG_DATABASE,
-    "host": process.env.PG_HOST,
+    "username": process.env.POSTGRES_USER,
+    "password": process.env.POSTGRES_PASSWORD,
+    "database": process.env.POSTGRES_DB,
+    "host": process.env.POSTGRES_HOST,
     "dialect": process.env.PG_DIALECT
 }
 

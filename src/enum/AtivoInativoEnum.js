@@ -1,6 +1,6 @@
 const AtivoInativoEnum = {
-    ATIVO: "Ativo",
-    INATIVO: "Inativo",
+    ATIVO: "ATIVO",
+    INATIVO: "INATIVO",
 }
 
 module.exports = AtivoInativoEnum;
