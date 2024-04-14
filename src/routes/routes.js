@@ -9,6 +9,7 @@ const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
 const pixApiController = require('../controllers/pixApiController');
+const chatbotController = require('../controllers/chatbotController');
 
 // Rotas para cadastro de usuário
 router.get('/usuarios/:id', usuarioController.obterUsuarioPorId);
@@ -65,5 +66,8 @@ router.get('/pixapi', pixApiController.obterTodasPixApis);
 router.post('/pixapi', pixApiController.criarPixApi);
 router.put('/pixapi/:id', pixApiController.atualizarPixApi);
 router.delete('/pixapi/:id', pixApiController.excluirPixApi);
+
+// Rotas para chatbot
+router.get('/chatbot/completion', chatbotController.getChatbotResponse);
 
 module.exports = router;
