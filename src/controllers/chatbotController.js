@@ -20,12 +20,13 @@ const getChatbotResponse = async (req, res) => {
 
 const postConversation = async (req, res) => {
     try {
-        const prompt = req.body.prompt;
+        const message = req.body.message;
+        const conversationId = req.body.conversation_id;
         const chatService = new ChatService();
-        const response = await chatService.messageAssistant(prompt);
+        const response = await chatService.messageAssistant(message, conversationId);
 
         res.status(201).json({
-            message: prompt,
+            message: message,
             response: response
         });
     } catch (error) {

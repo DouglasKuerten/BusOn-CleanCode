@@ -32,14 +32,34 @@ class ChatService {
      * Sends a message to the assistant.
      * 
      * @param {string} message The message to send to the assistant.
+     * @param {string|null} conversationId The id to the conversation.
      * 
      * @returns {Promise<string>} The response from the assistant.
     */
-    async messageAssistant(message) {
+    async messageAssistant(message, conversationId) {
 
         const assistant = await this.assistantProvider.getAssistant();
 
-        return assistant;
+        const thread = await this.getThread(conversationId);
+
+        return {
+            message: message,
+            response: "Hello, how are you?",
+            assistant: assistant,
+            thread: thread
+        };
+    }
+
+    /**
+     * Get thread to assistant.
+     * 
+     * @param {string | null} conversationId The id to the conversation.
+     * 
+     * @returns {Promise<void>}
+     */
+    async getThread(conversationId) {
+        const thread = await this.openai.beta.threads.create();
+        return thread;
     }
 
     /**
