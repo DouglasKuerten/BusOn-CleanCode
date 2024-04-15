@@ -9,7 +9,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "swagger": "node config/swagger.js",
     "docker": "docker compose up -d",
-    "ai": "node openai.js"
+    "ai": "node openai.js",
+    "assistant": "node aiAssistant.js"
   },
   "author": "",
   "license": "ISC",

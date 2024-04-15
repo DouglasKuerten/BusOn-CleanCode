@@ -15,6 +15,8 @@ const sequelize = require('./databaseConnection')
 app.use(bodyParser.json());
 app.use(cors())
 
+const Assistant = require('./src/models/assistant');
+const Thread = require('./src/models/thread');
 const Associacao = require('./src/models/associacao');
 const Instituicao = require('./src/models/instituicao');
 const Curso = require('./src/models/curso');
