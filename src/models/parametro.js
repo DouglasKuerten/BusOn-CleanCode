@@ -9,6 +9,7 @@ const Associacao = require('./associacao');
 const Parametro = sequelize.define('parametro', {
     associacao_id: {
         type: DataTypes.INTEGER,
+        unique: true,
         allowNull: false,
         references: {
             model: Associacao,
@@ -44,18 +45,18 @@ const Parametro = sequelize.define('parametro', {
         allowNull: false,
     },
     dia_vencimento: {
-        type: DataTypes.DATE,
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dia_aberto: {
-        type: DataTypes.DATE,
+    dia_abertura_pagamentos: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dia_tolerancia_multa: {
-        type: DataTypes.DATE,
+    dias_tolerancia_multa: {
+        type: DataTypes.INTEGER,
         allowNull: false,
     },
-    libera_pagamento: {
+    libera_alteracao_dados_pessoais: {
         type: DataTypes.ENUM(Object.keys(LiberadoBloqueadoEnum)),
         allowNull: false,
     },

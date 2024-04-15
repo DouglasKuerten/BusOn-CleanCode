@@ -15,6 +15,19 @@ const obterParametroPorId = async (req, res) => {
         return res.status(500).json({ message: 'Erro ao obter parâmetro', error: error.message });
     }
 };
+// Controller para obter um parâmetro pelo ID
+const obterParametroDaAssociacao = async (req, res) => {
+    try {
+        const { associacaoId } = req.params;
+        const parametro = await Parametro.findOne({ where: { 'associacao_id': associacaoId } });
+        if (parametro) {
+            return res.status(200).json(parametro);
+        }
+        throw new Error('Parâmetro não encontrado.');
+    } catch (error) {
+        return res.status(500).json({ message: 'Erro ao obter parâmetro', error: error.message });
+    }
+};
 
 // Controller para obter todos os parâmetros
 const obterTodosParametros = async (req, res) => {
@@ -76,6 +89,7 @@ const excluirParametro = async (req, res) => {
 module.exports = {
     obterParametroPorId,
     obterTodosParametros,
+    obterParametroDaAssociacao,
     criarParametro,
     atualizarParametro,
     excluirParametro

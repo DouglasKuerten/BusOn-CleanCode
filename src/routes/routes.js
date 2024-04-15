@@ -55,6 +55,7 @@ router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
 
 // Rotas para Parâmetro
 router.get('/parametro/:id', parametroController.obterParametroPorId);
+router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacao);
 router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
 router.put('/parametro/:id', parametroController.atualizarParametro);
