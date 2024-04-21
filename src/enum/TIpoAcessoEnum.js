@@ -1,5 +1,5 @@
 const TipoAcessoEnum = {
-    USUARIO: "Usuario",
+    ALUNO: "Aluno",
     GESTAO: "Gestao",
     ADMIN: "Admin"
 }

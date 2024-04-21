@@ -2,6 +2,8 @@
 
 const Associacao = require('../models/associacao');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
+const { buildOrderByClause } = require('../utils/buildOrderByClause');
+const { buildWhereClause } = require('../utils/buildWhereClause');
 
 // Controller para obter uma associação pelo ID
 const obterAssociacaoPorId = async (req, res) => {
@@ -22,7 +24,11 @@ const obterTodasAssociacoes = async (req, res) => {
     try {
         const whereClause = buildWhereClause(req.query.filters);
         const orderClause = buildOrderByClause(req.query.orderBy)
-        const associacoes = await Associacao.findAll();
+
+        const associacoes = await Associacao.findAll({
+            where: whereClause,
+            order: orderClause
+        });
         res.status(200).json(associacoes);
     } catch (error) {
         console.error(error);

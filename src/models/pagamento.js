@@ -8,15 +8,14 @@ const TipoPagamentoEnum = require('../enum//TipoPagamentoEnum');
 const usuario = require('./usuario');
 
 const Pagamento = sequelize.define('pagamento', {
-    txid: {
+    txId: {
+        type: DataTypes.STRING,
+    },
+    pixCopiaCola: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    copia_cola: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    usuario_id: {
+    usuarioId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -36,11 +35,11 @@ const Pagamento = sequelize.define('pagamento', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    data_vencimento: {
+    dataVencimento: {
         type: DataTypes.DATE,
         allowNull: false,
     },
-    data_pagamento: {
+    dataPagamento: {
         type: DataTypes.DATE,
         allowNull: true,
     },

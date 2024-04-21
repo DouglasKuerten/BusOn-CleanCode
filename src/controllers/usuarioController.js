@@ -2,6 +2,11 @@
 
 const bcrypt = require('bcrypt');
 const Usuario = require('../models/usuario');
+const { buildWhereClause } = require('../utils/buildWhereClause');
+const { buildOrderByClause } = require('../utils/buildOrderByClause');
+const Associacao = require('../models/associacao');
+const Curso = require('../models/curso');
+const Instituicao = require('../models/instituicao');
 
 // Controller para obter um usuário de ônibus pelo ID
 const obterUsuarioPorId = async (req, res) => {
@@ -20,7 +25,28 @@ const obterUsuarioPorId = async (req, res) => {
 // Controller para obter todos os usuários de ônibus
 const obterTodosUsuarios = async (req, res) => {
     try {
-        const usuariosOnibus = await Usuario.findAll();
+        const whereClause = buildWhereClause(req.query.filters);
+        const orderClause = buildOrderByClause(req.query.orderBy)
+
+        const usuariosOnibus = await Usuario.findAll({
+            include: [
+                {
+                    model: Associacao,
+                    attributes: ['id', 'nome']
+                },
+                {
+                    model: Curso,
+                    attributes: ['id', 'nome'],
+                    include: [{
+                        model: Instituicao,
+                        attributes: ['id', 'nome'],
+                    }]
+                }
+            ],
+            attributes: ['id', 'nome', 'tipoAcesso', 'situacao', 'diasUsoTransporte'],
+            where: whereClause,
+            order: orderClause
+        });
         res.status(200).json(usuariosOnibus);
     } catch (error) {
         console.error(error);
@@ -30,7 +56,7 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, curso, associacao, tipo_acesso, senha, situacao } = req.body;
+    const { nome, email, telefone, endereco, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(senha, 15);
         const novoUsuarioOnibus = await Usuario.create({
@@ -38,11 +64,12 @@ const criarUsuario = async (req, res) => {
             email,
             telefone,
             endereco,
-            curso,
-            associacao,
-            tipo_acesso,
+            cursoId,
+            associacaoId,
+            tipoAcesso,
             senha: hashedPassword,
-            situacao
+            situacao,
+            diasUsoTransporte
         });
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {

@@ -3,15 +3,15 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 
 const PixApi = sequelize.define('pixApi', {
-    dev_api_key: {
+    devApiKey: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    client_id: {
+    clientId: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    client_secret: {
+    clientSecret: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },

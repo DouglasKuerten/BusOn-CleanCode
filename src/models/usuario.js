@@ -5,6 +5,7 @@ const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 const TipoAcessoEnum = require('../enum/TIpoAcessoEnum');
 const Curso = require('./curso');
 const Associacao = require('./associacao');
+const DiasSemanaEnum = require('../enum/DiasSemanaEnum');
 
 const Usuario = sequelize.define('usuario', {
     nome: {
@@ -21,9 +22,9 @@ const Usuario = sequelize.define('usuario', {
     },
     endereco: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
-    curso_id: {
+    cursoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -31,7 +32,7 @@ const Usuario = sequelize.define('usuario', {
             key: 'id'
         }
     },
-    associacao_id: {
+    associacaoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
         references: {
@@ -39,7 +40,7 @@ const Usuario = sequelize.define('usuario', {
             key: 'id'
         }
     },
-    tipo_acesso: {
+    tipoAcesso: {
         type: DataTypes.ENUM(Object.keys(TipoAcessoEnum)),
         allowNull: false,
     },
@@ -50,7 +51,16 @@ const Usuario = sequelize.define('usuario', {
     situacao: {
         type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
-    }
+    },
+    diasUsoTransporte: {
+        type: DataTypes.ARRAY(DataTypes.ENUM(Object.keys(DiasSemanaEnum))),
+        allowNull: false
+    },
+
 })
+
+Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId' });
+Usuario.belongsTo(Curso, { foreignKey: 'cursoId' });
+
 
 module.exports = Usuario;

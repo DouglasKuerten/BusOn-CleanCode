@@ -19,7 +19,7 @@ const obterParametroPorId = async (req, res) => {
 const obterParametroDaAssociacao = async (req, res) => {
     try {
         const { associacaoId } = req.params;
-        const parametro = await Parametro.findOne({ where: { 'associacao_id': associacaoId } });
+        const parametro = await Parametro.findOne({ where: { associacaoId: associacaoId } });
         if (parametro) {
             return res.status(200).json(parametro);
         }

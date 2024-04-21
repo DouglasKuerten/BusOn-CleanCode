@@ -17,7 +17,7 @@ const Instituicao = sequelize.define('instituicao', {
         type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
     },
-    associacao_id: {
+    associacaoId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {

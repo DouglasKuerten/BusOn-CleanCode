@@ -14,7 +14,7 @@ const Curso = sequelize.define('curso', {
         type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
     },
-    instituicao_id: {
+    instituicaoId: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
@@ -24,6 +24,6 @@ const Curso = sequelize.define('curso', {
     },
 })
 
-Curso.belongsTo(Instituicao, { foreignKey: 'instituicao_id' }); // Definir a associação
+Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId' }); // Definir a associação
 
 module.exports = Curso;

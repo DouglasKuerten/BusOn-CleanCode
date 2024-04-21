@@ -7,7 +7,7 @@ const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
 const Associacao = require('./associacao');
 
 const Parametro = sequelize.define('parametro', {
-    associacao_id: {
+    associacaoId: {
         type: DataTypes.INTEGER,
         unique: true,
         allowNull: false,
@@ -16,47 +16,47 @@ const Parametro = sequelize.define('parametro', {
             key: 'id'
         }
     },
-    valor_1: {
+    valor1: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_2: {
+    valor2: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_3: {
+    valor3: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_4: {
+    valor4: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_5: {
+    valor5: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_6: {
+    valor6: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    valor_multa: {
+    valorMulta: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dia_vencimento: {
+    diaVencimento: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dia_abertura_pagamentos: {
+    diaAberturaPagamentos: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    dias_tolerancia_multa: {
+    diasToleranciaMulta: {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    libera_alteracao_dados_pessoais: {
+    liberaAlteracaoDadosPessoais: {
         type: DataTypes.ENUM(Object.keys(LiberadoBloqueadoEnum)),
         allowNull: false,
     },

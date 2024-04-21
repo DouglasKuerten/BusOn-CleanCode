@@ -12,15 +12,15 @@ const pixApiController = require('../controllers/pixApiController');
 const chatbotController = require('../controllers/chatbotController');
 
 // Rotas para cadastro de usuário
-router.get('/usuarios/:id', usuarioController.obterUsuarioPorId);
-router.get('/usuarios', usuarioController.obterTodosUsuarios);
-router.post('/usuarios', usuarioController.criarUsuario);
-router.put('/usuarios/:id', usuarioController.atualizarUsuario);
-router.delete('/usuarios/:id', usuarioController.excluirUsuario);
+router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
+router.get('/usuario', usuarioController.obterTodosUsuarios);
+router.post('/usuario', usuarioController.criarUsuario);
+router.put('/usuario/:id', usuarioController.atualizarUsuario);
+router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
 // Rota para autenticar o usuário e gerar um token JWT
-router.post('/usuarios/autenticar', autenticacaoController.authenticateUsuario);
-router.post('/usuarioss/atualizar-token', autenticacaoController.refreshToken);
+router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
+router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
 
 // Rotas para obtenção de registros por ID
 

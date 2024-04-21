@@ -13,13 +13,13 @@ const authenticateUsuario = async (req, res) => {
         // Verificar se o usuário existe
         const user = await Usuario.findOne({ where: { email } });
         if (!user) {
-            return res.status(404).json({ error: 'Usuário não encontrado' });
+            return res.status(404).json({ message: 'Usuário não encontrado' });
         }
 
         // Verificar se a senha está correta
         const isPasswordValid = await bcrypt.compare(senha, user.senha);
         if (!isPasswordValid) {
-            return res.status(401).json({ error: 'Senha incorreta' });
+            return res.status(401).json({ message: 'Senha incorreta' });
         }
 
         // Gerar token JWT
@@ -36,12 +36,12 @@ const authenticateUsuario = async (req, res) => {
             email: user.email,
             telefone: user.telefone,
             endereco: user.endereco,
-            curso: user.curso,
-            associacao: user.associacao,
+            cursoId: user.cursoId,
+            associacaoId: user.associacaoId,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             accessToken: token,
-            refreshToken
+            refreshToken: refreshToken
         });
     } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
