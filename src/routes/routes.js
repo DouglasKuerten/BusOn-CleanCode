@@ -10,6 +10,7 @@ const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
 const pixApiController = require('../controllers/pixApiController');
 const chatbotController = require('../controllers/chatbotController');
+const { validarAutenticacao } = require('../middleware/autenticacao.middleware');
 
 // Rotas para cadastro de usuário
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
@@ -21,6 +22,7 @@ router.delete('/usuario/:id', usuarioController.excluirUsuario);
 // Rota para autenticar o usuário e gerar um token JWT
 router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
+router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoController.validateToken);
 
 // Rotas para obtenção de registros por ID
 

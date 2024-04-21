@@ -90,7 +90,12 @@ const refreshToken = async (req, res) => {
     }
 };
 
+const validateToken = async (req, res) => {
+    res.status(200).json({ message: 'Usuário está com token ativo' })
+}
+
 module.exports = {
     authenticateUsuario,
-    refreshToken
+    refreshToken,
+    validateToken
 };
