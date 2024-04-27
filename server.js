@@ -47,3 +47,9 @@ app.get('/', (request, response) => {
     response.json({ aplicacao: 'CRUD MONEYZ' })
 })
 app.use('/api', routes);
+
+process.on('SIGINT', function () {
+    console.log("\nGracefully shutting down from SIGINT (Ctrl-C)");
+    // exit node.js app
+    process.exit(0);
+});

@@ -3,7 +3,7 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario');
-const TokenAutenticacao = require('../models/TokenAutenticacao');
+const TokenAutenticacao = require('../models/tokenAutenticacao');
 
 // Função para autenticar o usuário e gerar um token JWT
 const authenticateUsuario = async (req, res) => {
