@@ -8,7 +8,8 @@
     "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "swagger": "node config/swagger.js",
-    "docker": "docker compose up -d",
+    "docker": "docker compose -f docker-compose.yml up -d",
+    "dev-docker": "docker compose -f docker-compose-dev.yml up -d",
     "ai": "node openai.js",
     "assistant": "node aiAssistant.js"
   },
