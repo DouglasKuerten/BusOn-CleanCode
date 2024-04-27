@@ -2,7 +2,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
-const TipoPagamentoEnum = require('../enum//TipoPagamentoEnum');
+const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
 
 
 const usuario = require('./usuario');
@@ -10,10 +10,11 @@ const usuario = require('./usuario');
 const Pagamento = sequelize.define('pagamento', {
     txId: {
         type: DataTypes.STRING,
+        allowNull: true
     },
     pixCopiaCola: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true,
     },
     usuarioId: {
         type: DataTypes.INTEGER,
@@ -33,11 +34,11 @@ const Pagamento = sequelize.define('pagamento', {
     },
     multa: {
         type: DataTypes.INTEGER,
-        allowNull: false,
+        allowNull: true,
     },
     dataVencimento: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
     },
     dataPagamento: {
         type: DataTypes.DATE,
