@@ -6,6 +6,7 @@ services:
     container_name: express
     ports:
       - 3000:3000
+    command: npm start
     depends_on:
       - db
     restart: always
