@@ -32,11 +32,11 @@ class MessageProvider {
      */
     async sendMessage(message, assistant, thread) {
 
-        await this.createMessage(message, thread.id);
+        await this.#createMessage(message, thread.id);
 
-        const run = await this.createRunWithPolling(thread.id, assistant.id);
+        const run = await this.#createRunWithPolling(thread.id, assistant.id);
 
-        const content = await this.getAssistantReplyWithPolling(run, thread.id);
+        const content = await this.#getAssistantReplyWithPolling(run, thread.id);
 
         return content;
     }
@@ -49,7 +49,7 @@ class MessageProvider {
      * 
      * @returns {Promise<string>}
      */
-    async getAssistantReplyWithPolling(run, threadId) {
+    async #getAssistantReplyWithPolling(run, threadId) {
 
         let content = "";
         if (run.status === 'completed') {
@@ -75,7 +75,7 @@ class MessageProvider {
      * 
      * @returns {Promise<Run>}
      */
-    async createRunWithPolling(threadId, assistantId) {
+    async #createRunWithPolling(threadId, assistantId) {
 
         return await this.openai.beta.threads.runs.createAndPoll(
             threadId,
@@ -91,7 +91,7 @@ class MessageProvider {
      * 
      * @returns {Promise<void>}
      */
-    async createMessage(message, threadId) {
+    async #createMessage(message, threadId) {
 
         await this.openai.beta.threads.messages.create(
             threadId,
