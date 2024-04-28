@@ -2,7 +2,7 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
-const TipoPagamentoEnum = require('../enum//TipoPagamentoEnum');
+const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
 
 
 const usuario = require('./usuario');

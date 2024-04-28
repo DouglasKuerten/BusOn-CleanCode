@@ -1,6 +1,16 @@
 version: '3'
 
 services:
+  server:
+    build: ./
+    container_name: express
+    ports:
+      - 3000:3000
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
+    depends_on:
+      - db
+    restart: always
+
   db:
     container_name: 'postgres'
     image: 'postgres:14.1-alpine'
