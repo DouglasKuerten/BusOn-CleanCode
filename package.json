@@ -10,6 +10,7 @@
     "swagger": "node config/swagger.js",
     "docker": "docker compose -f docker-compose.yml up -d",
     "dev-docker": "docker compose -f docker-compose-dev.yml up -d",
+    "db-docker": "docker compose -f docker-compose-db.yml up -d",
     "ai": "node openai.js",
     "assistant": "node aiAssistant.js"
   },
