@@ -12,7 +12,23 @@ const Instituicao = require('../models/instituicao');
 const obterUsuarioPorId = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuarioOnibus = await Usuario.findByPk(id);
+        const usuarioOnibus = await Usuario.findByPk(id, {
+            include: [
+                {
+                    model: Associacao,
+                    attributes: ['id', 'nome']
+                },
+                {
+                    model: Curso,
+                    attributes: ['id', 'nome'],
+                    include: [{
+                        model: Instituicao,
+                        attributes: ['id', 'nome'],
+                    }]
+                }
+            ],
+            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
+        });
         if (usuarioOnibus) {
             return res.status(200).json(usuarioOnibus);
         }
@@ -56,14 +72,15 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte } = req.body;
+    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte } = req.body;
     try {
-        const hashedPassword = await bcrypt.hash(senha, 15);
+        const hashedPassword = await bcrypt.hash(senha || telefone, 15);
         const novoUsuarioOnibus = await Usuario.create({
             nome,
             email,
             telefone,
             endereco,
+            matricula,
             cursoId,
             associacaoId,
             tipoAcesso,
@@ -83,11 +100,11 @@ const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
         const [atualizado] = await Usuario.update(req.body, {
-            where: { id: id }
+            where: { id: id },
+            fields: ['nome', 'email', 'telefone', 'endereco', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
         });
         if (atualizado) {
-            const usuarioOnibusAtualizado = await Usuario.findByPk(id);
-            return res.status(200).json(usuarioOnibusAtualizado);
+            return res.status(200).json({ message: 'Usuário do ônibus atualizada com sucesso' });
         }
         throw new Error('Usuário de ônibus não encontrado ou não atualizado.');
     } catch (error) {
@@ -96,6 +113,25 @@ const atualizarUsuario = async (req, res) => {
     }
 };
 
+
+// Controller para atualizar a senha de um usuário de ônibus existente
+const atualizarSenhaUsuario = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { senha } = req.body;
+        const hashedPassword = await bcrypt.hash(senha, 15);
+        const [atualizado] = await Usuario.update({ senha: hashedPassword }, {
+            where: { id: id }
+        });
+        if (atualizado) {
+            return res.status(200).json({ message: 'Senha do usuário de ônibus atualizada com sucesso' });
+        }
+        throw new Error('Usuário de ônibus não encontrado ou senha não atualizada.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao atualizar a senha do usuário de ônibus', error: error.message });
+    }
+};
 // Controller para excluir um usuário de ônibus
 const excluirUsuario = async (req, res) => {
     try {

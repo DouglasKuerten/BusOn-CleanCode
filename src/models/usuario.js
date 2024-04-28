@@ -15,12 +15,17 @@ const Usuario = sequelize.define('usuario', {
     email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true
     },
     telefone: {
         type: DataTypes.STRING,
         allowNull: false,
     },
     endereco: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    matricula: {
         type: DataTypes.STRING,
         allowNull: true,
     },
