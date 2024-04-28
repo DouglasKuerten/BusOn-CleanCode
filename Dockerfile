@@ -8,6 +8,7 @@ ENV NODE_ENV development
 RUN apt-get update && apt-get install --no-install-recommends -y \
     wget \
     vim \
+    ssh \
     git \
     unzip \
     tmux
