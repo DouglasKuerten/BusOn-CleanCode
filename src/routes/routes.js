@@ -17,6 +17,7 @@ router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
 router.get('/usuario', usuarioController.obterTodosUsuarios);
 router.post('/usuario', usuarioController.criarUsuario);
 router.put('/usuario/:id', usuarioController.atualizarUsuario);
+router.put('/usuario/atualizar-senha/:id', usuarioController.atualizarSenhaUsuario);
 router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
 // Rota para autenticar o usuário e gerar um token JWT

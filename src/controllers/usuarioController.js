@@ -86,7 +86,8 @@ const criarUsuario = async (req, res) => {
             tipoAcesso,
             senha: hashedPassword,
             situacao,
-            diasUsoTransporte
+            diasUsoTransporte,
+            exigirRedefinicaoSenha: !senha ?? true // Se não foi cadastrado uma senha ele seta o telefone e vai exigir a troca de senha ao iniciar a aplicação
         });
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {
@@ -120,7 +121,7 @@ const atualizarSenhaUsuario = async (req, res) => {
         const { id } = req.params;
         const { senha } = req.body;
         const hashedPassword = await bcrypt.hash(senha, 15);
-        const [atualizado] = await Usuario.update({ senha: hashedPassword }, {
+        const [atualizado] = await Usuario.update({ senha: hashedPassword, exigirRedefinicaoSenha: false }, {
             where: { id: id }
         });
         if (atualizado) {
@@ -154,5 +155,6 @@ module.exports = {
     obterTodosUsuarios,
     criarUsuario,
     atualizarUsuario,
+    atualizarSenhaUsuario,
     excluirUsuario
 };

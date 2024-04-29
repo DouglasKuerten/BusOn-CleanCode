@@ -41,7 +41,8 @@ const authenticateUsuario = async (req, res) => {
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             accessToken: token,
-            refreshToken: refreshToken
+            refreshToken: refreshToken,
+            exigirRedefinicaoSenha: user.exigirRedefinicaoSenha
         });
     } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
