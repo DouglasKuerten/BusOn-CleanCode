@@ -4,8 +4,7 @@ const sequelize = require('../../databaseConnection');
 const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
 const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
 
-
-const usuario = require('./usuario');
+const Usuario = require('./usuario');
 
 const Pagamento = sequelize.define('pagamento', {
     txId: {
@@ -20,7 +19,7 @@ const Pagamento = sequelize.define('pagamento', {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-            model: usuario,
+            model: Usuario,
             key: 'id'
         }
     },
@@ -50,5 +49,7 @@ const Pagamento = sequelize.define('pagamento', {
     },
 
 });
+
+Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId' });
 
 module.exports = Pagamento;

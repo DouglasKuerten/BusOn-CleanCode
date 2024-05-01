@@ -1,6 +1,10 @@
 'use strict';
 
+const Associacao = require('../models/associacao');
 const Pagamento = require('../models/pagamento');
+const Usuario = require('../models/usuario');
+const { buildOrderByClause } = require('../utils/buildOrderByClause');
+const { buildWhereClause } = require('../utils/buildWhereClause');
 
 // Controller para obter um pagamento pelo ID
 const obterPagamentoPorId = async (req, res) => {
@@ -19,7 +23,30 @@ const obterPagamentoPorId = async (req, res) => {
 // Controller para obter todos os pagamentos
 const obterTodosPagamentos = async (req, res) => {
     try {
-        const pagamentos = await Pagamento.findAll();
+        const { filters, filtersAssociacao } = req.query
+        const whereClause = buildWhereClause(filters);
+        const whereClauseAssociacao = buildWhereClause(filtersAssociacao);
+        const orderClause = buildOrderByClause(req.query.orderBy)
+
+        const pagamentos = await Pagamento.findAll({
+            include: [
+                {
+                    model: Usuario,
+                    attributes: ['id', 'nome'],
+                    include: [{
+                        model: Associacao,
+                        attributes: ['id', 'nome'],
+                        where: whereClauseAssociacao,
+                        required: true
+                    }],
+                    required: true
+                }
+            ],
+            where: whereClause,
+            order: orderClause
+        });
+        console.log(whereClause);
+        console.log(whereClauseAssociacao);
         res.status(200).json(pagamentos);
     } catch (error) {
         console.error(error);
