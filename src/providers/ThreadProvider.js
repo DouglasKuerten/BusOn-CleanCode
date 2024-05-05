@@ -14,7 +14,7 @@ class ThreadProvider {
     /**
      * Get thread to assistant.
      * 
-     * @returns {Promise<import("openai/resources/beta/index.mjs").Thread>}
+     * @returns {Promise<import("openai/src/resources/beta/index.js").Thread>}
      */
     async getThread() {
 
@@ -35,7 +35,7 @@ class ThreadProvider {
     /**
      * Save thread.
      * 
-     * @param {import("openai/resources/beta/index.mjs").Thread} thread
+     * @param {import("openai/src/resources/beta/index.js").Thread} thread
      * 
      * @returns {Promise<void>}
      */
@@ -48,7 +48,7 @@ class ThreadProvider {
 
     /**
      * 
-     * @returns {Promise<Assistant>}
+     * @returns {Promise<import("openai/src/resources/beta/index.js").Thread>}
     */
     async createNewThread() {
         const thread = await this.openai.beta.threads.create();

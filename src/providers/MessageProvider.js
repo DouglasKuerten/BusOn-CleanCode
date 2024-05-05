@@ -25,8 +25,8 @@ class MessageProvider {
      * Method to send a message to the assistant.
      * 
      * @param {string} message The message to send to the assistant.
-     * @param {Assistant} assistant The assistant to send the message to.
-     * @param {Thread} thread The thread to send the message to.
+     * @param {import("openai/src/resources/beta/index.js").Assistant} assistant The assistant to send the message to.
+     * @param {import("openai/src/resources/beta/index.js").Thread} thread The thread to send the message to.
      * 
      * @returns {Promise<string>}
      */
@@ -44,7 +44,7 @@ class MessageProvider {
     /**
      * Method to get the assistant's reply with polling.
      * 
-     * @param {Run} run The run to get the assistant's reply from.
+     * @param {import("openai/src/resources/beta/threads/index.js").Run} run The run to get the assistant's reply from.
      * @param {string} threadId The ID of the thread.
      * 
      * @returns {Promise<string>}
@@ -73,7 +73,7 @@ class MessageProvider {
      * @param {string} threadId The ID of the thread.
      * @param {string} assistantId The ID of the assistant.
      * 
-     * @returns {Promise<Run>}
+     * @returns {Promise<import("openai/src/resources/beta/threads/index.js").Run>}
      */
     async #createRunWithPolling(threadId, assistantId) {
 

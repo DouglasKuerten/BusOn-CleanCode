@@ -34,7 +34,7 @@ class AssistantProvider {
 
     /**
      * 
-     * @returns {Promise<Assistant>}
+     * @returns {Promise<import('openai/src/resources/beta/index.js').Assistant>}
      */
     async getAssistant() {
         const dbAssistant = await Assistant.findOne();
@@ -53,7 +53,7 @@ class AssistantProvider {
 
     /**
      * 
-     * @returns {Promise<Assistant>}
+     * @returns {Promise<import('openai/src/resources/beta/index.js').Assistant>}
      */
     async createAssistant() {
         const assistant = await this.openai.beta.assistants.create({
