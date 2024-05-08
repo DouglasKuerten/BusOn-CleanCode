@@ -146,7 +146,7 @@ const gerarPagamentosMensais = async (req, res) => {
                     txId: null,
                     pixCopiaCola: null,
                     usuarioId: usuarioPagamento.dataValues.id,
-                    tipo: "PIX",
+                    tipo: "PIX_AUTOMATICO",
                     valor: valorPagamento,
                     multa: 0,
                     dataVencimento: dataVencimento,
