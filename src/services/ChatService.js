@@ -9,6 +9,7 @@ const Instituicao = require('../models/instituicao');
 const Usuario = require('../models/usuario');
 const Associacao = require('../models/associacao');
 const Pagamento = require('../models/pagamento');
+const AssistantContextInstruction = require('../entity/AssistantContextInstruction');
 
 /**
  * Represents a chat service for a personal assistant.
@@ -58,6 +59,11 @@ class ChatService {
     async messageAssistant(prompt) {
         const assistant = await this.assistantProvider.getAssistant();
         const thread = await this.threadProvider.getThread();
+
+        const adicionalInformation = `Não formate o texto da mensagem como json, apenas responda usando plain text`;
+        const contextInstruction = new AssistantContextInstruction(prompt, adicionalInformation);
+
+        console.log(contextInstruction.toString());
 
         let promptContext = `
 
