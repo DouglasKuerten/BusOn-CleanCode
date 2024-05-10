@@ -55,6 +55,7 @@ router.get('/pagamento', pagamentoController.obterTodosPagamentos);
 router.post('/pagamento', pagamentoController.criarPagamento);
 router.put('/pagamento/:id', pagamentoController.atualizarPagamento);
 router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
+router.post('/gerar-pagamentos', pagamentoController.gerarPagamentosMensais);
 
 // Rotas para Parâmetro
 router.get('/parametro/:id', parametroController.obterParametroPorId);
