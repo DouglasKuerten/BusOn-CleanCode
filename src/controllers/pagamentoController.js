@@ -1,6 +1,8 @@
 'use strict';
 
 const Associacao = require('../models/associacao');
+const Curso = require('../models/curso');
+const Instituicao = require('../models/instituicao');
 const Pagamento = require('../models/pagamento');
 const Parametro = require('../models/parametro');
 const Usuario = require('../models/usuario');
@@ -39,6 +41,14 @@ const obterTodosPagamentos = async (req, res) => {
                         attributes: ['id', 'nome'],
                         where: whereClauseAssociacao,
                         required: true
+                    },
+                    {
+                        model: Curso,
+                        attributes: ['id', 'nome'],
+                        include: [{
+                            model: Instituicao,
+                            attributes: ['id', 'nome'],
+                        }]
                     }],
                     required: true
                 }
