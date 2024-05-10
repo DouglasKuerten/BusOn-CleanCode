@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 const PixApi = require('./pixApi');
+const Imagem = require('./imagem');
 
 const Associacao = sequelize.define('associacao', {
     cnpj: {
@@ -27,7 +28,17 @@ const Associacao = sequelize.define('associacao', {
             model: PixApi,
             key: 'id'
         }
+    },
+    logoId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Imagem,
+            key: 'id'
+        }
     }
 })
+Associacao.belongsTo(Imagem, { foreignKey: 'logoId' });
+
 
 module.exports = Associacao;
