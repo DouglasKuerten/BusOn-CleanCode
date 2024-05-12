@@ -1,6 +1,7 @@
 'use strict';
 
 const Associacao = require('../models/associacao');
+const Imagem = require('../models/imagem');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
@@ -27,7 +28,11 @@ const obterTodasAssociacoes = async (req, res) => {
 
         const associacoes = await Associacao.findAll({
             where: whereClause,
-            order: orderClause
+            order: orderClause,
+            include: [{
+                model: Imagem,
+                attributes: ['id']
+            }],
         });
         res.status(200).json(associacoes);
     } catch (error) {
@@ -39,7 +44,11 @@ const obterTodasAssociacoes = async (req, res) => {
 // Controller para criar uma nova associação
 const criarAssociacao = async (req, res) => {
     try {
-        const novaAssociacao = await Associacao.create(req.body);
+        let idNovaImagem = null;
+        if (req.body?.logo && 1 == 2) {
+            idNovaImagem = (await Imagem.create({ imagem: req.body.logo })).dataValues.id;
+        }
+        const novaAssociacao = await Associacao.create({ ...req.body, logoId: idNovaImagem });
         res.status(201).json(novaAssociacao);
     } catch (error) {
         const erro = getFormattedSequelizeExceptions(error)

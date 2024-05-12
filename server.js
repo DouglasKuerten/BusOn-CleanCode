@@ -43,9 +43,6 @@ app.listen(port, () => {
     console.log(`Servidor rodando na porta de conexão ${port}.`)
 })
 
-app.get('/', (request, response) => {
-    response.json({ aplicacao: 'CRUD MONEYZ' })
-})
 app.use('/api', routes);
 
 process.on('SIGINT', function () {
