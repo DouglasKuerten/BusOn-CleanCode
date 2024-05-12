@@ -33,6 +33,21 @@ class ChatService {
     messageProvider;
 
     /**
+     * @var assistantContextInstruction: assistantContextInstruction
+     */
+    assistantContextInstruction;
+
+    /**
+     * @var assistantQueryResponse: assistantQueryResponse
+     */
+    assistantQueryResponse;
+
+    /**
+     * @var assistantQueryDataInstructions: assistantQueryDataInstructions
+     */
+    assistantQueryDataInstructions;
+
+    /**
      * Constructor for the ChatService class.
      */
     constructor() {
@@ -43,6 +58,9 @@ class ChatService {
         this.assistantProvider = new AssistantProvider(this.openai);
         this.threadProvider = new ThreadProvider(this.openai);
         this.messageProvider = new MessageProvider(this.openai);
+        this.assistantContextInstruction = new AssistantContextInstruction();
+        this.assistantQueryResponse = new AssistantQueryResponse();
+        this.assistantQueryDataInstructions = new AssistantQueryDataInstructions();
     }
 
     /**
@@ -57,13 +75,11 @@ class ChatService {
         const thread = await this.threadProvider.getThread();
 
         const adicionalInformation = `Não formate o texto da mensagem como json, apenas responda usando plain text`;
-        const assistantContextInstruction = new AssistantContextInstruction();
-        const contextInstruction = await assistantContextInstruction.toString(prompt, adicionalInformation);
+        const contextInstruction = await this.assistantContextInstruction.toString(prompt, adicionalInformation);
 
         const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread);
 
-        const assistantQueryResponse = new AssistantQueryResponse(query);
-        const dados = await assistantQueryResponse.readQuery();
+        const dados = await this.assistantQueryResponse.readQuery(query);
 
         if (dados.error) {
             return {
@@ -72,8 +88,7 @@ class ChatService {
             };
         }
 
-        const assistantQueryDataInstructions = new AssistantQueryDataInstructions();
-        const promptWithQuery = await assistantQueryDataInstructions.toString(prompt, dados);
+        const promptWithQuery = await this.assistantQueryDataInstructions.toString(prompt, dados);
 
         const content = await this.messageProvider.sendMessage(promptWithQuery, assistant, thread);
 

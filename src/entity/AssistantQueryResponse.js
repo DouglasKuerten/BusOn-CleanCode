@@ -8,16 +8,6 @@ const Pagamento = require('../models/pagamento');
  * Represents assistant query response.
  */
 class AssistantQueryResponse {
-
-    /**
-     * @var query: string
-     */
-    query;
-
-    constructor(query) {
-        this.query = query;
-    }
-
     /**
      * Method to read the query.
      * 
@@ -25,11 +15,10 @@ class AssistantQueryResponse {
      * 
      * @returns {Promise<object>}
     */
-    async readQuery() {
+    async readQuery(query) {
         let dados;
         try {
-            console.log(this.query);
-            if (this.query === '204') {
+            if (query === '204') {
                 return {
                     error: true,
                     message: 'Não foi possível identificar a intenção da pergunta.'
@@ -37,7 +26,7 @@ class AssistantQueryResponse {
             }
 
             // Converter a string de consulta em um objeto JavaScript
-            const queryObject = JSON.parse(this.query);
+            const queryObject = JSON.parse(query);
 
             // Extrair o nome do modelo e os critérios de busca
             const { model, where } = queryObject;
