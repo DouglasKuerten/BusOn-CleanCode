@@ -3,14 +3,9 @@ const OpenAI = require("openai");
 const AssistantProvider = require('../providers/AssistantProvider');
 const ThreadProvider = require("../providers/ThreadProvider");
 const MessageProvider = require("../providers/MessageProvider");
-const { Sequelize } = require('sequelize');
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const Usuario = require('../models/usuario');
-const Associacao = require('../models/associacao');
-const Pagamento = require('../models/pagamento');
 const AssistantContextInstruction = require('../entity/AssistantContextInstruction');
 const AssistantQueryResponse = require("../entity/AssistantQueryResponse");
+const AssistantQueryDataInstructions = require("../entity/AssistantQueryDataInstructions");
 
 /**
  * Represents a chat service for a personal assistant.
@@ -77,13 +72,8 @@ class ChatService {
             };
         }
 
-        const promptWithQuery = `
-            Resultado da consulta: ${dados.content}
-
-            Prompt do usuario: '${prompt}'
-
-            Realize a analise dos dados e responda a pergunta do usuario.
-        `;
+        const assistantQueryDataInstructions = new AssistantQueryDataInstructions();
+        const promptWithQuery = await assistantQueryDataInstructions.toString(prompt, dados);
 
         const content = await this.messageProvider.sendMessage(promptWithQuery, assistant, thread);
 
