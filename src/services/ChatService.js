@@ -10,6 +10,7 @@ const Usuario = require('../models/usuario');
 const Associacao = require('../models/associacao');
 const Pagamento = require('../models/pagamento');
 const AssistantContextInstruction = require('../entity/AssistantContextInstruction');
+const AssistantQueryResponse = require("../entity/AssistantQueryResponse");
 
 /**
  * Represents a chat service for a personal assistant.
@@ -66,58 +67,18 @@ class ChatService {
 
         const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread);
 
-        let dados;
-        try {
-            console.log(query);
-            if (query === '204') {
-                return {
-                    prompt: prompt,
-                    content: 'Não foi possível identificar a intenção da pergunta.'
-                };
-            }
+        const assistantQueryResponse = new AssistantQueryResponse(query);
+        const dados = await assistantQueryResponse.readQuery();
 
-            // Converter a string de consulta em um objeto JavaScript
-            const queryObject = JSON.parse(query);
-
-            // Extrair o nome do modelo e os critérios de busca
-            const { model, where } = queryObject;
-
-            let dbModel;
-            switch (model) {
-                case 'usuarios':
-                    dbModel = Usuario;
-                    break;
-                case 'pagamentos':
-                    dbModel = Pagamento;
-                    break;
-                case 'instituicoes':
-                    dbModel = Instituicao;
-                    break;
-                case 'cursos':
-                    dbModel = Curso;
-                    break;
-                case 'associacaos':
-                    dbModel = Associacao;
-                    break;
-            }
-
-            // Buscar dados do banco de dados
-            const result = await dbModel.findAll({
-                where: where
-            });
-
-            dados = JSON.stringify(result);
-
-        } catch (error) {
-            console.error(error);
+        if (dados.error) {
             return {
                 prompt: prompt,
-                content: 'Não foi possível buscar dados da aplicação.'
+                content: dados.message
             };
         }
 
         const promptWithQuery = `
-            Resultado da consulta: ${dados}
+            Resultado da consulta: ${dados.content}
 
             Prompt do usuario: '${prompt}'
 
@@ -130,8 +91,9 @@ class ChatService {
             prompt: prompt,
             content: content,
             query: query,
+            dados: dados,
             promptWithQuery: promptWithQuery,
-            contextInstruction: contextInstruction
+            contextInstruction: contextInstruction,
         };
     }
 }
