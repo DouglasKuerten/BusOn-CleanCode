@@ -61,35 +61,10 @@ class ChatService {
         const thread = await this.threadProvider.getThread();
 
         const adicionalInformation = `Não formate o texto da mensagem como json, apenas responda usando plain text`;
-        const contextInstruction = new AssistantContextInstruction(prompt, adicionalInformation);
+        const assistantContextInstruction = new AssistantContextInstruction();
+        const contextInstruction = await assistantContextInstruction.toString(prompt, adicionalInformation);
 
-        console.log(contextInstruction.toString());
-
-        let promptContext = `
-
-        Dados da aplicação:
-        data atual: ${new Date().toISOString()}
-
-        Relação de tabelas da aplicação:
-        usuarios: ${await Usuario.describe()}
-        pagamentos: ${await Pagamento.describe()}
-        instituicoes: ${await Instituicao.describe()}
-        cursos: ${await Curso.describe()}
-        associacaos: ${await Associacao.describe()}
-
-        Quais dados você precisa para responder esta pergunta? 
-        Você deve especificar um dos models para obter os dados e um comando where para filtrar os dados.
-        Uma nova mensagem será enviada com os dados do model escolhido.
-        Caso não seja possível responder a pergunta somente com os dados do model, responda somente '204'.
-        
-        Prompt do usuario: '${prompt}'
-
-        Responda em formato json encodado, exemplo:\`{"model": "usuarios","where": { "id": 1 }}\`
-
-        Não formate o texto da mensagem como json, apenas responda usando plain text.
-        `;
-
-        const query = await this.messageProvider.sendMessage(promptContext, assistant, thread);
+        const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread);
 
         let dados;
         try {
@@ -155,7 +130,8 @@ class ChatService {
             prompt: prompt,
             content: content,
             query: query,
-            promptWithQuery: promptWithQuery
+            promptWithQuery: promptWithQuery,
+            contextInstruction: contextInstruction
         };
     }
 }
