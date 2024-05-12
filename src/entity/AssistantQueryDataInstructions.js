@@ -14,7 +14,7 @@ class AssistantQueryDataInstructions {
     async toString(prompt, data) {
         return JSON.stringify({
             prompt: prompt,
-            queryResult: data.content,
+            queryResult: JSON.parse(data.content),
             instruction: 'Realize a analise dos dados e responda a pergunta do usuario.'
         });
     }

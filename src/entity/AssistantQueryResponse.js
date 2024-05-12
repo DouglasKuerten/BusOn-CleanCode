@@ -9,13 +9,13 @@ const Pagamento = require('../models/pagamento');
  */
 class AssistantQueryResponse {
     /**
-     * Method to read the query.
+     * Method to get the database data from the query.
      * 
      * @param {string} query The query to read.
      * 
      * @returns {Promise<object>}
     */
-    async readQuery(query) {
+    async getDatabaseDataFromQuery(query) {
         let dados;
         try {
             if (query === '204') {

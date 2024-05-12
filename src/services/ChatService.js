@@ -79,16 +79,16 @@ class ChatService {
 
         const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread);
 
-        const dados = await this.assistantQueryResponse.readQuery(query);
+        const data = await this.assistantQueryResponse.getDatabaseDataFromQuery(query);
 
-        if (dados.error) {
+        if (data.error) {
             return {
                 prompt: prompt,
-                content: dados.message
+                content: data.message
             };
         }
 
-        const promptWithQuery = await this.assistantQueryDataInstructions.toString(prompt, dados);
+        const promptWithQuery = await this.assistantQueryDataInstructions.toString(prompt, data);
 
         const content = await this.messageProvider.sendMessage(promptWithQuery, assistant, thread);
 
@@ -96,7 +96,7 @@ class ChatService {
             prompt: prompt,
             content: content,
             query: query,
-            dados: dados,
+            data: data,
             promptWithQuery: promptWithQuery,
             contextInstruction: contextInstruction,
         };
