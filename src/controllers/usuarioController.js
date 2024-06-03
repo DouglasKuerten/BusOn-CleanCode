@@ -102,7 +102,7 @@ const atualizarUsuario = async (req, res) => {
         const { id } = req.params;
         const [atualizado] = await Usuario.update(req.body, {
             where: { id: id },
-            fields: ['nome', 'email', 'telefone', 'endereco', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
+            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
         });
         if (atualizado) {
             return res.status(200).json({ message: 'Usuário do ônibus atualizada com sucesso' });
@@ -117,7 +117,7 @@ const atualizarUsuario = async (req, res) => {
 
 // Controller para atualizar a senha de um usuário de ônibus existente
 const atualizarSenhaUsuario = async (req, res) => {
-    try {
+    try {.
         const { id } = req.params;
         const { senha } = req.body;
         const hashedPassword = await bcrypt.hash(senha, 15);
