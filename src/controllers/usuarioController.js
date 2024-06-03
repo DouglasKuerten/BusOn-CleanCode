@@ -117,7 +117,7 @@ const atualizarUsuario = async (req, res) => {
 
 // Controller para atualizar a senha de um usuário de ônibus existente
 const atualizarSenhaUsuario = async (req, res) => {
-    try {.
+    try {
         const { id } = req.params;
         const { senha } = req.body;
         const hashedPassword = await bcrypt.hash(senha, 15);
