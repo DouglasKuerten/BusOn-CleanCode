@@ -85,10 +85,10 @@ class ChatService {
 
         const data = await this.assistantQueryResponse.getDatabaseDataFromQuery(query);
 
-        if (data.error) {
+        if (data.earlyReturn) {
             return {
                 prompt: prompt,
-                content: data.message,
+                content: data,
                 query: query,
                 contextInstruction: contextInstruction,
                 threadId: thread.id

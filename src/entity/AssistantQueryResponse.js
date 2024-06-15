@@ -18,15 +18,12 @@ class AssistantQueryResponse {
     async getDatabaseDataFromQuery(query) {
         let dados;
         try {
-            if (query === '204') {
-                return {
-                    error: true,
-                    message: 'Não foi possível identificar a intenção da pergunta.'
-                };
-            }
-
             // Converter a string de consulta em um objeto JavaScript
             const queryObject = JSON.parse(query);
+
+            if (queryObject.earlyReturn) {
+                return queryObject;
+            }
 
             // Extrair o nome do modelo e os critérios de busca
             const { model, where } = queryObject;

@@ -85,10 +85,14 @@ class AssistantContextInstruction {
      * @returns {Promise<void>}
      */
     async #getInstructions() {
-        const instructions = `Quais dados você precisa para responder esta pergunta? 
+        const instructions =
+            `Quais dados você precisa para responder esta pergunta? 
         Você deve especificar um dos models para obter os dados e um comando where para filtrar os dados.
         Uma nova mensagem será enviada com os dados do model escolhido.
-        Caso não seja possível responder a pergunta somente com os dados do model, responda somente '204'.`;
+        Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando o modelo: 
+        {"earlyReturn": true,"status": 204,"data": { "message": "Escreva a mensagem de resposta aqui"}}
+        Caso não seja necessário realizar consultas no banco de dados, responda utilizando o modelo: 
+        {"earlyReturn": true,"status": 200,"data": { "message": "Escreva a mensagem de resposta aqui"}}`;
 
         return {
             instruction: 'Instruções',
