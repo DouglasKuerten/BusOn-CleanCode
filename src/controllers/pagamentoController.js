@@ -35,7 +35,7 @@ const obterTodosPagamentos = async (req, res) => {
             include: [
                 {
                     model: Usuario,
-                    attributes: ['id', 'nome'],
+                    attributes: ['id', 'nome', 'diasUsoTransporte'],
                     include: [{
                         model: Associacao,
                         attributes: ['id', 'nome'],
