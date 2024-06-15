@@ -4,7 +4,6 @@ const Associacao = require('../models/associacao');
 const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
 const Pagamento = require('../models/pagamento');
-const Parametro = require('../models/parametro');
 const Usuario = require('../models/usuario');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
@@ -35,7 +34,7 @@ const obterTodosPagamentos = async (req, res) => {
             include: [
                 {
                     model: Usuario,
-                    attributes: ['id', 'nome', 'diasUsoTransporte'],
+                    attributes: ['id', 'nome'],
                     include: [{
                         model: Associacao,
                         attributes: ['id', 'nome'],
@@ -111,79 +110,11 @@ const excluirPagamento = async (req, res) => {
     }
 };
 
-// Controller para gerar as cobranças do mes automaticamente
-const gerarPagamentosMensais = async (req, res) => {
-    try {
-        const parametrosPagamento = await Parametro.findAll();
-
-        for (const parametroPagamento of parametrosPagamento) {
-
-            const usuariosPagamento = await Usuario.findAll({
-                where: { associacaoId: parametroPagamento.dataValues.associacaoId }
-            });
-
-            for (const usuarioPagamento of usuariosPagamento) {
-                let valorPagamento = 0;
-                switch (usuarioPagamento.dataValues.diasUsoTransporte.length) {
-                    case 1:
-                        valorPagamento = parametroPagamento.dataValues.valor1
-                        break;
-                    case 2:
-                        valorPagamento = parametroPagamento.dataValues.valor2
-                        break;
-                    case 3:
-                        valorPagamento = parametroPagamento.dataValues.valor3
-                        break;
-                    case 4:
-                        valorPagamento = parametroPagamento.dataValues.valor4
-                        break;
-                    case 5:
-                        valorPagamento = parametroPagamento.dataValues.valor5
-                        break;
-                    case 6:
-                        valorPagamento = parametroPagamento.dataValues.valor6
-                        break;
-                    case 7:
-                        valorPagamento = parametroPagamento.dataValues.valor7
-                        break;
-                    default:
-                        valorPagamento = 0;
-                        break;
-                }
-                let dataVencimento = new Date(new Date().setDate(parametroPagamento.dataValues.diaVencimento));
-
-                let body = {
-                    txId: null,
-                    pixCopiaCola: null,
-                    usuarioId: usuarioPagamento.dataValues.id,
-                    tipo: "PIX_AUTOMATICO",
-                    valor: valorPagamento,
-                    multa: 0,
-                    dataVencimento: dataVencimento,
-                    dataPagamento: null,
-                    situacao: "ABERTO"
-                }
-
-                const novoPagamento = await Pagamento.create(body);
-
-            }
-
-        }
-
-
-        res.status(201).json({ message: 'Pagamentos gerados para todos os usuários! ' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao criar novo pagamento', error: error.message });
-    }
-};
-
 module.exports = {
     obterPagamentoPorId,
     obterTodosPagamentos,
     criarPagamento,
     atualizarPagamento,
-    excluirPagamento,
-    gerarPagamentosMensais
+    excluirPagamento
 };
 

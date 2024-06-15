@@ -50,3 +50,5 @@ process.on('SIGINT', function () {
     // exit node.js app
     process.exit(0);
 });
+
+const Job = require('./src/jobs/job');

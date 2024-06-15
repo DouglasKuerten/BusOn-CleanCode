@@ -48,10 +48,6 @@ const Parametro = sequelize.define('parametro', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    diaAberturaPagamentos: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
     diasToleranciaMulta: {
         type: DataTypes.INTEGER,
         allowNull: false,
