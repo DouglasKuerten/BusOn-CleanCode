@@ -87,7 +87,6 @@ class AssistantContextInstruction {
     async #getInstructions() {
         const instructions =
             `Quais dados você precisa para responder esta pergunta? 
-        Você deve especificar um dos models para obter os dados e um comando where para filtrar os dados.
         Uma nova mensagem será enviada com os dados do model escolhido.
         Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando o modelo: 
         {"earlyReturn": true,"status": 204,"data": { "message": "Escreva a mensagem de resposta aqui"}}
@@ -120,8 +119,24 @@ class AssistantContextInstruction {
      */
     async #getResponseFormat() {
         return {
-            instruction: 'Responda em formato json encodado, exemplo:',
-            data: `{"model": "usuarios","where": { "id": 1 }}`
+            instruction: `
+            Você deve criar uma consulta a um model usando sequelize.
+            Responda em formato json valido encodado, exemplo:`,
+            data: `
+            {
+                "earlyReturn": false,
+                "status": 200,
+                "data": {
+                    "model": "usuarios",
+                    "method": "findAll",
+                    "attributes": ["id", "nome", "tipoAcesso", "situacao", "diasUsoTransporte"],
+                    "where": { "id": 1, "nome": "Jhon" },
+                    "order": [["id", "DESC"], ["nome", "ASC"]],
+                    "include": [
+                        {model: Associacao,attributes: ["id", "nome"]},{model: Curso,attributes: ["id", "nome"],include: [{model: Instituicao,attributes: ["id", "nome"],}]}
+                    ]
+                }
+            }`
         };
     }
 

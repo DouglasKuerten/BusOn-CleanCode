@@ -21,12 +21,18 @@ class AssistantQueryResponse {
             // Converter a string de consulta em um objeto JavaScript
             const queryObject = JSON.parse(query);
 
+            console.log(queryObject);
+
             if (queryObject.earlyReturn) {
                 return queryObject;
             }
 
             // Extrair o nome do modelo e os critérios de busca
-            const { model, where } = queryObject;
+            const model = queryObject.data.model;
+            const method = queryObject.data.method;
+            const where = queryObject.data.where;
+            const attributes = queryObject.data.attributes;
+            const order = queryObject.data.order;
 
             let dbModel;
             switch (model) {
@@ -48,8 +54,10 @@ class AssistantQueryResponse {
             }
 
             // Buscar dados do banco de dados
-            const result = await dbModel.findAll({
-                where: where
+            const result = await dbModel[method]({
+                attributes: attributes,
+                where: where,
+                order: order
             });
 
             dados = JSON.stringify(result);
