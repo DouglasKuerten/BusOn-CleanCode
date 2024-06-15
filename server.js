@@ -24,12 +24,15 @@ const Usuario = require('./src/models/usuario');
 const Pagamento = require('./src/models/pagamento');
 const Parametro = require('./src/models/parametro');
 const PixApi = require('./src/models/pixApi');
+const { gerarUsuarioAdmin } = require('./src/scripts/gerarUsuarioAdmin')
 
 sequelize.sync({ force: false }).then(() => {
     console.log('Todos os modelos foram sincronizados com sucesso');
 }).catch(error => {
     console.log('OCorreu um erro durante a sincronização dos modelos: ', error);
 })
+
+gerarUsuarioAdmin().catch(err => console.error(err));
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 

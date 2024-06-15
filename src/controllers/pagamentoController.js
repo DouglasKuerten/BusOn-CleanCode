@@ -34,7 +34,7 @@ const obterTodosPagamentos = async (req, res) => {
             include: [
                 {
                     model: Usuario,
-                    attributes: ['id', 'nome'],
+                    attributes: ['id', 'nome', 'diasUsoTransporte'],
                     include: [{
                         model: Associacao,
                         attributes: ['id', 'nome'],
@@ -59,7 +59,7 @@ const obterTodosPagamentos = async (req, res) => {
         console.log(whereClauseAssociacao);
         res.status(200).json(pagamentos);
     } catch (error) {
-        console.error(error);
+        console.error(error.response);
         res.status(500).json({ message: 'Erro ao obter todos os pagamentos', error: error.message });
     }
 };

@@ -63,7 +63,7 @@ const Usuario = sequelize.define('usuario', {
     },
     exigirRedefinicaoSenha: {
         type: DataTypes.BOOLEAN,
-        allowNull: true
+        allowNull: false
     }
 
 })

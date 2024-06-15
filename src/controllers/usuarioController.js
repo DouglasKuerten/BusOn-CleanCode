@@ -72,7 +72,7 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte } = req.body;
+    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(senha || telefone, 15);
         const novoUsuarioOnibus = await Usuario.create({
@@ -87,7 +87,7 @@ const criarUsuario = async (req, res) => {
             senha: hashedPassword,
             situacao,
             diasUsoTransporte,
-            exigirRedefinicaoSenha: !senha ?? true // Se não foi cadastrado uma senha ele seta o telefone e vai exigir a troca de senha ao iniciar a aplicação
+            exigirRedefinicaoSenha: exigirRedefinicaoSenha || (!senha ?? true) // Se não foi cadastrado uma senha ele seta o telefone e vai exigir a troca de senha ao iniciar a aplicação
         });
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {
