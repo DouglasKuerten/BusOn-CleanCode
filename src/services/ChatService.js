@@ -67,32 +67,37 @@ class ChatService {
      * Sends a message to the assistant.
      * 
      * @param {string} message The message to send to the assistant.
+     * @param {string} threadId The thread ID to send the message to.
      * 
      * @returns {Promise<{prompt:string, content:string}>} The response from the assistant.
     */
-    async messageAssistant(prompt) {
+    async messageAssistant(prompt, threadId) {
         const assistant = await this.assistantProvider.getAssistant();
-        const thread = await this.threadProvider.getThread();
+        const thread = await this.threadProvider.getThread(threadId);
+        console.log(thread);
 
         this.assistantContextInstruction.setAditionlInformation(
             'Não formate o texto da mensagem como json, apenas responda usando plain text'
         );
         const contextInstruction = await this.assistantContextInstruction.toString(prompt);
 
-        const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread);
+        const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread.thread);
 
         const data = await this.assistantQueryResponse.getDatabaseDataFromQuery(query);
 
         if (data.error) {
             return {
                 prompt: prompt,
-                content: data.message
+                content: data.message,
+                query: query,
+                contextInstruction: contextInstruction,
+                threadId: thread.id
             };
         }
 
         const promptWithQuery = await this.assistantQueryDataInstructions.toString(prompt, data);
 
-        const content = await this.messageProvider.sendMessage(promptWithQuery, assistant, thread);
+        const content = await this.messageProvider.sendMessage(promptWithQuery, assistant, thread.thread);
 
         return {
             prompt: prompt,
@@ -101,6 +106,7 @@ class ChatService {
             data: data,
             promptWithQuery: promptWithQuery,
             contextInstruction: contextInstruction,
+            threadId: thread.id,
         };
     }
 }
