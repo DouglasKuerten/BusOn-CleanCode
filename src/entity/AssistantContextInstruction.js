@@ -10,30 +10,45 @@ const Pagamento = require('../models/pagamento');
 class AssistantContextInstruction {
 
     /**
+     * @var string: aditionalInformation
+     */
+    aditionalInformation = '';
+
+    /**
      * Method to get object string
      * 
      * @param {string} prompt
-     * @param {string} aditionalInformation
      * 
      * @returns {Promise<string>}
     */
-    async toString(prompt, aditionalInformation) {
+    async toString(prompt) {
         return ''.concat([
-            JSON.stringify(await this.#setApplicationContext()),
-            JSON.stringify(await this.#setApplicationDataStructure()),
-            JSON.stringify(await this.#setInstructions()),
-            JSON.stringify(await this.#setPrompt(prompt)),
-            JSON.stringify(await this.#setResponseFormat()),
-            JSON.stringify(await this.#setAditionalInformation(aditionalInformation))
+            JSON.stringify(await this.#getApplicationContext()),
+            JSON.stringify(await this.#getApplicationDataStructure()),
+            JSON.stringify(await this.#getInstructions()),
+            JSON.stringify(await this.#getPrompt(prompt)),
+            JSON.stringify(await this.#getResponseFormat()),
+            JSON.stringify(await this.#getAditionalInformation())
         ]);
     }
 
     /**
-     * Method to set application context
+     * Method to set aditional information
+     * 
+     * @param {string} aditionalInformation
+     * 
+     * @returns {Promise<void>}
+    */
+    async setAditionlInformation(aditionalInformation) {
+        this.aditionalInformation = aditionalInformation;
+    }
+
+    /**
+     * Method to get application context
      * 
      * @returns {Promise<void>}
      */
-    async #setApplicationContext() {
+    async #getApplicationContext() {
         const context = {
             data: new Date().toISOString(),
         }
@@ -45,11 +60,11 @@ class AssistantContextInstruction {
     }
 
     /**
-     * Method to set application data structure
+     * Method to get application data structure
      * 
      * @returns {Promise<void>}
      */
-    async #setApplicationDataStructure() {
+    async #getApplicationDataStructure() {
         const dataStructure = {
             usuarios: await Usuario.describe(),
             pagamentos: await Pagamento.describe(),
@@ -57,6 +72,7 @@ class AssistantContextInstruction {
             cursos: await Curso.describe(),
             associacaos: await Associacao.describe(),
         }
+        console.log("Data structure: ", dataStructure);
 
         return {
             instruction: 'Relação de tabelas da aplicação',
@@ -65,15 +81,18 @@ class AssistantContextInstruction {
     }
 
     /**
-     * Method to set instructions
+     * Method to get instructions
      * 
      * @returns {Promise<void>}
      */
-    async #setInstructions() {
-        const instructions = `Quais dados você precisa para responder esta pergunta? 
-        Você deve especificar um dos models para obter os dados e um comando where para filtrar os dados.
+    async #getInstructions() {
+        const instructions =
+            `Quais dados você precisa para responder esta pergunta? 
         Uma nova mensagem será enviada com os dados do model escolhido.
-        Caso não seja possível responder a pergunta somente com os dados do model, responda somente '204'.`;
+        Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando somente plain text com o modelo: 
+        {"earlyReturn": true,"status": 204,"data": { "message": "Escreva a mensagem de resposta aqui"}}
+        Caso não seja necessário realizar consultas no banco de dados, responda utilizando somente plain text com o modelo: 
+        {"earlyReturn": true,"status": 200,"data": { "message": "Escreva a mensagem de resposta aqui"}}`;
 
         return {
             instruction: 'Instruções',
@@ -87,7 +106,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #setPrompt(prompt) {
+    async #getPrompt(prompt) {
         return {
             instruction: 'Prompt do usuario',
             data: prompt
@@ -95,14 +114,42 @@ class AssistantContextInstruction {
     }
 
     /**
-     * Method to set response format
+     * Method to get response format
      * 
      * @returns {Promise<void>}
      */
-    async #setResponseFormat() {
+    async #getResponseFormat() {
         return {
-            instruction: 'Responda em formato json encodado, exemplo:',
-            data: `{"model": "usuarios","where": { "id": 1 }}`
+            instruction: `
+            Você deve criar uma consulta a um model usando sequelize.
+            Responda em formato json valido encodado, exemplo:`,
+            data: `{
+                "earlyReturn": false,
+                "status": 200,
+                "data": {
+                    "model": "usuarios",
+                    "method": "findAll",
+                    "attributes": ["id", "nome", "tipoAcesso", "situacao", "diasUsoTransporte"],
+                    "where": { "id": 1, "nome": "Jhon" },
+                    "order": [["id", "DESC"], ["nome", "ASC"]],
+                    "include": [
+                        {
+                            "model": "associacao",
+                            "attributes": ["id", "nome"]
+                        },
+                        {
+                            "model": "curso",
+                            "attributes": ["id", "nome"],
+                            "include": [
+                                {
+                                    "model": "instituicao",
+                                    "attributes": ["id", "nome"]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }`
         };
     }
 
@@ -112,7 +159,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #setAditionalInformation(aditionalInformation) {
+    async #getAditionalInformation(aditionalInformation) {
         return {
             instruction: 'Informações adicionais',
             data: aditionalInformation

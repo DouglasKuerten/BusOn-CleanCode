@@ -16,62 +16,89 @@ class AssistantQueryResponse {
      * @returns {Promise<object>}
     */
     async getDatabaseDataFromQuery(query) {
-        let dados;
         try {
-            if (query === '204') {
-                return {
-                    error: true,
-                    message: 'Não foi possível identificar a intenção da pergunta.'
-                };
-            }
-
-            // Converter a string de consulta em um objeto JavaScript
             const queryObject = JSON.parse(query);
-
-            // Extrair o nome do modelo e os critérios de busca
-            const { model, where } = queryObject;
-
-            let dbModel;
-            switch (model) {
-                case 'usuarios':
-                    dbModel = Usuario;
-                    break;
-                case 'pagamentos':
-                    dbModel = Pagamento;
-                    break;
-                case 'instituicoes':
-                    dbModel = Instituicao;
-                    break;
-                case 'cursos':
-                    dbModel = Curso;
-                    break;
-                case 'associacaos':
-                    dbModel = Associacao;
-                    break;
+            if (queryObject.earlyReturn) {
+                return queryObject;
             }
 
-            // Buscar dados do banco de dados
-            const result = await dbModel.findAll({
-                where: where
-            });
+            const { model, method, where, attributes, order, include } = queryObject.data;
+            const queryOptions = {
+                attributes,
+                where,
+                order,
+                include: this._buildInclude(include)
+            };
 
-            dados = JSON.stringify(result);
+            // gets the primary model and execute the query
+            const dbModel = this._getModel(model);
+            const result = await dbModel[method](queryOptions);
 
+            return {
+                error: false,
+                content: JSON.stringify(result),
+            };
         } catch (error) {
             console.error(error);
             return {
                 error: true,
                 message: 'Não foi possível buscar dados da aplicação.',
-                trace: error
+                trace: error,
             };
-        }
-
-        return {
-            error: false,
-            content: dados
         }
     }
 
+    /**
+     * Method to get the Sequelize model by name.
+     * 
+     * @param {string} modelName The model name.
+     * 
+     * @returns {import('sequelize').ModelCtor<any>}
+     */
+    _getModel(modelName) {
+        let dbModel = null;
+        switch (modelName) {
+            case 'usuarios':
+                dbModel = Usuario;
+                break;
+            case 'pagamentos':
+                dbModel = Pagamento;
+                break;
+            case 'instituicoes':
+                dbModel = Instituicao;
+                break;
+            case 'cursos':
+                dbModel = Curso;
+                break;
+            case 'associacaos':
+                dbModel = Associacao;
+                break;
+        }
+
+        if (!dbModel) {
+            throw new Error(`Model ${modelName} not found`);
+        }
+        return dbModel;
+    }
+
+    /**
+     * Method to build include.
+     * 
+     * @param {Array<object>} includes The includes.
+     * 
+     * @returns {object}
+     */
+    _buildInclude(includes) {
+        if (!Array.isArray(includes)) {
+            return [];
+        }
+
+        return includes.map(include => ({
+            model: this._getModel(include.model),
+            attributes: include.attributes,
+            include: this._buildInclude(include.include)
+        }));
+    }
 }
 
 module.exports = AssistantQueryResponse;
