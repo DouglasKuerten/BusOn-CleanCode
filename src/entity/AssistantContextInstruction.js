@@ -72,6 +72,7 @@ class AssistantContextInstruction {
             cursos: await Curso.describe(),
             associacaos: await Associacao.describe(),
         }
+        console.log("Data structure: ", dataStructure);
 
         return {
             instruction: 'Relação de tabelas da aplicação',
@@ -88,9 +89,9 @@ class AssistantContextInstruction {
         const instructions =
             `Quais dados você precisa para responder esta pergunta? 
         Uma nova mensagem será enviada com os dados do model escolhido.
-        Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando o modelo: 
+        Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando somente plain text com o modelo: 
         {"earlyReturn": true,"status": 204,"data": { "message": "Escreva a mensagem de resposta aqui"}}
-        Caso não seja necessário realizar consultas no banco de dados, responda utilizando o modelo: 
+        Caso não seja necessário realizar consultas no banco de dados, responda utilizando somente plain text com o modelo: 
         {"earlyReturn": true,"status": 200,"data": { "message": "Escreva a mensagem de resposta aqui"}}`;
 
         return {
@@ -122,8 +123,7 @@ class AssistantContextInstruction {
             instruction: `
             Você deve criar uma consulta a um model usando sequelize.
             Responda em formato json valido encodado, exemplo:`,
-            data: `
-            {
+            data: `{
                 "earlyReturn": false,
                 "status": 200,
                 "data": {
@@ -133,7 +133,20 @@ class AssistantContextInstruction {
                     "where": { "id": 1, "nome": "Jhon" },
                     "order": [["id", "DESC"], ["nome", "ASC"]],
                     "include": [
-                        {model: Associacao,attributes: ["id", "nome"]},{model: Curso,attributes: ["id", "nome"],include: [{model: Instituicao,attributes: ["id", "nome"],}]}
+                        {
+                            "model": "associacao",
+                            "attributes": ["id", "nome"]
+                        },
+                        {
+                            "model": "curso",
+                            "attributes": ["id", "nome"],
+                            "include": [
+                                {
+                                    "model": "instituicao",
+                                    "attributes": ["id", "nome"]
+                                }
+                            ]
+                        }
                     ]
                 }
             }`
