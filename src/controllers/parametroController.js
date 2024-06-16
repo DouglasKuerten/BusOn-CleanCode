@@ -10,9 +10,15 @@ const obterParametroPorId = async (req, res) => {
         if (parametro) {
             return res.status(200).json(parametro);
         }
-        throw new Error('Parâmetro não encontrado.');
+        const error = new Error("Erro ao obter parâmetros")
+        error.data = {
+            title: 'Parâmetros da associação não foram encontrados!',
+            message: 'Cadastre os parâmetros da associação para prosseguir.'
+        }
+        throw error;
     } catch (error) {
-        return res.status(500).json({ message: 'Erro ao obter parâmetro', error: error.message });
+        console.error(error)
+        return res.status(500).json({ title: error?.data?.title || 'Erro ao buscar os parâmetros', message: error?.data?.message || error.message });
     }
 };
 // Controller para obter um parâmetro pelo ID
@@ -23,9 +29,15 @@ const obterParametroDaAssociacao = async (req, res) => {
         if (parametro) {
             return res.status(200).json(parametro);
         }
-        throw new Error('Parâmetro não encontrado.');
+        const error = new Error("Erro ao obter parâmetros")
+        error.data = {
+            title: 'Parâmetros da associação não foram encontrados!',
+            message: 'Cadastre os parâmetros da associação para prosseguir.'
+        }
+        throw error;
     } catch (error) {
-        return res.status(500).json({ message: 'Erro ao obter parâmetro', error: error.message });
+        console.error(error)
+        return res.status(500).json({ title: error?.data?.title || 'Erro ao buscar os parâmetros', message: error?.data?.message || error.message });
     }
 };
 

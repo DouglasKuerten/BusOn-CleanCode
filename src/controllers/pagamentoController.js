@@ -1,5 +1,6 @@
 'use strict';
 
+const { Sequelize } = require('sequelize');
 const Associacao = require('../models/associacao');
 const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
@@ -52,11 +53,14 @@ const obterTodosPagamentos = async (req, res) => {
                     required: true
                 }
             ],
+            attributes: {
+                include: [
+                    [Sequelize.literal('multa + valor'), 'valorTotal']
+                ]
+            },
             where: whereClause,
             order: orderClause
         });
-        console.log(whereClause);
-        console.log(whereClauseAssociacao);
         res.status(200).json(pagamentos);
     } catch (error) {
         console.error(error.response);
