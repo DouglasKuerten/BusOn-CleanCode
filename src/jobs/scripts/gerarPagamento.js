@@ -49,7 +49,7 @@ async function gerarPagamentosMensais(req, res) {
                     txId: null,
                     pixCopiaCola: null,
                     usuarioId: usuarioPagamento.dataValues.id,
-                    tipo: "PIX_AUTOMATICO",
+                    tipo: "PIX",
                     valor: valorPagamento,
                     multa: 0,
                     dataVencimento: dataVencimento,

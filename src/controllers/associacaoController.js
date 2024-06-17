@@ -46,7 +46,8 @@ const criarAssociacao = async (req, res) => {
     try {
         let idNovaImagem = null;
         if (req.body?.logo && 1 == 2) {
-            idNovaImagem = (await Imagem.create({ imagem: req.body.logo })).dataValues.id;
+
+            //  idNovaImagem = (await Imagem.create({ imagem: req.body.logo })).dataValues.id;
         }
         const novaAssociacao = await Associacao.create({ ...req.body, logoId: idNovaImagem });
         res.status(201).json(novaAssociacao);

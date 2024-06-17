@@ -29,7 +29,6 @@ const obterTodosPagamentos = async (req, res) => {
         const { filters, filtersAssociacao } = req.query
         const whereClause = buildWhereClause(filters);
         const whereClauseAssociacao = buildWhereClause(filtersAssociacao);
-        const orderClause = buildOrderByClause(req.query.orderBy)
 
         const pagamentos = await Pagamento.findAll({
             include: [
@@ -59,7 +58,11 @@ const obterTodosPagamentos = async (req, res) => {
                 ]
             },
             where: whereClause,
-            order: orderClause
+            order: [
+                [Sequelize.literal("CASE WHEN pagamento.situacao = 'ATRASADO' THEN 1 WHEN pagamento.situacao = 'ABERTO' THEN 2 WHEN pagamento.situacao = 'PAGO' THEN 3 ELSE 4 END"), 'ASC'],
+                [Sequelize.literal('DATE_TRUNC(\'day\', "pagamento"."data_vencimento")'), 'DESC'], // Ordena pela data truncada
+                [Sequelize.literal('"usuario"."nome"'), 'ASC'] // Ordena pelo nome do usuário
+            ]
         });
         res.status(200).json(pagamentos);
     } catch (error) {
