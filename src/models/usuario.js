@@ -65,8 +65,7 @@ const Usuario = sequelize.define('usuario', {
         type: DataTypes.BOOLEAN,
         allowNull: false
     }
-
-})
+});
 
 Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId' });
 Usuario.belongsTo(Curso, { foreignKey: 'cursoId' });

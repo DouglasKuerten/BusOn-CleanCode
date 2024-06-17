@@ -2,7 +2,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const PixApi = require('./pixApi');
 const Imagem = require('./imagem');
 
 const Associacao = sequelize.define('associacao', {
@@ -20,14 +19,6 @@ const Associacao = sequelize.define('associacao', {
     situacao: {
         type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
-    },
-    pixApiId: {
-        type: DataTypes.INTEGER,
-        allowNull: true,
-        references: {
-            model: PixApi,
-            key: 'id'
-        }
     },
     logoId: {
         type: DataTypes.INTEGER,

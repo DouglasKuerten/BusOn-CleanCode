@@ -23,7 +23,6 @@ const Curso = require('./src/models/curso');
 const Usuario = require('./src/models/usuario');
 const Pagamento = require('./src/models/pagamento');
 const Parametro = require('./src/models/parametro');
-const PixApi = require('./src/models/pixApi');
 const { gerarUsuarioAdmin } = require('./src/scripts/gerarUsuarioAdmin')
 
 sequelize.sync({ force: false }).then(() => {

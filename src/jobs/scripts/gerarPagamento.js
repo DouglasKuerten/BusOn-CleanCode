@@ -3,14 +3,16 @@ const Usuario = require('../../models/usuario');
 const Pagamento = require('../../models/pagamento');
 
 async function gerarPagamentosMensais(req, res) {
-    console.log('log 1 ');
     try {
         const parametrosPagamento = await Parametro.findAll();
 
         for (const parametroPagamento of parametrosPagamento) {
 
             const usuariosPagamento = await Usuario.findAll({
-                where: { associacaoId: parametroPagamento.dataValues.associacaoId }
+                where: {
+                    associacaoId: parametroPagamento.dataValues.associacaoId,
+                    situacao: 'ATIVO'
+                }
             });
 
             for (const usuarioPagamento of usuariosPagamento) {

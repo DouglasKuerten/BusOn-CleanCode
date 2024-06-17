@@ -8,9 +8,10 @@ const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
-const pixApiController = require('../controllers/pixApiController');
 const chatbotController = require('../controllers/chatbotController');
 const { validarAutenticacao } = require('../middleware/autenticacao.middleware');
+
+//router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', 'parametro', 'chatbot'], validarAutenticacao);
 
 // Rotas para cadastro de usuário
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
@@ -63,13 +64,6 @@ router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
 router.put('/parametro/:id', parametroController.atualizarParametro);
 router.delete('/parametro/:id', parametroController.excluirParametro);
-
-// Rotas para PixApi
-router.get('/pixapi/:id', pixApiController.obterPixApiPorId);
-router.get('/pixapi', pixApiController.obterTodasPixApis);
-router.post('/pixapi', pixApiController.criarPixApi);
-router.put('/pixapi/:id', pixApiController.atualizarPixApi);
-router.delete('/pixapi/:id', pixApiController.excluirPixApi);
 
 // Rotas para chatbot
 router.get('/chatbot/completion', chatbotController.getChatbotResponse);

@@ -75,9 +75,10 @@ const criarUsuario = async (req, res) => {
     const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(senha || telefone, 15);
+        const emailLowerCase = String(email).toLowerCase();
         const novoUsuarioOnibus = await Usuario.create({
             nome,
-            email,
+            email: email.toLowerCase(),
             telefone,
             endereco,
             matricula,
@@ -100,6 +101,9 @@ const criarUsuario = async (req, res) => {
 const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
+        if (req.body.email) {
+            req.body.email = req.body.email.toLowerCase();
+        }
         const [atualizado] = await Usuario.update(req.body, {
             where: { id: id },
             fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte']

@@ -11,15 +11,15 @@ const authenticateUsuario = async (req, res) => {
         const { email, senha } = req.body;
 
         // Verificar se o usuário existe
-        const user = await Usuario.findOne({ where: { email } });
+        const user = await Usuario.findOne({ where: { email: email?.toLowerCase() } });
         if (!user) {
-            return res.status(404).json({ message: 'Usuário não encontrado' });
+            return res.status(404).json({ message: 'E-mail informado não foi encontrado' });
         }
 
         // Verificar se a senha está correta
         const isPasswordValid = await bcrypt.compare(senha, user.senha);
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Senha incorreta' });
+            return res.status(401).json({ message: 'Senha informada está incorreta' });
         }
 
         // Gerar token JWT

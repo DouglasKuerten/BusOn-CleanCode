@@ -4,7 +4,6 @@ const Pagamento = require('../../models/pagamento');
 const { Op } = require('sequelize');
 
 async function verificarPagamentosAtrasados(req, res) {
-    console.log('log 1 ');
     try {
         const parametrosPagamento = await Parametro.findAll();
         for (const parametroPagamento of parametrosPagamento) {
