@@ -4,6 +4,8 @@ const Instituicao = require('../models/instituicao');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
+const fs = require('fs/promises');
+const path = require('path');
 
 // Controller para obter uma instituição pelo ID
 const obterInstituicaoPorId = async (req, res) => {
@@ -39,7 +41,9 @@ const obterTodasInstituicoes = async (req, res) => {
 // Controller para criar uma nova instituição
 const criarInstituicao = async (req, res) => {
     try {
-        const novaInstituicao = await Instituicao.create(req.body);
+        const instituicaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
+        const instituicaoFile = req.file;
+        const novaInstituicao = await Instituicao.create({ ...instituicaoBody, logoUrl: instituicaoFile?.filename || null });
         res.status(201).json(novaInstituicao);
     } catch (error) {
         const erro = getFormattedSequelizeExceptions(error)
@@ -52,12 +56,23 @@ const criarInstituicao = async (req, res) => {
 const atualizarInstituicao = async (req, res) => {
     try {
         const { id } = req.params;
-        const [atualizado] = await Instituicao.update(req.body, {
+        const instituicaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
+        const instituicaoFile = req.file;
+        const instituicaoExistente = await Instituicao.findByPk(id);
+
+        const [atualizado] = await Instituicao.update({ ...instituicaoBody, logoUrl: instituicaoFile?.filename || null }, {
             where: { id: id }
         });
         if (atualizado) {
-            const instituicaoAtualizada = await Instituicao.findByPk(id);
-            return res.status(200).json(instituicaoAtualizada);
+            try {
+                if (instituicaoExistente.logoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', instituicaoExistente.logoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+            return res.status(200).json({ message: 'Instituição atualizada com sucesso!' });
         }
         throw new Error('Instituição não encontrada ou não atualizada.');
     } catch (error) {

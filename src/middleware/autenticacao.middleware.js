@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const Usuario = require("../models/usuario");
 const jwtDataOptions = {
     secret: process.env.JWT_SECRET,
     jwtExpiration: Number(process.env.JWT_EXPIRATION),
@@ -20,11 +21,12 @@ const validarAutenticacao = (req, res, next) => {
     if (!token) {
         return res.status(403).send({ message: "No token provided!" });
     } else {
-        jwt.verify(token, jwtDataOptions.secret, (err, decoded) => {
+        jwt.verify(token, jwtDataOptions.secret, async (err, decoded) => {
             if (err) {
                 return catchError(err, res);
             } else {
-                req.user = decoded;
+                const dadosUsuario = await Usuario.findOne({ where: { email: decoded?.email?.toLowerCase() } })
+                req.user = dadosUsuario;
                 next();
             }
         });

@@ -1,4 +1,6 @@
 const express = require('express')
+const multer = require('multer')
+const { storage } = require('./multerConfig')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
@@ -28,7 +30,7 @@ const { gerarUsuarioAdmin } = require('./src/scripts/gerarUsuarioAdmin')
 sequelize.sync({ force: false }).then(() => {
     console.log('Todos os modelos foram sincronizados com sucesso');
 }).catch(error => {
-    console.log('OCorreu um erro durante a sincronização dos modelos: ', error);
+    console.log('Ocorreu um erro durante a sincronização dos modelos: ', error);
 })
 
 gerarUsuarioAdmin().catch(err => console.error(err));
@@ -47,6 +49,13 @@ app.listen(port, () => {
 
 app.use('/api', routes);
 
+const upload = multer({ storage: storage })
+
+app.post('/upload', upload.single('file'), (req, res) => {
+    return res.json(req.file.filename);
+})
+app.use('/files', express.static('uploads'))
+
 process.on('SIGINT', function () {
     console.log("\nGracefully shutting down from SIGINT (Ctrl-C)");
     // exit node.js app
@@ -54,3 +63,4 @@ process.on('SIGINT', function () {
 });
 
 const Job = require('./src/jobs/job');
+

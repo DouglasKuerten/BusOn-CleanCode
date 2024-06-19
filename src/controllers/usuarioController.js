@@ -7,6 +7,9 @@ const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const Associacao = require('../models/associacao');
 const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
+const fs = require('fs/promises');
+const path = require('path');
+
 
 // Controller para obter um usuário de ônibus pelo ID
 const obterUsuarioPorId = async (req, res) => {
@@ -27,7 +30,7 @@ const obterUsuarioPorId = async (req, res) => {
                     }]
                 }
             ],
-            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
+            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
         });
         if (usuarioOnibus) {
             return res.status(200).json(usuarioOnibus);
@@ -59,7 +62,7 @@ const obterTodosUsuarios = async (req, res) => {
                     }]
                 }
             ],
-            attributes: ['id', 'nome', 'tipoAcesso', 'situacao', 'diasUsoTransporte'],
+            attributes: ['id', 'nome', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl'],
             where: whereClause,
             order: orderClause
         });
@@ -72,10 +75,11 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = req.body;
+    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = (req.body.data ? JSON.parse(req.body.data) : req.body);
+    const usuarioFile = req.file;
+
     try {
         const hashedPassword = await bcrypt.hash(senha || telefone, 15);
-        const emailLowerCase = String(email).toLowerCase();
         const novoUsuarioOnibus = await Usuario.create({
             nome,
             email: email.toLowerCase(),
@@ -88,7 +92,8 @@ const criarUsuario = async (req, res) => {
             senha: hashedPassword,
             situacao,
             diasUsoTransporte,
-            exigirRedefinicaoSenha: exigirRedefinicaoSenha || (!senha ?? true) // Se não foi cadastrado uma senha ele seta o telefone e vai exigir a troca de senha ao iniciar a aplicação
+            exigirRedefinicaoSenha: exigirRedefinicaoSenha || (!senha ?? true), // Se não foi cadastrado uma senha ele seta o telefone e vai exigir a troca de senha ao iniciar a aplicação
+            fotoUrl: usuarioFile?.filename || null
         });
         res.status(201).json(novoUsuarioOnibus);
     } catch (error) {
@@ -101,14 +106,25 @@ const criarUsuario = async (req, res) => {
 const atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        if (req.body.email) {
-            req.body.email = req.body.email.toLowerCase();
+        const usuarioBody = req.body.data ? JSON.parse(req.body.data) : req.body;
+        const usuarioFile = req.file;
+        if (usuarioBody.email) {
+            usuarioBody.email = usuarioBody.email.toLowerCase();
         }
-        const [atualizado] = await Usuario.update(req.body, {
+        const usuarioExistente = await Usuario.findByPk(id);
+        const [atualizado] = await Usuario.update({ ...usuarioBody, fotoUrl: usuarioFile?.filename || null }, {
             where: { id: id },
-            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte']
+            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
         });
         if (atualizado) {
+            try {
+                if (usuarioExistente.fotoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.fotoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+            } catch (error) {
+                console.log(error)
+            }
             return res.status(200).json({ message: 'Usuário do ônibus atualizada com sucesso' });
         }
         throw new Error('Usuário de ônibus não encontrado ou não atualizado.');
@@ -141,10 +157,19 @@ const atualizarSenhaUsuario = async (req, res) => {
 const excluirUsuario = async (req, res) => {
     try {
         const { id } = req.params;
+        const usuarioExistente = await Usuario.findByPk(id);
         const excluido = await Usuario.destroy({
             where: { id: id }
         });
         if (excluido) {
+            try {
+                if (usuarioExistente.fotoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', usuarioExistente.fotoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+            } catch (error) {
+                console.log(error)
+            }
             return res.status(200).json({ message: 'Usuário de ônibus excluído com sucesso.' });
         }
         throw new Error('Usuário de ônibus não encontrado ou não excluído.');

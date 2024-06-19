@@ -1,4 +1,8 @@
 const express = require('express');
+const multer = require('multer')
+const { storage } = require('../../multerConfig')
+
+const app = express()
 const router = express.Router();
 
 const associacaoController = require('../controllers/associacaoController');
@@ -11,13 +15,19 @@ const parametroController = require('../controllers/parametroController');
 const chatbotController = require('../controllers/chatbotController');
 const { validarAutenticacao } = require('../middleware/autenticacao.middleware');
 
+const upload = multer({ storage: storage })
+
+app.post('/upload', upload.single('file'), (req, res) => {
+    return res.json(req.file.filename);
+})
+
 //router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', 'parametro', 'chatbot'], validarAutenticacao);
 
 // Rotas para cadastro de usuário
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
 router.get('/usuario', usuarioController.obterTodosUsuarios);
-router.post('/usuario', usuarioController.criarUsuario);
-router.put('/usuario/:id', usuarioController.atualizarUsuario);
+router.post('/usuario', upload.single('foto'), usuarioController.criarUsuario);
+router.put('/usuario/:id', upload.single('foto'), usuarioController.atualizarUsuario);
 router.put('/usuario/atualizar-senha/:id', usuarioController.atualizarSenhaUsuario);
 router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
@@ -31,15 +41,15 @@ router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoCont
 // Rotas para Associação
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
 router.get('/associacao', associacaoController.obterTodasAssociacoes);
-router.post('/associacao', associacaoController.criarAssociacao);
-router.put('/associacao/:id', associacaoController.atualizarAssociacao);
+router.post('/associacao', upload.single('logo'), associacaoController.criarAssociacao);
+router.put('/associacao/:id', upload.single('logo'), associacaoController.atualizarAssociacao);
 router.delete('/associacao/:id', associacaoController.excluirAssociacao);
 
 // Rotas para Instituição
 router.get('/instituicao/:id', instituicaoController.obterInstituicaoPorId);
 router.get('/instituicao', instituicaoController.obterTodasInstituicoes);
-router.post('/instituicao', instituicaoController.criarInstituicao);
-router.put('/instituicao/:id', instituicaoController.atualizarInstituicao);
+router.post('/instituicao', upload.single('logo'), instituicaoController.criarInstituicao);
+router.put('/instituicao/:id', upload.single('logo'), instituicaoController.atualizarInstituicao);
 router.delete('/instituicao/:id', instituicaoController.excluirInstituicao);
 
 // Rotas para Curso

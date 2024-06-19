@@ -25,6 +25,10 @@ const Instituicao = sequelize.define('instituicao', {
             key: 'id'
         }
     },
+    logoUrl: {
+        type: DataTypes.STRING,
+        allowNull: true
+    }
 })
 
 module.exports = Instituicao;

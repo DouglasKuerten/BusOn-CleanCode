@@ -1,10 +1,11 @@
 'use strict';
 
 const Associacao = require('../models/associacao');
-const Imagem = require('../models/imagem');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
+const fs = require('fs/promises');
+const path = require('path');
 
 // Controller para obter uma associação pelo ID
 const obterAssociacaoPorId = async (req, res) => {
@@ -29,10 +30,6 @@ const obterTodasAssociacoes = async (req, res) => {
         const associacoes = await Associacao.findAll({
             where: whereClause,
             order: orderClause,
-            include: [{
-                model: Imagem,
-                attributes: ['id']
-            }],
         });
         res.status(200).json(associacoes);
     } catch (error) {
@@ -44,12 +41,9 @@ const obterTodasAssociacoes = async (req, res) => {
 // Controller para criar uma nova associação
 const criarAssociacao = async (req, res) => {
     try {
-        let idNovaImagem = null;
-        if (req.body?.logo && 1 == 2) {
-
-            //  idNovaImagem = (await Imagem.create({ imagem: req.body.logo })).dataValues.id;
-        }
-        const novaAssociacao = await Associacao.create({ ...req.body, logoId: idNovaImagem });
+        const associacaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
+        const associacaoFile = req.file;
+        const novaAssociacao = await Associacao.create({ ...associacaoBody, logoUrl: associacaoFile?.filename || null });
         res.status(201).json(novaAssociacao);
     } catch (error) {
         const erro = getFormattedSequelizeExceptions(error)
@@ -62,12 +56,23 @@ const criarAssociacao = async (req, res) => {
 const atualizarAssociacao = async (req, res) => {
     try {
         const { id } = req.params;
-        const [atualizado] = await Associacao.update(req.body, {
+        const associacaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
+        const associacaoFile = req.file;
+        const associacaoExistente = await Associacao.findByPk(id);
+
+        const [atualizado] = await Associacao.update({ ...associacaoBody, logoUrl: associacaoFile?.filename || null }, {
             where: { id: id }
         });
         if (atualizado) {
-            const associacaoAtualizada = await Associacao.findByPk(id);
-            return res.status(200).json(associacaoAtualizada);
+            try {
+                if (associacaoExistente.logoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', associacaoExistente.logoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+            return res.status(200).json({ message: 'Associação atualizada com sucesso!' });
         }
         throw new Error('Associação não encontrada ou não atualizada.');
     } catch (error) {
@@ -81,10 +86,20 @@ const atualizarAssociacao = async (req, res) => {
 const excluirAssociacao = async (req, res) => {
     try {
         const { id } = req.params;
+        const associacaoExistente = await Associacao.findByPk(id);
         const excluido = await Associacao.destroy({
             where: { id: id }
         });
         if (excluido) {
+            try {
+                if (associacaoExistente.logoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', associacaoExistente.logoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+            } catch (error) {
+                console.log(error)
+            }
+
             return res.status(200).json({ message: 'Associação excluída com sucesso.' });
         }
         throw new Error('Associação não encontrada ou não excluída.');

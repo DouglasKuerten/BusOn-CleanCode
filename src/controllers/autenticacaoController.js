@@ -42,7 +42,8 @@ const authenticateUsuario = async (req, res) => {
             situacao: user.situacao,
             accessToken: token,
             refreshToken: refreshToken,
-            exigirRedefinicaoSenha: user.exigirRedefinicaoSenha
+            exigirRedefinicaoSenha: user.exigirRedefinicaoSenha,
+            fotoUrl: user.fotoUrl
         });
     } catch (error) {
         console.error('Erro ao autenticar usuário:', error);
@@ -92,7 +93,22 @@ const refreshToken = async (req, res) => {
 };
 
 const validateToken = async (req, res) => {
-    res.status(200).json({ message: 'Usuário está com token ativo' })
+    const user = req.user.dataValues;
+    res.status(200).json({
+        message: 'Usuário está com token ativo', user: {
+            id: user.id,
+            nome: user.nome,
+            email: user.email,
+            telefone: user.telefone,
+            endereco: user.endereco,
+            cursoId: user.cursoId,
+            associacaoId: user.associacaoId,
+            tipoAcesso: user.tipoAcesso,
+            situacao: user.situacao,
+            exigirRedefinicaoSenha: user.exigirRedefinicaoSenha,
+            fotoUrl: user.fotoUrl
+        }
+    })
 }
 
 module.exports = {

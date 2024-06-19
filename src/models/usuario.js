@@ -64,6 +64,10 @@ const Usuario = sequelize.define('usuario', {
     exigirRedefinicaoSenha: {
         type: DataTypes.BOOLEAN,
         allowNull: false
+    },
+    fotoUrl: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 
