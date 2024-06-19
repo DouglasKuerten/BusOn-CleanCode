@@ -2,7 +2,6 @@ const express = require('express');
 const multer = require('multer')
 const { storage } = require('../../multerConfig')
 
-const app = express()
 const router = express.Router();
 
 const associacaoController = require('../controllers/associacaoController');
@@ -17,11 +16,7 @@ const { validarAutenticacao } = require('../middleware/autenticacao.middleware')
 
 const upload = multer({ storage: storage })
 
-app.post('/upload', upload.single('file'), (req, res) => {
-    return res.json(req.file.filename);
-})
-
-//router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', 'parametro', 'chatbot'], validarAutenticacao);
+router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/chatbot'], validarAutenticacao);
 
 // Rotas para cadastro de usuário
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
@@ -35,8 +30,6 @@ router.delete('/usuario/:id', usuarioController.excluirUsuario);
 router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
 router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoController.validateToken);
-
-// Rotas para obtenção de registros por ID
 
 // Rotas para Associação
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
@@ -65,6 +58,8 @@ router.get('/pagamento/:id', pagamentoController.obterPagamentoPorId);
 router.get('/pagamento', pagamentoController.obterTodosPagamentos);
 router.post('/pagamento', pagamentoController.criarPagamento);
 router.put('/pagamento/:id', pagamentoController.atualizarPagamento);
+router.put('/pagamento/aprovar/:id', pagamentoController.aprovarPagamento);
+router.put('/pagamento/reprovar/:id', pagamentoController.reprovarPagamento);
 router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
 
 // Rotas para Parâmetro

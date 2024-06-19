@@ -5,7 +5,6 @@ exports.buildWhereClause = (filtros) => {
 
     if (filtros != undefined && filtros != null && filtros != 'undefined') {
         const parsedFilters = JSON.parse(filtros);
-        console.log(parsedFilters)
         // Função auxiliar para construir a cláusula where com base nos filtros fornecidos
         const buildWhere = (filters, operator) => {
             const where = {};
@@ -46,6 +45,5 @@ exports.buildWhereClause = (filtros) => {
             whereClause = { ...whereClause, ...buildWhere(parsedFilters.iLike, Op.iLike) };
         }
     }
-    console.log('whereClause', whereClause)
     return whereClause;
 };

@@ -34,7 +34,7 @@ const obterTodosPagamentos = async (req, res) => {
             include: [
                 {
                     model: Usuario,
-                    attributes: ['id', 'nome', 'diasUsoTransporte'],
+                    attributes: ['id', 'nome', 'diasUsoTransporte', 'fotoUrl'],
                     include: [{
                         model: Associacao,
                         attributes: ['id', 'nome'],
@@ -54,7 +54,8 @@ const obterTodosPagamentos = async (req, res) => {
             ],
             attributes: {
                 include: [
-                    [Sequelize.literal('multa + valor'), 'valorTotal']
+                    [Sequelize.literal('COALESCE(multa, 0) + valor'), 'valorTotal'],
+                    [Sequelize.literal('COALESCE(multa, 0)'), 'multa']
                 ]
             },
             where: whereClause,
@@ -117,11 +118,53 @@ const excluirPagamento = async (req, res) => {
     }
 };
 
+const aprovarPagamento = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const [atualizado] = await Pagamento.update({ situacao: 'PAGO', dataPagamento: new Date() }, {
+            where: { id: id }
+        });
+        if (atualizado) {
+            return res.status(200).json({ title: 'Pagamento aprovado com sucesso!', message: 'Atualizando pagamentos...' });
+        }
+        throw new Error('Pagamento não encontrado ou não atualizado.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao atualizar pagamento', error: error.message });
+    }
+};
+
+const reprovarPagamento = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const dadosPagamento = await Pagamento.findByPk(id)
+        let dataVencimento = dadosPagamento.dataValues.dataVencimento;
+
+        let situacaoPagamento = 'ABERTO';
+        if (dataVencimento < new Date()) {
+            situacaoPagamento = 'ATRASADO';
+        }
+
+        const [atualizado] = await Pagamento.update({ situacao: situacaoPagamento, dataPagamento: null }, {
+            where: { id: id }
+        });
+        if (atualizado) {
+            return res.status(200).json({ title: 'Pagamento reprovado com sucesso!', message: situacaoPagamento === 'ATRASADO' ? 'O valor da multa será aplicada somente no próximo dia' : 'Atualizando pagamentos...' });
+        }
+        throw new Error('Pagamento não encontrado ou não atualizado.');
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Erro ao atualizar pagamento', error: error.message });
+    }
+};
+
 module.exports = {
     obterPagamentoPorId,
     obterTodosPagamentos,
     criarPagamento,
     atualizarPagamento,
-    excluirPagamento
+    excluirPagamento,
+    aprovarPagamento,
+    reprovarPagamento
 };
 

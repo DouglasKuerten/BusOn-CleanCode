@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const Usuario = require('../models/usuario');
 const TokenAutenticacao = require('../models/tokenAutenticacao');
+const Associacao = require('../models/associacao');
+const Curso = require('../models/curso');
+const Instituicao = require('../models/instituicao');
 
 // Função para autenticar o usuário e gerar um token JWT
 const authenticateUsuario = async (req, res) => {
@@ -11,7 +14,24 @@ const authenticateUsuario = async (req, res) => {
         const { email, senha } = req.body;
 
         // Verificar se o usuário existe
-        const user = await Usuario.findOne({ where: { email: email?.toLowerCase() } });
+        const user = await Usuario.findOne(
+            {
+                include: [
+                    {
+                        model: Associacao,
+                        attributes: ['id', 'nome']
+                    },
+                    {
+                        model: Curso,
+                        attributes: ['id', 'nome'],
+                        include: [{
+                            model: Instituicao,
+                            attributes: ['id', 'nome'],
+                        }]
+                    }
+                ],
+                where: { email: email?.toLowerCase() }
+            });
         if (!user) {
             return res.status(404).json({ message: 'E-mail informado não foi encontrado' });
         }
@@ -29,7 +49,6 @@ const authenticateUsuario = async (req, res) => {
 
         // Criar refreshToken
         let refreshToken = await TokenAutenticacao.criarToken(user);
-
         res.status(200).json({
             id: user.id,
             nome: user.nome,
@@ -37,7 +56,10 @@ const authenticateUsuario = async (req, res) => {
             telefone: user.telefone,
             endereco: user.endereco,
             cursoId: user.cursoId,
+            cursoNome: user.curso?.nome,
+            instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
+            associacaoNome: user.associacao?.nome,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             accessToken: token,
@@ -102,7 +124,10 @@ const validateToken = async (req, res) => {
             telefone: user.telefone,
             endereco: user.endereco,
             cursoId: user.cursoId,
+            cursoNome: user.curso?.nome,
+            instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
+            associacaoNome: user.associacao?.nome,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             exigirRedefinicaoSenha: user.exigirRedefinicaoSenha,

@@ -139,18 +139,37 @@ const atualizarUsuario = async (req, res) => {
 const atualizarSenhaUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        const { senha } = req.body;
-        const hashedPassword = await bcrypt.hash(senha, 15);
-        const [atualizado] = await Usuario.update({ senha: hashedPassword, exigirRedefinicaoSenha: false }, {
-            where: { id: id }
-        });
-        if (atualizado) {
-            return res.status(200).json({ message: 'Senha do usuário de ônibus atualizada com sucesso' });
+        const { senhaAntiga, senhaNova } = req.body;
+
+        // Buscar o usuário no banco de dados
+        const user = await Usuario.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
         }
-        throw new Error('Usuário de ônibus não encontrado ou senha não atualizada.');
+
+        // Verificar se a senha antiga está correta
+        const isPasswordValid = await bcrypt.compare(senhaAntiga, user.senha);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: 'Senha antiga está incorreta' });
+        }
+
+        // Gerar hash da nova senha
+        const hashedPassword = await bcrypt.hash(senhaNova, 15);
+
+        // Atualizar a senha no banco de dados
+        const [atualizado] = await Usuario.update(
+            { senha: hashedPassword, exigirRedefinicaoSenha: false },
+            { where: { id: id } }
+        );
+
+        if (atualizado) {
+            return res.status(200).json({ message: 'Senha do usuário atualizada com sucesso' });
+        }
+
+        throw new Error('Senha não atualizada.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao atualizar a senha do usuário de ônibus', error: error.message });
+        console.error('Erro ao atualizar a senha do usuário:', error);
+        res.status(500).json({ message: 'Erro ao atualizar a senha do usuário', error: error.message });
     }
 };
 // Controller para excluir um usuário de ônibus

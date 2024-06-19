@@ -21,7 +21,6 @@ const tokenAutenticacao = sequelize.define('tokenAutenticacao', {
 tokenAutenticacao.criarToken = async function (usuario) {
     let dataValidade = new Date();
     dataValidade.setSeconds(dataValidade.getSeconds() + Number(process.env.JWT_REFRESH_EXPIRATION));
-    console.log(dataValidade)
     let _token = uuidv4();
     let refreshToken = await tokenAutenticacao.create({
         token: _token,

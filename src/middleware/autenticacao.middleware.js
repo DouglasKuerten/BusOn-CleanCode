@@ -1,5 +1,8 @@
 const jwt = require("jsonwebtoken");
 const Usuario = require("../models/usuario");
+const Associacao = require("../models/associacao");
+const Curso = require("../models/curso");
+const Instituicao = require("../models/instituicao");
 const jwtDataOptions = {
     secret: process.env.JWT_SECRET,
     jwtExpiration: Number(process.env.JWT_EXPIRATION),
@@ -25,7 +28,23 @@ const validarAutenticacao = (req, res, next) => {
             if (err) {
                 return catchError(err, res);
             } else {
-                const dadosUsuario = await Usuario.findOne({ where: { email: decoded?.email?.toLowerCase() } })
+                const dadosUsuario = await Usuario.findOne({
+                    include: [
+                        {
+                            model: Associacao,
+                            attributes: ['id', 'nome']
+                        },
+                        {
+                            model: Curso,
+                            attributes: ['id', 'nome'],
+                            include: [{
+                                model: Instituicao,
+                                attributes: ['id', 'nome'],
+                            }]
+                        }
+                    ],
+                    where: { email: decoded?.email?.toLowerCase() }
+                });
                 req.user = dadosUsuario;
                 next();
             }
