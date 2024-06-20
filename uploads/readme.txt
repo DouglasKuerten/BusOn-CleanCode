@@ -1,0 +1,1 @@
+Essa pasta irá salvar as imagens do projeto, se não tiver ela dará erro ao tentar salvar caso o sistema operacional não permita a criação automática dela
