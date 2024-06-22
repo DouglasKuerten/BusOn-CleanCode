@@ -22,14 +22,14 @@ class AssistantContextInstruction {
      * @returns {Promise<string>}
     */
     async toString(prompt) {
-        return ''.concat([
-            JSON.stringify(await this.#getApplicationContext()),
-            JSON.stringify(await this.#getApplicationDataStructure()),
-            JSON.stringify(await this.#getInstructions()),
-            JSON.stringify(await this.#getPrompt(prompt)),
-            JSON.stringify(await this.#getResponseFormat()),
-            JSON.stringify(await this.#getAditionalInformation())
-        ]);
+        return `
+            ${await this._getApplicationContext()}
+            ${await this._getApplicationDataStructure()}
+            ${await this._getInstructions()}
+            ${await this._getResponseFormat()}
+            ${await this._getPrompt(prompt)}
+            ${await this._getAditionalInformation()}
+        `;
     }
 
     /**
@@ -46,25 +46,68 @@ class AssistantContextInstruction {
     /**
      * Method to get application context
      * 
-     * @returns {Promise<void>}
+     * @returns {Promise<string>}
      */
-    async #getApplicationContext() {
-        const context = {
-            data: new Date().toISOString(),
-        }
+    async _getApplicationContext() {
+        const data = new Date().toISOString();
 
-        return {
-            instruction: 'Dados da aplicação',
-            data: context
-        };
+        return `
+            Dados da aplicação: 
+            Data: ${data}
+        `;
+    }
+
+    /**
+     * Method to get instructions
+     * 
+     * @returns {Promise<string>}
+     */
+    async _getInstructions() {
+        return `
+            Você deve criar uma query para consultar os models da aplicação e conseguir os dados para responder a pergunta usando sequelize. 
+            Gere a query e envie no campo "jsonQueryString".
+
+            Uma nova mensagem será enviada com os dados do model escolhido.
+
+            Caso não seja possível responder a pergunta somente com os dados do model, 
+            "earlyReturn" deve ser true e "status" deve ser 204 e a sua mensagem deve ser enviada no campo "message".
+
+            Caso não seja necessário realizar consultas no banco de dados, responda utilizando somente plain text com o modelo: 
+            "earlyReturn" deve ser true e "status" deve ser 200 e a sua resposta deve ser enviada no campo "message".
+        `;
+    }
+
+    /**
+     * Method to get prompt
+     * 
+     * @param {string} prompt 
+     * 
+     * @returns {Promise<string>}
+     */
+    async _getPrompt(prompt) {
+        return `
+            Prompt do usuario: ${prompt}
+        `;
+    }
+
+    /**
+     * Method to get aditional information
+     * 
+     * @returns {Promise<string>}
+     */
+    async _getAditionalInformation() {
+        return `
+            Informações adicionais:
+            ${this.aditionalInformation}
+        `;
     }
 
     /**
      * Method to get application data structure
      * 
-     * @returns {Promise<void>}
+     * @returns {Promise<string>}
      */
-    async #getApplicationDataStructure() {
+    async _getApplicationDataStructure() {
         const dataStructure = {
             usuarios: await Usuario.describe(),
             pagamentos: await Pagamento.describe(),
@@ -72,98 +115,54 @@ class AssistantContextInstruction {
             cursos: await Curso.describe(),
             associacaos: await Associacao.describe(),
         }
-        console.log("Data structure: ", dataStructure);
 
-        return {
-            instruction: 'Relação de tabelas da aplicação',
-            data: dataStructure
-        };
-    }
-
-    /**
-     * Method to get instructions
-     * 
-     * @returns {Promise<void>}
-     */
-    async #getInstructions() {
-        const instructions =
-            `Quais dados você precisa para responder esta pergunta? 
-        Uma nova mensagem será enviada com os dados do model escolhido.
-        Caso não seja possível responder a pergunta somente com os dados do model, responda utilizando somente plain text com o modelo: 
-        {"earlyReturn": true,"status": 204,"data": { "message": "Escreva a mensagem de resposta aqui"}}
-        Caso não seja necessário realizar consultas no banco de dados, responda utilizando somente plain text com o modelo: 
-        {"earlyReturn": true,"status": 200,"data": { "message": "Escreva a mensagem de resposta aqui"}}`;
-
-        return {
-            instruction: 'Instruções',
-            data: instructions
-        }
-    }
-
-    /**
-     * 
-     * @param {string} prompt 
-     * 
-     * @returns {Promise<void>}
-     */
-    async #getPrompt(prompt) {
-        return {
-            instruction: 'Prompt do usuario',
-            data: prompt
-        };
+        return `
+            Relação de tabelas da aplicação,
+            ${JSON.stringify(dataStructure)}
+        `;
     }
 
     /**
      * Method to get response format
      * 
-     * @returns {Promise<void>}
+     * @returns {Promise<string>}
      */
-    async #getResponseFormat() {
-        return {
-            instruction: `
-            Você deve criar uma consulta a um model usando sequelize.
-            Responda em formato json valido encodado, exemplo:`,
-            data: `{
+    async _getResponseFormat() {
+        return `
+            As suas respostas devem sempre estar no formato json abaixo. O json deve ser serializado para string antes de ser enviado.
+            Retorne somente texto simples.
+            Exemplo:
+            {
                 "earlyReturn": false,
                 "status": 200,
                 "data": {
-                    "model": "usuarios",
-                    "method": "findAll",
-                    "attributes": ["id", "nome", "tipoAcesso", "situacao", "diasUsoTransporte"],
-                    "where": { "id": 1, "nome": "Jhon" },
-                    "order": [["id", "DESC"], ["nome", "ASC"]],
-                    "include": [
-                        {
-                            "model": "associacao",
-                            "attributes": ["id", "nome"]
-                        },
-                        {
-                            "model": "curso",
-                            "attributes": ["id", "nome"],
-                            "include": [
-                                {
-                                    "model": "instituicao",
-                                    "attributes": ["id", "nome"]
-                                }
-                            ]
-                        }
-                    ]
+                    "jsonQueryString": {
+                        "model": "usuarios",
+                        "method": "findAll",
+                        "attributes": ["id", "nome", "tipoAcesso", "situacao", "diasUsoTransporte"],
+                        "where": { "id": 1, "nome": "Jhon" },
+                        "order": [["id", "DESC"], ["nome", "ASC"]],
+                        "include": [
+                            {
+                                "model": "associacao",
+                                "attributes": ["id", "nome"]
+                            },
+                            {
+                                "model": "curso",
+                                "attributes": ["id", "nome"],
+                                "include": [
+                                    {
+                                        "model": "instituicao",
+                                        "attributes": ["id", "nome"]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "message": ""
                 }
-            }`
-        };
-    }
-
-    /**
-     * 
-     * @param {string} aditionalInformation 
-     * 
-     * @returns {Promise<void>}
-     */
-    async #getAditionalInformation(aditionalInformation) {
-        return {
-            instruction: 'Informações adicionais',
-            data: aditionalInformation
-        };
+            }
+        `;
     }
 }
 
