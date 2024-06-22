@@ -17,6 +17,7 @@ class AssistantQueryResponse {
     */
     async getDatabaseDataFromQuery(query) {
         try {
+            console.log('Query:', query);
             const queryObject = JSON.parse(query);
             if (queryObject.earlyReturn) {
                 return queryObject;
@@ -59,24 +60,28 @@ class AssistantQueryResponse {
         let dbModel = null;
         switch (modelName) {
             case 'usuarios':
+            case 'usuario':
                 dbModel = Usuario;
                 break;
             case 'pagamentos':
+            case 'pagamento':
                 dbModel = Pagamento;
                 break;
             case 'instituicoes':
+            case 'instituicao':
                 dbModel = Instituicao;
                 break;
             case 'cursos':
+            case 'curso':
                 dbModel = Curso;
                 break;
             case 'associacaos':
+            case 'associacao':
+            case 'associacoes':
                 dbModel = Associacao;
                 break;
-        }
-
-        if (!dbModel) {
-            throw new Error(`Model ${modelName} not found`);
+            default:
+                throw new Error(`Model ${modelName} not found`);
         }
         return dbModel;
     }
