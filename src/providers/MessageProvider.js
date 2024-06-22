@@ -32,11 +32,15 @@ class MessageProvider {
      */
     async sendMessage(message, assistant, thread) {
 
-        await this.#createMessage(message, thread.id);
+        await this._createMessage(message, thread.id);
 
-        const run = await this.#createRunWithPolling(thread.id, assistant.id);
+        const run = await this._createRunWithPolling(thread.id, assistant.id);
 
-        const content = await this.#getAssistantReplyWithPolling(run, thread.id);
+        if (run.last_error !== null) {
+            throw new Error('Erro ao enviar mensagem para o assistente.');
+        }
+
+        const content = await this._getAssistantReplyWithPolling(run, thread.id);
 
         return content;
     }
@@ -49,7 +53,7 @@ class MessageProvider {
      * 
      * @returns {Promise<string>}
      */
-    async #getAssistantReplyWithPolling(run, threadId) {
+    async _getAssistantReplyWithPolling(run, threadId) {
 
         let content = "";
         if (run.status === 'completed') {
@@ -75,7 +79,7 @@ class MessageProvider {
      * 
      * @returns {Promise<import("openai/src/resources/beta/threads/index.js").Run>}
      */
-    async #createRunWithPolling(threadId, assistantId) {
+    async _createRunWithPolling(threadId, assistantId) {
 
         return await this.openai.beta.threads.runs.createAndPoll(
             threadId,
@@ -91,7 +95,7 @@ class MessageProvider {
      * 
      * @returns {Promise<void>}
      */
-    async #createMessage(message, threadId) {
+    async _createMessage(message, threadId) {
 
         await this.openai.beta.threads.messages.create(
             threadId,

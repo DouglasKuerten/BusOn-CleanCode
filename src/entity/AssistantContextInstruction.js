@@ -23,12 +23,12 @@ class AssistantContextInstruction {
     */
     async toString(prompt) {
         return ''.concat([
-            JSON.stringify(await this.#getApplicationContext()),
-            JSON.stringify(await this.#getApplicationDataStructure()),
-            JSON.stringify(await this.#getInstructions()),
-            JSON.stringify(await this.#getPrompt(prompt)),
-            JSON.stringify(await this.#getResponseFormat()),
-            JSON.stringify(await this.#getAditionalInformation())
+            JSON.stringify(await this._getApplicationContext()),
+            JSON.stringify(await this._getApplicationDataStructure()),
+            JSON.stringify(await this._getInstructions()),
+            JSON.stringify(await this._getPrompt(prompt)),
+            JSON.stringify(await this._getResponseFormat()),
+            JSON.stringify(await this._getAditionalInformation())
         ]);
     }
 
@@ -48,7 +48,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getApplicationContext() {
+    async _getApplicationContext() {
         const context = {
             data: new Date().toISOString(),
         }
@@ -64,7 +64,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getApplicationDataStructure() {
+    async _getApplicationDataStructure() {
         const dataStructure = {
             usuarios: await Usuario.describe(),
             pagamentos: await Pagamento.describe(),
@@ -72,7 +72,6 @@ class AssistantContextInstruction {
             cursos: await Curso.describe(),
             associacaos: await Associacao.describe(),
         }
-        console.log("Data structure: ", dataStructure);
 
         return {
             instruction: 'Relação de tabelas da aplicação',
@@ -85,7 +84,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getInstructions() {
+    async _getInstructions() {
         const instructions =
             `Quais dados você precisa para responder esta pergunta? 
         Uma nova mensagem será enviada com os dados do model escolhido.
@@ -106,7 +105,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getPrompt(prompt) {
+    async _getPrompt(prompt) {
         return {
             instruction: 'Prompt do usuario',
             data: prompt
@@ -118,7 +117,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getResponseFormat() {
+    async _getResponseFormat() {
         return {
             instruction: `
             Você deve criar uma consulta a um model usando sequelize.
@@ -159,7 +158,7 @@ class AssistantContextInstruction {
      * 
      * @returns {Promise<void>}
      */
-    async #getAditionalInformation(aditionalInformation) {
+    async _getAditionalInformation(aditionalInformation) {
         return {
             instruction: 'Informações adicionais',
             data: aditionalInformation
