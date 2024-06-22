@@ -22,7 +22,7 @@ class AssistantQueryResponse {
                 return queryObject;
             }
 
-            const { model, method, where, attributes, order, include } = queryObject.data;
+            const { model, method, where, attributes, order, include } = queryObject.data.jsonQueryString;
             const queryOptions = {
                 attributes,
                 where,

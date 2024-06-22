@@ -75,9 +75,6 @@ class ChatService {
         const assistant = await this.assistantProvider.getAssistant();
         const thread = await this.threadProvider.getThread(threadId);
 
-        this.assistantContextInstruction.setAditionlInformation(
-            'Não formate o texto da mensagem como json, apenas responda usando plain text'
-        );
         const contextInstruction = await this.assistantContextInstruction.toString(prompt);
 
         const query = await this.messageProvider.sendMessage(contextInstruction, assistant, thread.thread);
