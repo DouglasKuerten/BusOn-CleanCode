@@ -1,5 +1,5 @@
 exports.buildOrderByClause = (orderBy) => {
-    let orderClause = [['id', 'ASC']];
+    let orderClause = [];
     if (orderBy) {
         const orders = JSON.parse(orderBy);
         // Itera sobre cada critério de ordenação fornecido
@@ -11,5 +11,5 @@ exports.buildOrderByClause = (orderBy) => {
             }
         });
     }
-    return orderClause;
+    return orderClause || [['id', 'ASC']];
 }
