@@ -53,7 +53,7 @@ class AssistantContextInstruction {
 
         return `
             Dados da aplicação: 
-            Data: ${data}
+            Data Atual: ${data}
         `;
     }
 
@@ -72,7 +72,7 @@ class AssistantContextInstruction {
             Caso não seja possível responder a pergunta somente com os dados do model, 
             "earlyReturn" deve ser true e "status" deve ser 204 e a sua mensagem deve ser enviada no campo "message".
 
-            Caso não seja necessário realizar consultas no banco de dados, responda utilizando somente plain text com o modelo: 
+            Caso não seja necessário realizar consultas no banco de dados, responda normalmente utilizando somente plain text com o modelo: 
             "earlyReturn" deve ser true e "status" deve ser 200 e a sua resposta deve ser enviada no campo "message".
         `;
     }
@@ -98,6 +98,7 @@ class AssistantContextInstruction {
     async _getAditionalInformation() {
         return `
             Informações adicionais:
+            Estas instruções serão enviadas em todas as mensagens e não devem ser consideradas como parte da resposta.
             ${this.aditionalInformation}
         `;
     }
@@ -159,7 +160,7 @@ class AssistantContextInstruction {
                             }
                         ]
                     },
-                    "message": ""
+                    "message": null
                 }
             }
         `;

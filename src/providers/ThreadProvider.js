@@ -14,13 +14,11 @@ class ThreadProvider {
     /**
      * Get thread to assistant.
      * 
-     * @param {string} id The thread ID.
-     * 
      * @returns {Promise<{id: string, thread: import("openai/src/resources/beta/index.js").Thread}>}
      */
-    async getThread(id) {
+    async getThread() {
 
-        const dbThread = await Thread.findByPk(id)
+        const dbThread = await Thread.findOne();
 
         if (!dbThread) {
             const newThread = await this.createNewThread();
@@ -32,7 +30,6 @@ class ThreadProvider {
         );
 
         return {
-            id: id,
             thread: thread
         };
     }
@@ -56,15 +53,14 @@ class ThreadProvider {
     /**
      * Create new thread and save it.
      * 
-     * @returns {Promise<{id: string, thread: import("openai/src/resources/beta/index.js").Thread}>}
+     * @returns {Promise<{thread: import("openai/src/resources/beta/index.js").Thread}>}
     */
     async createNewThread() {
         const thread = await this.openai.beta.threads.create();
 
-        const id = await this.saveThread(thread);
+        await this.saveThread(thread);
 
         return {
-            id: id,
             thread: thread
         };
     }
