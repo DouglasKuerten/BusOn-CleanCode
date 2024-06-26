@@ -15,7 +15,7 @@ class AssistantQueryDataInstructions {
         return JSON.stringify({
             prompt: prompt,
             queryResult: JSON.parse(data.content),
-            instruction: 'Realize a analise dos dados e responda a pergunta do usuario com texto como em um chat.'
+            instruction: 'Realize a analise dos dados e responda a pergunta do usuario com texto como em um chat. Não formate a resposta dessa vez.'
         });
     }
 

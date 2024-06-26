@@ -37,6 +37,7 @@ class MessageProvider {
         const run = await this._createRunWithPolling(thread.id, assistant.id);
 
         if (run.last_error !== null) {
+            console.error(run.last_error);
             throw new Error('Erro ao enviar mensagem para o assistente.');
         }
 
