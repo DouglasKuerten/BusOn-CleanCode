@@ -17,7 +17,6 @@ class AssistantQueryResponse {
     */
     async getDatabaseDataFromQuery(query) {
         try {
-            console.log('Query:', query);
             const queryObject = JSON.parse(query);
             if (queryObject.earlyReturn) {
                 return queryObject;

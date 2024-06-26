@@ -67,13 +67,12 @@ class ChatService {
      * Sends a message to the assistant.
      * 
      * @param {string} message The message to send to the assistant.
-     * @param {string} threadId The thread ID to send the message to.
      * 
      * @returns {Promise<{prompt:string, content:string}>} The response from the assistant.
     */
-    async messageAssistant(prompt, threadId) {
+    async messageAssistant(prompt) {
         const assistant = await this.assistantProvider.getAssistant();
-        const thread = await this.threadProvider.getThread(threadId);
+        const thread = await this.threadProvider.getThread();
 
         const contextInstruction = await this.assistantContextInstruction.toString(prompt);
 
@@ -84,10 +83,10 @@ class ChatService {
         if (data.earlyReturn) {
             return {
                 prompt: prompt,
-                content: data,
+                content: data.message,
+                data: data,
                 query: query,
-                contextInstruction: contextInstruction,
-                threadId: thread.id
+                contextInstruction: contextInstruction
             };
         }
 
@@ -101,8 +100,7 @@ class ChatService {
             query: query,
             data: data,
             promptWithQuery: promptWithQuery,
-            contextInstruction: contextInstruction,
-            threadId: thread.id,
+            contextInstruction: contextInstruction
         };
     }
 }
