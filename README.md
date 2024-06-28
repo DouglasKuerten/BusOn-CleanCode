@@ -113,6 +113,8 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 ### **Variáveis da IA**
 `OPENAI_API_KEY` -> (Chave usada para acesso a API do OpenAI)
 
+Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) para vizualizar mais detalhes sobre a implemetação da IA dentro desse projeto
+
 ---
 
 # Tecnologias utilizadas
