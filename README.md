@@ -1,96 +1,139 @@
 <div align="center">
-  <img src="https://github.com/BrunoDimon/BusOnApp/blob/main/assets/busOnFontePreta.png" alt="BusOn Logo" style='height: 280px;'/>
-  <hr>
+  <img src="https://github.com/BrunoDimon/BusOnApp/blob/main/assets/busOnFonteBranca.png" alt="BusOn Logo" style='height: 280px;'/>  <hr>
   <h1>
     <br>
-      <p>Back - end  BusOn - Projeto Integrador Inteligencia Artificial <br> Engenharia de Software - UNISATC</p>
+      <p>Back-End Buson - Projeto Integrador IA - Engenharia de Software - UNISATC</p>
   </h1>
 </div>
 
-Este projeto consiste em um aplicativo desenvolvido para facilitar o gerenciamento dos pagamentos dos alunos que utilizam o serviço de transporte de São Ludgero para universidades. Através desta aplicação, é possível realizar e monitorar os pagamentos dos alunos de forma organizada e eficiente. O objetivo é proporcionar uma ferramenta que simplifique o controle financeiro e administrativo relacionado ao transporte univesitário.
+# Sobre o Projeto
+## Oque é:
+- O Aplicativo foi desenvolvido com o intuito de facilitar o gerenciamento dos pagamentos mensais dos acadêmicos que utilizam o serviço de transporte para deslocamento até as universidades. Além disso, o aplicativo fornece informações detalhadas sobre a associação e, situação dos acadêmicos e seus pagamentos, por meio de um chat com inteligência artificial.
 
-## Introdução
+## Oque procuramos resolver:
+- Controle manual por meio de uma planilha de controle;
+- Preenchimento de documentos de forma manual;
+  
+## Objetivos:
+- Facilitar a cobrança/conferência/consulta de pagamentos dos acadêmicos;
+- Facilitar emissão de documentos para os acadêmicos em nome da associação;
+- Gerenciamento dos dias de utilização do transporte por cada universitário e manter seus dados atualizados;
+- Gerenciamento de todas informações de alunos da associação;
+- Contato assertivo com cada acadêmico;
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
+---
 
-Consulte **[Implantação](#-implanta%C3%A7%C3%A3o)** para saber como implantar o projeto.
-
-## Telas do App
-
-Abaixo o menu principal de cada usuario:
-
-Tela Aluno
-<div style text-align: right>
-  <img src="https://github.com/BrunoDimon/BusOnApp/blob/main/assets/TelaAluno.jfif" alt="BusOn Logo" style='height: 600px;'/>
-</div>
-
-Tela Gestao
-<div>
-  <img src="https://github.com/BrunoDimon/BusOnApp/blob/main/assets/TelaGestao.jfif" alt="BusOn Logo" style='height: 600px;'/>
-</div>
-
-
-## Pré-requisitos
-
-Para instalar a aplicação, primeiro precisa dos seguintes componentes instalados:
-
+# Inicialização do Projeto
+### Clonar o projeto:
+```bash
+  git clone https://github.com/BrunoDimon/BusOn.git
 ```
-VisualStudioCode - https://code.visualstudio.com/
-```
-```
-Git - https://www.git-scm.com/downloads
-```
-```
-NodeJs - https://nodejs.org/en/download/package-manager/current
-```
-```
-Docker - https://www.docker.com/products/docker-desktop/
-```
-```
-Insomnia - https://insomnia.rest/download
+### Navegar até a pasta do projeto
+
+Instalar as dependências:
+```bash
+  npm i 
 ```
 
-### Instalação e execução
+Iniciar servidor back-end:
 
-Para instalar o aplicativo, siga os seguintes passos:
-
-1. Clone o repositório do aplicativo.
-```sh
-  git clone https://github.com/BrunoDimon/BusOnApp.git
-```
-2. Execute o comando para instalar as dependências do aplicativo.
-```sh
-  npm install
+```bash
+  npm start 
 ```
 
-3. Execute o comando para configurar o docker.
-```sh
-  docker compose -f docker-compose.yml up -d
+---
+
+# Variáveis de Ambiente
+
+Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu arquivo .env
+> O arquivo [.env.example](https://github.com/BrunoDimon/BusOn/blob/main/.env.example) foi deixado no projeto para usar de modelo
+
+---
+
+### Variáveis do banco de dados
+##### **Configurações para conexção com o banco de dados**
+
+`POSTGRES_HOST` (Endereço do banco de dados. Ex: "localhost")
+
+`POSTGRES_DB` -> (Nome do banco de dados. Ex: "buson")
+
+`POSTGRES_USER` -> (Usuário para conexão com banco de dados. Ex: "postgres")
+
+`POSTGRES_PASSWORD` -> (Senha para conexão com banco de dados. Ex: "1234")
+
+`PG_DIALECT` -> (Módulo do node que irá gerenciar o banco. Ex: "postgres)"
+
+###### **Caso estiver utilizando o docker para rodar, deverá configurar as seguintes váriaveis também**
+
+`POSTGRES_PORT` -> (Porta que irá rodar o postgres. Ex (Padrão): "5432")
+
+`DATABASE_URL` -> (Url do database.) 
+Ex:
 ```
-4. Execute o comando para iniciar a aplicação.
-```sh
-  npm start
+postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB)
 ```
-5. Com aplicativo do Expo, scaneie o QR code gerado ou simule em um smartphone virtual via Android Studio
 
 
-## Implantação
+---
 
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
+### Variáveis do servidor
+##### **Define em qual porta irá rodar o servidor.**
 
-### Tecnologias utilizadas
-[![Insomnia][Insomnia.js]][Insomnia-url]
-[![Docker][Docker.js]][Docker-url]
-[![PostgreSQL][PostgreSQL.js]][PostgreSQL-url]
+`SERVER_PORT`  (Normalmente o node roda na porta 3000. Ex: 3000)
+
+---
+
+### Variáveis da autenticação
+##### **Chave Secreta utilizada na autenticação.**
+
+`JWT_SECRET` -> (Gerar uma chave aleatória. Ex:"cHavEgErAdA1234")
+
+Comando:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
+```
+
+##### **Variáveis definem o tempo para expirar o token de acesso.**
+
+`JWT_EXPIRATION` -> (Definir valor em segundos. Ex: 86400)
+
+`JWT_REFRESH_EXPIRATION` -> (Definir valor em segundos. Ex: 86400)
+
+---
+
+### **Variáveis da IA**
+`OPENAI_API_KEY` -> (Chave usada para acesso a API do OpenAI)
+
+---
+
+# Tecnologias utilizadas
+### Tecnologias usadas para a execução em produção
+[![JavaScript][JavaScript.js]][JavaScript-url]
 [![NodeJS][NodeJS.js]][NodeJS-url]
+[![Express][Express.js]][Express-url]
+[![Sequelize][Sequelize]][Sequelize-url]
 
-## Autores
+[![PostgreSQL][PostgreSQL.js]][PostgreSQL-url]
+[![ChatGPT][ChatGPT]][ChatGPT-url]
+[![Docker][Docker.js]][Docker-url]
 
-* **Lucas Zanoni* - *Desenvolvimento Back End* - [https://github.com/Castrozan](https://github.com/Castrozan)
+### Tecnologias usadas em desenvolvimento apenas
+[![Insomnia][Insomnia.js]][Insomnia-url]
 
-## Referências
+# Autores
 
-Cite aqui todas as referências utilizadas neste projeto, pode ser outros repositórios, livros, artigos de internet etc.
+* **Bruno Dimon** - [https://github.com/BrunoDimon](https://github.com/BrunoDimon)
+* **Douglas Kuerten** - [https://github.com/DouglasKuerten](https://github.com/DouglasKuerten)
+* **Lucas Zanoni** - [https://github.com/Castrozan](https://github.com/Castrozan)
+* **Thiago Dimon** - [https://github.com/thiagoDimon](https://github.com/thiagoDimon)
+* **Vinicius Milanez** - [https://github.com/viniciusmilanez](https://github.com/viniciusmilanez)
+  
+---
+
+# Repositórios Relacionados
+
+ #### - [Buson Front-End App (Mobile)](https://github.com/BrunoDimon/BusOnApp)
+ #### - [Buson Back-End](https://github.com/BrunoDimon/BusOn)
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -109,3 +152,9 @@ Cite aqui todas as referências utilizadas neste projeto, pode ser outros reposi
 [PostgreSQL-url]: https://www.postgresql.org/download/
 [NodeJS.js]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
 [NodeJS-url]: https://nodejs.org/en/download/package-manager/current
+[Express.js]: https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB
+[Express-url]: https://expressjs.com/pt-br/
+[ChatGPT]: https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white
+[ChatGPT-url]: https://platform.openai.com/
+[Sequelize]: https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white
+[Sequelize-url]: https://sequelize.org/
