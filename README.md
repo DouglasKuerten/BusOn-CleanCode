@@ -30,18 +30,20 @@
 ```
 ### Navegar até a pasta do projeto
 
-Instalar as dependências:
+#### Instalar as dependências:
 ```bash
   npm i 
 ```
 
-Iniciar servidor back-end manualmente:
+#### Iniciar o servidor
+Tem duas opções para inicializar o servidor que irão funcionar normalmente:
+##### 1 - Manualmente:
 ```bash
   npm start 
 ```
 > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
 
-Iniciar servidor back-end com docker:
+##### 2 - Com Docker:
 ```bash
   npm run docker
 ```
