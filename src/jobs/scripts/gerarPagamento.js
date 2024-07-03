@@ -4,7 +4,7 @@ const Pagamento = require('../../models/pagamento');
 
 async function gerarPagamentosMensais(req, res) {
     try {
-        const parametrosPagamento = await Parametro.findAll();
+        const parametrosPagamento = await Parametro.findAll({ where: { gerarPagamentosAutomatico: 'SIM' } });
 
         for (const parametroPagamento of parametrosPagamento) {
 
