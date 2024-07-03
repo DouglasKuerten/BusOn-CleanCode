@@ -28,11 +28,11 @@ const Pagamento = sequelize.define('pagamento', {
         allowNull: false,
     },
     valor: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DOUBLE,
         allowNull: false,
     },
     multa: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DOUBLE,
         allowNull: true,
     },
     dataVencimento: {

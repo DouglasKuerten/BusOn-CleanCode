@@ -43,7 +43,7 @@ const authenticateUsuario = async (req, res) => {
         }
 
         // Gerar token JWT
-        const token = jwt.sign({ email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ usuarioId: user.id, email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
             expiresIn: Number(process.env.JWT_EXPIRATION),
         });
 
@@ -100,7 +100,7 @@ const refreshToken = async (req, res) => {
             }
         });
 
-        let newAccessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+        const newAccessToken = jwt.sign({ usuarioId: user.id, email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
             expiresIn: Number(process.env.JWT_EXPIRATION),
         });
 
@@ -113,6 +113,7 @@ const refreshToken = async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 const validateToken = async (req, res) => {
     const user = req.user.dataValues;
