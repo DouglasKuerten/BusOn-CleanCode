@@ -5,6 +5,7 @@ const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
 
 
 const Associacao = require('./associacao');
+const SimNaoEnum = require('../enum/SimNaoEnum');
 
 const Parametro = sequelize.define('parametro', {
     associacaoId: {
@@ -56,6 +57,10 @@ const Parametro = sequelize.define('parametro', {
         type: DataTypes.ENUM(Object.keys(LiberadoBloqueadoEnum)),
         allowNull: false,
     },
+    gerarPagamentosAutomatico: {
+        type: DataTypes.ENUM(Object.keys(SimNaoEnum)),
+        allowNull: false,
+    }
 
 
 })
