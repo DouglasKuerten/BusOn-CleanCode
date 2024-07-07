@@ -18,6 +18,7 @@ const Pagamento = sequelize.define('pagamento', {
     usuarioId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        onDelete: 'RESTRICT',
         references: {
             model: Usuario,
             key: 'id'
@@ -50,6 +51,6 @@ const Pagamento = sequelize.define('pagamento', {
 
 });
 
-Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId' });
+Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
 
 module.exports = Pagamento;

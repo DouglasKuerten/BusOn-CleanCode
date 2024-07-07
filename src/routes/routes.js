@@ -12,7 +12,7 @@ const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
 const chatbotController = require('../controllers/chatbotController');
-const { validarAutenticacao } = require('../middleware/autenticacao.middleware');
+const { validarAutenticacao, logout } = require('../middleware/autenticacao.middleware');
 
 const upload = multer({ storage: storage })
 
@@ -30,6 +30,7 @@ router.delete('/usuario/:id', usuarioController.excluirUsuario);
 router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
 router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoController.validateToken);
+router.post('/autenticacao/logout', validarAutenticacao, logout);
 
 // Rotas para Associação
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
@@ -61,6 +62,7 @@ router.put('/pagamento/:id', pagamentoController.atualizarPagamento);
 router.put('/pagamento/aprovar/:id', pagamentoController.aprovarPagamento);
 router.put('/pagamento/reprovar/:id', pagamentoController.reprovarPagamento);
 router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
+router.post('/pagamento/gerar-manualmente', pagamentoController.gerarPagamentosMensaisManualmente);
 
 // Rotas para Parâmetro
 router.get('/parametro/:id', parametroController.obterParametroPorId);

@@ -17,6 +17,7 @@ const Curso = sequelize.define('curso', {
     instituicaoId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        onDelete: 'RESTRICT',
         references: {
             model: Instituicao,
             key: 'id'
@@ -24,6 +25,6 @@ const Curso = sequelize.define('curso', {
     },
 })
 
-Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId' }); // Definir a associação
+Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' }); // Definir a associação
 
 module.exports = Curso;

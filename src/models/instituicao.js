@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const associacao = require('./associacao');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+const Associacao = require('./associacao');
 
 const Instituicao = sequelize.define('instituicao', {
     nome: {
@@ -20,6 +21,7 @@ const Instituicao = sequelize.define('instituicao', {
     associacaoId: {
         type: DataTypes.INTEGER,
         allowNull: false,
+        onDelete: 'RESTRICT',
         references: {
             model: associacao,
             key: 'id'
@@ -30,5 +32,6 @@ const Instituicao = sequelize.define('instituicao', {
         allowNull: true
     }
 })
+Instituicao.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
 
 module.exports = Instituicao;

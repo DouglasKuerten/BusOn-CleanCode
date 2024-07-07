@@ -42,13 +42,14 @@ const authenticateUsuario = async (req, res) => {
             return res.status(401).json({ message: 'Senha informada está incorreta' });
         }
 
+        let refreshToken = await TokenAutenticacao.criarToken(user);
+
         // Gerar token JWT
-        const token = jwt.sign({ usuarioId: user.id, email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
+        const token = jwt.sign({ refreshToken: refreshToken, usuarioId: user.id, email: user.email, tipoAcesso: user.tipoAcesso }, process.env.JWT_SECRET, {
             expiresIn: Number(process.env.JWT_EXPIRATION),
         });
 
         // Criar refreshToken
-        let refreshToken = await TokenAutenticacao.criarToken(user);
         res.status(200).json({
             id: user.id,
             nome: user.nome,
@@ -60,6 +61,7 @@ const authenticateUsuario = async (req, res) => {
             instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
             associacaoNome: user.associacao?.nome,
+            dataEntradaAssociacao: user.dataEntradaAssociacao,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             accessToken: token,
@@ -114,7 +116,6 @@ const refreshToken = async (req, res) => {
     }
 };
 
-
 const validateToken = async (req, res) => {
     const user = req.user.dataValues;
     res.status(200).json({
@@ -129,6 +130,7 @@ const validateToken = async (req, res) => {
             instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
             associacaoNome: user.associacao?.nome,
+            dataEntradaAssociacao: user.dataEntradaAssociacao,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
             exigirRedefinicaoSenha: user.exigirRedefinicaoSenha,

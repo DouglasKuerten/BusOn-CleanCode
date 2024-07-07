@@ -11,6 +11,7 @@ const Parametro = sequelize.define('parametro', {
     associacaoId: {
         type: DataTypes.INTEGER,
         unique: true,
+        onDelete: 'CASCADE',
         allowNull: false,
         references: {
             model: Associacao,
@@ -64,5 +65,6 @@ const Parametro = sequelize.define('parametro', {
 
 
 })
+Parametro.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'CASCADE' });
 
 module.exports = Parametro;

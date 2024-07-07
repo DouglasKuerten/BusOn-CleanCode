@@ -9,6 +9,7 @@ const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
 const fs = require('fs/promises');
 const path = require('path');
+const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 
 
 // Controller para obter um usuário de ônibus pelo ID
@@ -30,7 +31,7 @@ const obterUsuarioPorId = async (req, res) => {
                     }]
                 }
             ],
-            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
+            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl', 'dataEntradaAssociacao']
         });
         if (usuarioOnibus) {
             return res.status(200).json(usuarioOnibus);
@@ -75,7 +76,7 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = (req.body.data ? JSON.parse(req.body.data) : req.body);
+    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, dataEntradaAssociacao, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = (req.body.data ? JSON.parse(req.body.data) : req.body);
     const usuarioFile = req.file;
 
     try {
@@ -88,6 +89,7 @@ const criarUsuario = async (req, res) => {
             matricula,
             cursoId,
             associacaoId,
+            dataEntradaAssociacao,
             tipoAcesso,
             senha: hashedPassword,
             situacao,
@@ -114,7 +116,7 @@ const atualizarUsuario = async (req, res) => {
         const usuarioExistente = await Usuario.findByPk(id);
         const [atualizado] = await Usuario.update({ ...usuarioBody, fotoUrl: usuarioFile?.filename || null }, {
             where: { id: id },
-            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
+            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'dataEntradaAssociacao', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
         });
         if (atualizado) {
             try {
@@ -193,8 +195,9 @@ const excluirUsuario = async (req, res) => {
         }
         throw new Error('Usuário de ônibus não encontrado ou não excluído.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao excluir usuário de ônibus', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ title: 'Erro ao excluir usuário', message: erro.message });
     }
 };
 
