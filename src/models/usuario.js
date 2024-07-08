@@ -32,6 +32,7 @@ const Usuario = sequelize.define('usuario', {
     cursoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        onDelete: 'RESTRICT',
         references: {
             model: Curso,
             key: 'id'
@@ -40,10 +41,15 @@ const Usuario = sequelize.define('usuario', {
     associacaoId: {
         type: DataTypes.INTEGER,
         allowNull: true,
+        onDelete: 'RESTRICT',
         references: {
             model: Associacao,
             key: 'id'
         }
+    },
+    dataEntradaAssociacao: {
+        type: DataTypes.DATE,
+        allowNull: true,
     },
     tipoAcesso: {
         type: DataTypes.ENUM(Object.keys(TipoAcessoEnum)),
@@ -71,8 +77,8 @@ const Usuario = sequelize.define('usuario', {
     }
 });
 
-Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId' });
-Usuario.belongsTo(Curso, { foreignKey: 'cursoId' });
+Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
+Usuario.belongsTo(Curso, { foreignKey: 'cursoId', onDelete: 'RESTRICT', });
 
 
 module.exports = Usuario;

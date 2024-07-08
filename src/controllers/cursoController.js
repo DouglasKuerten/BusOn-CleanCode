@@ -2,6 +2,7 @@
 
 const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
+const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
 
@@ -82,8 +83,9 @@ const excluirCurso = async (req, res) => {
         }
         throw new Error('Curso não encontrado ou não excluído.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao excluir curso', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ title: 'Erro ao excluir curso', message: erro.message });
     }
 };
 

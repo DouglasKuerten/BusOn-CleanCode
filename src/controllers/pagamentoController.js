@@ -8,6 +8,8 @@ const Pagamento = require('../models/pagamento');
 const Usuario = require('../models/usuario');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
+const getFormattedSequelizeExceptions = require('../utils/Exceptions');
+const Parametro = require('../models/parametro');
 
 // Controller para obter um pagamento pelo ID
 const obterPagamentoPorId = async (req, res) => {
@@ -113,8 +115,9 @@ const excluirPagamento = async (req, res) => {
         }
         throw new Error('Pagamento não encontrado ou não excluído.');
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao excluir pagamento', error: error.message });
+        const erro = getFormattedSequelizeExceptions(error)
+        console.error(erro);
+        res.status(500).json({ title: 'Erro ao excluir pagamento', message: erro.message });
     }
 };
 
@@ -157,6 +160,68 @@ const reprovarPagamento = async (req, res) => {
         res.status(500).json({ message: 'Erro ao atualizar pagamento', error: error.message });
     }
 };
+const gerarPagamentosMensaisManualmente = async (req, res) => {
+    try {
+        const { associacaoId } = req.body;
+        console.log('associacaoId ', associacaoId)
+        const parametroPagamento = await Parametro.findOne({ where: { associacaoId: associacaoId } });
+
+        const usuariosPagamento = await Usuario.findAll({
+            where: {
+                associacaoId: associacaoId,
+                situacao: 'ATIVO'
+            }
+        });
+
+        for (const usuarioPagamento of usuariosPagamento) {
+            let valorPagamento = 0;
+            switch (usuarioPagamento.dataValues.diasUsoTransporte.length) {
+                case 1:
+                    valorPagamento = parametroPagamento.dataValues.valor1
+                    break;
+                case 2:
+                    valorPagamento = parametroPagamento.dataValues.valor2
+                    break;
+                case 3:
+                    valorPagamento = parametroPagamento.dataValues.valor3
+                    break;
+                case 4:
+                    valorPagamento = parametroPagamento.dataValues.valor4
+                    break;
+                case 5:
+                    valorPagamento = parametroPagamento.dataValues.valor5
+                    break;
+                case 6:
+                    valorPagamento = parametroPagamento.dataValues.valor6
+                    break;
+                case 7:
+                    valorPagamento = parametroPagamento.dataValues.valor7
+                    break;
+                default:
+                    valorPagamento = 0;
+                    break;
+            }
+            let dataVencimento = new Date(new Date().setDate(parametroPagamento.dataValues.diaVencimento));
+
+            let body = {
+                txId: null,
+                pixCopiaCola: null,
+                usuarioId: usuarioPagamento.dataValues.id,
+                tipo: "PIX",
+                valor: valorPagamento,
+                multa: 0,
+                dataVencimento: dataVencimento,
+                dataPagamento: null,
+                situacao: "ABERTO"
+            }
+            const novoPagamento = await Pagamento.create(body);
+        }
+        return res.status(200).json({ title: 'Pagamentos gerados com sucesso!', message: 'Pagamentos gerados com sucesso para todos os usuários da associação' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ title: 'Falha ao gerar pagamentos', message: error.message });
+    }
+};
 
 module.exports = {
     obterPagamentoPorId,
@@ -165,6 +230,7 @@ module.exports = {
     atualizarPagamento,
     excluirPagamento,
     aprovarPagamento,
-    reprovarPagamento
+    reprovarPagamento,
+    gerarPagamentosMensaisManualmente
 };
 

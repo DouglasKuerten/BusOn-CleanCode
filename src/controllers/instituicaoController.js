@@ -96,7 +96,7 @@ const excluirInstituicao = async (req, res) => {
     } catch (error) {
         const erro = getFormattedSequelizeExceptions(error)
         console.error(erro);
-        res.status(500).json({ message: 'Erro ao excluir instituição', error: erro.message });
+        res.status(500).json({ title: 'Erro ao excluir instituição', message: erro.message });
     }
 };
 
