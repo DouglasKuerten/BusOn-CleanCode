@@ -12,6 +12,26 @@ const Associacao = sequelize.define('associacao', {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    sigla: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    cidade: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    cep: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    uf: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    bairro: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
     endereco: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -21,6 +41,10 @@ const Associacao = sequelize.define('associacao', {
         allowNull: false,
     },
     logoUrl: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+    logoDeclaracaoUrl: {
         type: DataTypes.STRING,
         allowNull: true
     }

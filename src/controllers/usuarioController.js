@@ -20,7 +20,7 @@ const obterUsuarioPorId = async (req, res) => {
             include: [
                 {
                     model: Associacao,
-                    attributes: ['id', 'nome']
+                    attributes: ['id', 'sigla']
                 },
                 {
                     model: Curso,
@@ -52,7 +52,7 @@ const obterTodosUsuarios = async (req, res) => {
             include: [
                 {
                     model: Associacao,
-                    attributes: ['id', 'nome']
+                    attributes: ['id', 'sigla']
                 },
                 {
                     model: Curso,

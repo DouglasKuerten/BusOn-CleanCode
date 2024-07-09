@@ -39,7 +39,7 @@ const validarAutenticacao = (req, res, next) => {
                     include: [
                         {
                             model: Associacao,
-                            attributes: ['id', 'nome']
+                            attributes: ['id', 'sigla']
                         },
                         {
                             model: Curso,

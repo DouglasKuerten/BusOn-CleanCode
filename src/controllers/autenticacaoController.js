@@ -19,7 +19,7 @@ const authenticateUsuario = async (req, res) => {
                 include: [
                     {
                         model: Associacao,
-                        attributes: ['id', 'nome']
+                        attributes: ['id', 'sigla']
                     },
                     {
                         model: Curso,
@@ -60,7 +60,7 @@ const authenticateUsuario = async (req, res) => {
             cursoNome: user.curso?.nome,
             instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
-            associacaoNome: user.associacao?.nome,
+            associacaoSigla: user.associacao?.sigla,
             dataEntradaAssociacao: user.dataEntradaAssociacao,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
@@ -129,7 +129,7 @@ const validateToken = async (req, res) => {
             cursoNome: user.curso?.nome,
             instituicaoNome: user.curso?.instituicao?.nome,
             associacaoId: user.associacaoId,
-            associacaoNome: user.associacao?.nome,
+            associacaoSigla: user.associacao?.sigla,
             dataEntradaAssociacao: user.dataEntradaAssociacao,
             tipoAcesso: user.tipoAcesso,
             situacao: user.situacao,
