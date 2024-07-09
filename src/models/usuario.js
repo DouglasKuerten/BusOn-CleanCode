@@ -65,7 +65,8 @@ const Usuario = sequelize.define('usuario', {
     },
     diasUsoTransporte: {
         type: DataTypes.ARRAY(DataTypes.ENUM(Object.keys(DiasSemanaEnum))),
-        allowNull: false
+        allowNull: true,
+        defaultValue: [],
     },
     exigirRedefinicaoSenha: {
         type: DataTypes.BOOLEAN,

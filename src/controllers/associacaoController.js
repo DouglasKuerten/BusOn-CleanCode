@@ -42,8 +42,12 @@ const obterTodasAssociacoes = async (req, res) => {
 const criarAssociacao = async (req, res) => {
     try {
         const associacaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
-        const associacaoFile = req.file;
-        const novaAssociacao = await Associacao.create({ ...associacaoBody, logoUrl: associacaoFile?.filename || null });
+        const associacaoFiles = req.files;
+
+        const logoUrl = associacaoFiles.logo ? associacaoFiles.logo[0].filename : null;
+        const logoDeclaracaoUrl = associacaoFiles.logoDeclaracao ? associacaoFiles.logoDeclaracao[0].filename : null;
+
+        const novaAssociacao = await Associacao.create({ ...associacaoBody, logoUrl, logoDeclaracaoUrl });
         res.status(201).json(novaAssociacao);
     } catch (error) {
         const erro = getFormattedSequelizeExceptions(error)
@@ -57,16 +61,24 @@ const atualizarAssociacao = async (req, res) => {
     try {
         const { id } = req.params;
         const associacaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
-        const associacaoFile = req.file;
+        const associacaoFiles = req.files;
+
+        const logoUrl = associacaoFiles.logo ? associacaoFiles.logo[0].filename : null;
+        const logoDeclaracaoUrl = associacaoFiles.logoDeclaracao ? associacaoFiles.logoDeclaracao[0].filename : null;
+
         const associacaoExistente = await Associacao.findByPk(id);
 
-        const [atualizado] = await Associacao.update({ ...associacaoBody, logoUrl: associacaoFile?.filename || null }, {
+        const [atualizado] = await Associacao.update({ ...associacaoBody, logoUrl, logoDeclaracaoUrl }, {
             where: { id: id }
         });
         if (atualizado) {
             try {
                 if (associacaoExistente.logoUrl) {
                     const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', associacaoExistente.logoUrl);
+                    await fs.unlink(caminhoImagemAntiga);
+                }
+                if (associacaoExistente.logoDeclaracaoUrl) {
+                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', associacaoExistente.logoDeclaracaoUrl);
                     await fs.unlink(caminhoImagemAntiga);
                 }
             } catch (error) {

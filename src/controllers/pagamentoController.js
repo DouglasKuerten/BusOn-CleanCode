@@ -39,7 +39,7 @@ const obterTodosPagamentos = async (req, res) => {
                     attributes: ['id', 'nome', 'diasUsoTransporte', 'fotoUrl'],
                     include: [{
                         model: Associacao,
-                        attributes: ['id', 'nome'],
+                        attributes: ['id', 'sigla'],
                         where: whereClauseAssociacao,
                         required: true
                     },

@@ -12,11 +12,12 @@ const usuarioController = require('../controllers/usuarioController');
 const pagamentoController = require('../controllers/pagamentoController');
 const parametroController = require('../controllers/parametroController');
 const chatbotController = require('../controllers/chatbotController');
+const templateDocumentosController = require('../controllers/templateDocumentosController');
 const { validarAutenticacao, logout } = require('../middleware/autenticacao.middleware');
 
 const upload = multer({ storage: storage })
 
-router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro'], validarAutenticacao);
+router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/documentoTemplate'], validarAutenticacao);
 
 // Rotas para cadastro de usuário
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
@@ -35,9 +36,15 @@ router.post('/autenticacao/logout', validarAutenticacao, logout);
 // Rotas para Associação
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
 router.get('/associacao', associacaoController.obterTodasAssociacoes);
-router.post('/associacao', upload.single('logo'), associacaoController.criarAssociacao);
-router.put('/associacao/:id', upload.single('logo'), associacaoController.atualizarAssociacao);
+router.post('/associacao', upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'logoDeclaracao', maxCount: 1 }]), associacaoController.criarAssociacao);
+router.put('/associacao/:id', upload.fields([{ name: 'logo', maxCount: 1 }, { name: 'logoDeclaracao', maxCount: 1 }]), associacaoController.atualizarAssociacao);
 router.delete('/associacao/:id', associacaoController.excluirAssociacao);
+
+router.get('/template-documento/:id', templateDocumentosController.obterTemplateDocumentoPorId);
+router.get('/template-documento', templateDocumentosController.obterTodosTemplatesDocumentos);
+router.post('/template-documento', templateDocumentosController.criarTemplateDocumento);
+router.put('/template-documento/:id', templateDocumentosController.atualizarTemplateDocumento);
+router.delete('/template-documento/:id', templateDocumentosController.excluirTemplateDocumento);
 
 // Rotas para Instituição
 router.get('/instituicao/:id', instituicaoController.obterInstituicaoPorId);

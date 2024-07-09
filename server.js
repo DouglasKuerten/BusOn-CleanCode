@@ -20,6 +20,7 @@ app.use(cors())
 const Assistant = require('./src/models/assistant');
 const Thread = require('./src/models/thread');
 const Associacao = require('./src/models/associacao');
+const TemplateDocumento = require('./src/models/templateDocumento');
 const Parametro = require('./src/models/parametro');
 const Instituicao = require('./src/models/instituicao');
 const Curso = require('./src/models/curso');
