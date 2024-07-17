@@ -51,6 +51,4 @@ const Pagamento = sequelize.define('pagamento', {
 
 });
 
-Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
-
 module.exports = Pagamento;

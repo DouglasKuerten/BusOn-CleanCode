@@ -25,6 +25,5 @@ const Curso = sequelize.define('curso', {
     },
 })
 
-Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' }); // Definir a associação
 
 module.exports = Curso;

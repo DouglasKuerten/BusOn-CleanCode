@@ -17,9 +17,10 @@ const { validarAutenticacao, logout } = require('../middleware/autenticacao.midd
 
 const upload = multer({ storage: storage })
 
-router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/documentoTemplate'], validarAutenticacao);
+router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/template-documento'], validarAutenticacao);
 
 // Rotas para cadastro de usuário
+router.get('/usuario/completo', usuarioController.obterUsuariosCompleto);
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
 router.get('/usuario', usuarioController.obterTodosUsuarios);
 router.post('/usuario', upload.single('foto'), usuarioController.criarUsuario);

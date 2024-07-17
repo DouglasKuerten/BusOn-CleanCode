@@ -3,7 +3,6 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
 
-
 const Associacao = require('./associacao');
 const SimNaoEnum = require('../enum/SimNaoEnum');
 
@@ -62,9 +61,6 @@ const Parametro = sequelize.define('parametro', {
         type: DataTypes.ENUM(Object.keys(SimNaoEnum)),
         allowNull: false,
     }
-
-
 })
-Parametro.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'CASCADE' });
 
 module.exports = Parametro;
