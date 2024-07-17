@@ -27,6 +27,5 @@ const TemplateDocumento = sequelize.define('templateDocumento', {
         allowNull: false
     }
 })
-TemplateDocumento.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
 
 module.exports = TemplateDocumento;

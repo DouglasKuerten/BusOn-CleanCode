@@ -83,5 +83,5 @@ module.exports = {
     obterTodosTemplatesDocumentos,
     obterTemplateDocumentoPorId,
     atualizarTemplateDocumento,
-    excluirTemplateDocumento,
+    excluirTemplateDocumento
 };

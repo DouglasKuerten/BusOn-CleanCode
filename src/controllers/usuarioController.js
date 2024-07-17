@@ -10,6 +10,7 @@ const Instituicao = require('../models/instituicao');
 const fs = require('fs/promises');
 const path = require('path');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
+const Parametro = require('../models/parametro');
 
 
 // Controller para obter um usuário de ônibus pelo ID
@@ -31,13 +32,14 @@ const obterUsuarioPorId = async (req, res) => {
                     }]
                 }
             ],
-            attributes: ['id', 'nome', 'email', 'telefone', 'endereco', 'matricula', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl', 'dataEntradaAssociacao']
+            attributes: ['id', 'nome', 'email', 'telefone', 'cidade', 'cpf', 'matricula', 'tipoAcesso', 'cargo', 'situacao', 'diasUsoTransporte', 'fotoUrl', 'dataEntradaAssociacao']
         });
         if (usuarioOnibus) {
             return res.status(200).json(usuarioOnibus);
         }
         throw new Error('Usuário de ônibus não encontrado.');
     } catch (error) {
+        console.error(error)
         return res.status(500).json({ message: 'Erro ao obter usuário de ônibus', error: error.message });
     }
 };
@@ -63,7 +65,7 @@ const obterTodosUsuarios = async (req, res) => {
                     }]
                 }
             ],
-            attributes: ['id', 'nome', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl'],
+            attributes: ['id', 'nome', 'cpf', 'tipoAcesso', 'cargo', 'situacao', 'diasUsoTransporte', 'fotoUrl'],
             where: whereClause,
             order: orderClause
         });
@@ -76,7 +78,7 @@ const obterTodosUsuarios = async (req, res) => {
 
 // Controller para criar um novo usuário de ônibus
 const criarUsuario = async (req, res) => {
-    const { nome, email, telefone, endereco, matricula, cursoId, associacaoId, dataEntradaAssociacao, tipoAcesso, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = (req.body.data ? JSON.parse(req.body.data) : req.body);
+    const { nome, email, telefone, cidade, cpf, matricula, cursoId, associacaoId, dataEntradaAssociacao, tipoAcesso, cargo, senha, situacao, diasUsoTransporte, exigirRedefinicaoSenha } = (req.body.data ? JSON.parse(req.body.data) : req.body);
     const usuarioFile = req.file;
 
     try {
@@ -85,12 +87,14 @@ const criarUsuario = async (req, res) => {
             nome,
             email: email.toLowerCase(),
             telefone,
-            endereco,
+            cidade,
+            cpf,
             matricula,
             cursoId,
             associacaoId,
             dataEntradaAssociacao,
             tipoAcesso,
+            cargo,
             senha: hashedPassword,
             situacao,
             diasUsoTransporte,
@@ -116,7 +120,7 @@ const atualizarUsuario = async (req, res) => {
         const usuarioExistente = await Usuario.findByPk(id);
         const [atualizado] = await Usuario.update({ ...usuarioBody, fotoUrl: usuarioFile?.filename || null }, {
             where: { id: id },
-            fields: ['nome', 'email', 'telefone', 'endereco', 'matricula', 'cursoId', 'associacaoId', 'dataEntradaAssociacao', 'tipoAcesso', 'situacao', 'diasUsoTransporte', 'fotoUrl']
+            fields: ['nome', 'email', 'telefone', 'cidade', 'cpf', 'matricula', 'cursoId', 'associacaoId', 'dataEntradaAssociacao', 'tipoAcesso', 'cargo', 'situacao', 'diasUsoTransporte', 'fotoUrl']
         });
         if (atualizado) {
             try {
@@ -201,11 +205,81 @@ const excluirUsuario = async (req, res) => {
     }
 };
 
+const obterUsuariosCompleto = async (req, res) => {
+    try {
+        const whereClause = buildWhereClause(req.query.filters);
+        const orderClause = buildOrderByClause(req.query.orderBy);
+
+        const usuariosOnibus = await Usuario.findAll({
+            include: [
+                {
+                    model: Associacao,
+                    attributes: ['id', 'sigla'],
+                    include: [{
+                        model: Parametro,
+                        attributes: ['valor1', 'valor2', 'valor3', 'valor4', 'valor5', 'valor6']
+                    }]
+                },
+                {
+                    model: Curso,
+                    attributes: ['id', 'nome'],
+                    include: [{
+                        model: Instituicao,
+                        attributes: ['id', 'nome'],
+                    }]
+                }
+            ],
+            attributes: ['id', 'nome', 'cpf', 'tipoAcesso', 'cargo', 'situacao', 'diasUsoTransporte', 'fotoUrl'],
+            where: whereClause,
+            order: orderClause
+        });
+        const usuariosComMensalidade = usuariosOnibus.map(usuario => {
+            const parametros = usuario.associacao.parametro;
+            let valorMensalidade;
+            switch (Number(usuario.diasUsoTransporte.length)) {
+                case 1: // Dias de uso 1
+                    valorMensalidade = parametros.valor1;
+                    break;
+                case 2: // Dias de uso 2
+                    valorMensalidade = parametros.valor2;
+                    break;
+                case 3: // Dias de uso 3
+                    valorMensalidade = parametros.valor3;
+                    break;
+                case 4: // Dias de uso 4
+                    valorMensalidade = parametros.valor4;
+                    break;
+                case 5: // Dias de uso 5
+                    valorMensalidade = parametros.valor5;
+                    break;
+                case 6: // Dias de uso 6
+                    valorMensalidade = parametros.valor6;
+                    break;
+                case 7: // Dias de uso 6
+                    valorMensalidade = parametros.valor7;
+                    break;
+                default:
+                    valorMensalidade = 0;
+            }
+            return {
+                ...usuario.toJSON(),
+                valorMensalidade
+            };
+        });
+
+        res.status(200).json(usuariosComMensalidade);
+    } catch (error) {
+        console.error(error.data);
+        res.status(500).json({ message: 'Erro ao obter todos os usuários de ônibus', error: error.message });
+    }
+};
+
 module.exports = {
     obterUsuarioPorId,
     obterTodosUsuarios,
     criarUsuario,
     atualizarUsuario,
     atualizarSenhaUsuario,
-    excluirUsuario
+    excluirUsuario,
+    obterUsuariosCompleto
 };

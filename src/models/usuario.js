@@ -21,7 +21,11 @@ const Usuario = sequelize.define('usuario', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    endereco: {
+    cidade: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
+    cpf: {
         type: DataTypes.STRING,
         allowNull: true,
     },
@@ -55,6 +59,10 @@ const Usuario = sequelize.define('usuario', {
         type: DataTypes.ENUM(Object.keys(TipoAcessoEnum)),
         allowNull: false,
     },
+    cargo: {
+        type: DataTypes.STRING,
+        allowNull: true,
+    },
     senha: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -77,9 +85,5 @@ const Usuario = sequelize.define('usuario', {
         allowNull: true
     }
 });
-
-Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
-Usuario.belongsTo(Curso, { foreignKey: 'cursoId', onDelete: 'RESTRICT', });
-
 
 module.exports = Usuario;
