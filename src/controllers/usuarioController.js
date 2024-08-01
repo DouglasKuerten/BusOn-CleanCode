@@ -178,6 +178,36 @@ const atualizarSenhaUsuario = async (req, res) => {
         res.status(500).json({ message: 'Erro ao atualizar a senha do usuário', error: error.message });
     }
 };
+const resetarSenhaUsuario = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        // Buscar o usuário no banco de dados
+        const user = await Usuario.findByPk(id);
+        if (!user) {
+            return res.status(404).json({ message: 'Usuário não encontrado' });
+        }
+
+        // Gerar hash da nova senha
+        let senhaNova = user.dataValues.telefone;
+        const hashedPassword = await bcrypt.hash(senhaNova, 15);
+
+        // Atualizar a senha no banco de dados
+        const [atualizado] = await Usuario.update(
+            { senha: hashedPassword, exigirRedefinicaoSenha: true },
+            { where: { id: id } }
+        );
+
+        if (atualizado) {
+            return res.status(200).json({ message: 'Senha do usuário redefinida com sucesso' });
+        }
+
+        throw new Error('Senha não redefinida.');
+    } catch (error) {
+        console.error('Erro ao redefinir a senha do usuário:', error);
+        res.status(500).json({ message: 'Erro ao redefinir a senha do usuário', error: error.message });
+    }
+};
 // Controller para excluir um usuário de ônibus
 const excluirUsuario = async (req, res) => {
     try {
@@ -280,6 +310,7 @@ module.exports = {
     criarUsuario,
     atualizarUsuario,
     atualizarSenhaUsuario,
+    resetarSenhaUsuario,
     excluirUsuario,
     obterUsuariosCompleto
 };

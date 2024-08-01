@@ -11,6 +11,7 @@ const gerarUsuarioAdmin = async () => {
             telefone: '00000000000',
             cidade: null,
             matricula: null,
+            cpf: null,
             cursoId: null,
             associacaoId: null,
             tipoAcesso: 'ADMIN',
