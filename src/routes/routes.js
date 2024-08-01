@@ -26,6 +26,7 @@ router.get('/usuario', usuarioController.obterTodosUsuarios);
 router.post('/usuario', upload.single('foto'), usuarioController.criarUsuario);
 router.put('/usuario/:id', upload.single('foto'), usuarioController.atualizarUsuario);
 router.put('/usuario/atualizar-senha/:id', usuarioController.atualizarSenhaUsuario);
+router.put('/usuario/resetar-senha/:id', usuarioController.resetarSenhaUsuario);
 router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
 // Rota para autenticar o usuário e gerar um token JWT
