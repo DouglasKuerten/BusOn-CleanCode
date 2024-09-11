@@ -1,6 +1,7 @@
 const Parametro = require('../../models/parametro');
 const Usuario = require('../../models/usuario');
 const Pagamento = require('../../models/pagamento');
+const { convertDateToUTC } = require('../../utils/converterDateToUtc');
 
 async function gerarPagamentosMensais(req, res) {
     try {
@@ -43,7 +44,7 @@ async function gerarPagamentosMensais(req, res) {
                         valorPagamento = 0;
                         break;
                 }
-                let dataVencimento = new Date(new Date().setDate(parametroPagamento.dataValues.diaVencimento));
+                let dataVencimento = new Date(convertDateToUTC(new Date())).setDate(parametroPagamento.dataValues.diaVencimento);
 
                 let body = {
                     txId: null,

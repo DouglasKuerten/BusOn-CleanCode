@@ -10,6 +10,7 @@ const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
 const Parametro = require('../models/parametro');
+const { convertDateToUTC } = require('../utils/converterDateToUtc');
 
 // Controller para obter um pagamento pelo ID
 const obterPagamentoPorId = async (req, res) => {
@@ -163,7 +164,6 @@ const reprovarPagamento = async (req, res) => {
 const gerarPagamentosMensaisManualmente = async (req, res) => {
     try {
         const { associacaoId } = req.body;
-        console.log('associacaoId ', associacaoId)
         const parametroPagamento = await Parametro.findOne({ where: { associacaoId: associacaoId } });
 
         const usuariosPagamento = await Usuario.findAll({
@@ -201,7 +201,7 @@ const gerarPagamentosMensaisManualmente = async (req, res) => {
                     valorPagamento = 0;
                     break;
             }
-            let dataVencimento = new Date(new Date().setDate(parametroPagamento.dataValues.diaVencimento));
+            let dataVencimento = new Date(convertDateToUTC(new Date())).setDate(parametroPagamento.dataValues.diaVencimento);
 
             let body = {
                 txId: null,

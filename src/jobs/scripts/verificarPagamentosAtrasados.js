@@ -1,7 +1,9 @@
+const { toZonedTime, format } = require('date-fns-tz')
 const Parametro = require('../../models/parametro');
 const Usuario = require('../../models/usuario');
 const Pagamento = require('../../models/pagamento');
 const { Op } = require('sequelize');
+const { convertDateToUTC } = require('../../utils/converterDateToUtc');
 
 async function verificarPagamentosAtrasados() {
     try {
@@ -19,7 +21,7 @@ async function verificarPagamentosAtrasados() {
                         [Op.or]: ['ABERTO', 'ATRASADO']
                     },
                     dataVencimento: {
-                        [Op.lt]: new Date()
+                        [Op.lt]: convertDateToUTC(new Date())
                     }
                 }
             });
@@ -30,9 +32,9 @@ async function verificarPagamentosAtrasados() {
                 let dataVencimento = pagamento.dataValues.dataVencimento;
                 let dataComToleranciaDeMulta = dataVencimento.setDate(dataVencimento.getDate() + diasToleranciaMulta);
 
-                if (dataVencimento < new Date()) {
+                if (dataVencimento < convertDateToUTC(new Date())) {
                     pagamento.situacao = 'ATRASADO';
-                    if (dataComToleranciaDeMulta < new Date()) {
+                    if (dataComToleranciaDeMulta < convertDateToUTC(new Date())) {
                         pagamento.multa = valorMultaPorDia * calcularDiferencaDias(new Date().getTime(), new Date(dataComToleranciaDeMulta).getTime());
                     }
                     await pagamento.save();
