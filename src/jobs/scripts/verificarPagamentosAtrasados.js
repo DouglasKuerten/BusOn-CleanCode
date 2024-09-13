@@ -1,4 +1,3 @@
-const { toZonedTime, format } = require('date-fns-tz')
 const Parametro = require('../../models/parametro');
 const Usuario = require('../../models/usuario');
 const Pagamento = require('../../models/pagamento');
