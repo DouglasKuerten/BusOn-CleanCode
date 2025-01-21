@@ -22,7 +22,7 @@ const obterTodosTemplatesDocumentos = async (req, res) => {
                     attributes: ['id', 'sigla'],
                 }
             ],
-            attributes: ['id', 'nome', 'situacao']
+            attributes: ['id', 'nome', 'situacao', 'tipo_impressao']
         });
         res.status(200).json(templates);
     } catch (error) {

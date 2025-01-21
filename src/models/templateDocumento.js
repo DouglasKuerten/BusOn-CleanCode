@@ -3,6 +3,7 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../../databaseConnection');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 const Associacao = require('./associacao');
+const TipoImpressaoEnum = require('../enum/TipoImpressaoEnum');
 
 const TemplateDocumento = sequelize.define('templateDocumento', {
     associacaoId: {
@@ -21,6 +22,11 @@ const TemplateDocumento = sequelize.define('templateDocumento', {
     situacao: {
         type: DataTypes.ENUM(Object.keys(AtivoInativoEnum)),
         allowNull: false,
+    },
+    tipoImpressao: {
+        type: DataTypes.ENUM(Object.keys(TipoImpressaoEnum)),
+        allowNull: false,
+        defaultValue: TipoImpressaoEnum.UM_DOCUMENTO_PARA_UM_USUARIO
     },
     htmlTemplate: {
         type: DataTypes.TEXT,
