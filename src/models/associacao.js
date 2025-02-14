@@ -5,7 +5,7 @@ const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 
 const Associacao = sequelize.define('associacao', {
     cnpj: {
-        type: DataTypes.BIGINT,
+        type: DataTypes.STRING,
         allowNull: true
     },
     nome: {
@@ -21,7 +21,7 @@ const Associacao = sequelize.define('associacao', {
         allowNull: false,
     },
     cep: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
     },
     uf: {
