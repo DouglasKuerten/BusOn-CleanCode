@@ -1,6 +1,7 @@
 const express = require('express')
 const multer = require('multer')
 const { storage } = require('./multerConfig')
+const errorHandler = require('./src/middleware/errorHandler.middleware')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
@@ -63,6 +64,6 @@ process.on('SIGINT', function () {
     // exit node.js app
     process.exit(0);
 });
-
+app.use(errorHandler)
 const Job = require('./src/jobs/job');
 

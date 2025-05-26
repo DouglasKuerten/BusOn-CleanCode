@@ -1,6 +1,6 @@
 const SimNaoEnum = {
-    SIM: "Sim",
-    NAO: "Não",
+    SIM: "SIM",
+    NAO: "NAO",
 }
 
 module.exports = SimNaoEnum;

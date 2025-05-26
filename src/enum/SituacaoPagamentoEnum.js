@@ -1,7 +1,7 @@
 const SituacaoPagamentoEnum = {
-    ABERTO: "Aberto",
+    ABERTO: "ABERTO",
     PAGO: "PAGO",
-    ATRASADO: "Atrasado"
+    ATRASADO: "ATRASADO"
 }
 
 module.exports = SituacaoPagamentoEnum;

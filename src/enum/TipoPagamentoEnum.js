@@ -1,6 +1,6 @@
 const TipoPagamentoEnum = {
-    PIX: "Pix",
-    DINHEIRO: "Dinheiro"
+    PIX: "PIX",
+    DINHEIRO: "DINHEIRO"
 }
 
 module.exports = TipoPagamentoEnum;

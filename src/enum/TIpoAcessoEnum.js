@@ -1,7 +1,7 @@
 const TipoAcessoEnum = {
-    ALUNO: "Aluno",
-    GESTAO: "Gestao",
-    ADMIN: "Admin"
+    ALUNO: "ALUNO",
+    GESTAO: "GESTAO",
+    ADMIN: "ADMIN"
 }
 
 module.exports = TipoAcessoEnum;

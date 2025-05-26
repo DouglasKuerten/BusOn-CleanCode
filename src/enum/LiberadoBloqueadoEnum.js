@@ -1,6 +1,6 @@
 const LiberadoBloqueadoEnum = {
-    LIBERADO: "Liberado",
-    BLOQUEADO: "Bloqueado",
+    LIBERADO: "LIBERADO",
+    BLOQUEADO: "BLOQUEADO",
 }
 
 module.exports = LiberadoBloqueadoEnum;

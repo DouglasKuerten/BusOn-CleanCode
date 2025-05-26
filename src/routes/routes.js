@@ -14,7 +14,8 @@ const parametroController = require('../controllers/parametroController');
 const chatbotController = require('../controllers/chatbotController');
 const templateDocumentosController = require('../controllers/templateDocumentosController');
 const { validarAutenticacao, logout } = require('../middleware/autenticacao.middleware');
-
+const { validate } = require('../middleware/validate.middleware');
+const { pagamentoBodySchema } = require('../validators/pagamentoSchema');
 const upload = multer({ storage: storage })
 
 router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/template-documento'], validarAutenticacao);
@@ -66,7 +67,7 @@ router.delete('/curso/:id', cursoController.excluirCurso);
 // Rotas para Pagamento
 router.get('/pagamento/:id', pagamentoController.obterPagamentoPorId);
 router.get('/pagamento', pagamentoController.obterTodosPagamentos);
-router.post('/pagamento', pagamentoController.criarPagamento);
+router.post('/pagamento', validate(pagamentoBodySchema, 'body'), pagamentoController.criarPagamento);
 router.put('/pagamento/:id', pagamentoController.atualizarPagamento);
 router.put('/pagamento/aprovar/:id', pagamentoController.aprovarPagamento);
 router.put('/pagamento/reprovar/:id', pagamentoController.reprovarPagamento);
@@ -74,7 +75,6 @@ router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
 router.post('/pagamento/gerar-manualmente', pagamentoController.gerarPagamentosMensaisManualmente);
 
 // Rotas para Parâmetro
-router.get('/parametro/:id', parametroController.obterParametroPorId);
 router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacao);
 router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
