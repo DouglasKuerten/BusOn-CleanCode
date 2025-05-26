@@ -7,6 +7,7 @@ const { buildWhereClause } = require('../utils/buildWhereClause');
 const BusonException = require('../exceptions/BusonException');
 const SequelizeException = require('../exceptions/SequelizeException');
 const { StatusCodes } = require('http-status-codes');
+const cursoSchema = require('../validators/CursoSchema');
 
 class CursoService {
     async obterCursoPorId(id) {
@@ -32,6 +33,12 @@ class CursoService {
                 order: orderClause
             });
         } catch (error) {
+            if (error.name === 'SequelizeValidationError') {
+                throw new BusonException(
+                    StatusCodes.BAD_REQUEST,
+                    'Filtros inválidos para buscar cursos.'
+                );
+            }
             if (error.name && error.name.startsWith('Sequelize')) {
                 throw new SequelizeException(error);
             }
@@ -51,20 +58,20 @@ class CursoService {
 
     async criarCurso(dados) {
         try {
+            await cursoSchema.validate(dados, { abortEarly: false });
 
-            if (dados.instituicaoId) {
-                await this.validarInstituicao(dados.instituicaoId);
-            } else {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'O ID da instituição é obrigatório.'
-                );
-            }
+            await this.validarInstituicao(dados.instituicaoId);
 
             return await Curso.create(dados);
         } catch (error) {
             if (error instanceof BusonException) {
                 throw error;
+            }
+            if (error.name === 'ValidationError') {
+                throw new BusonException(
+                    StatusCodes.BAD_REQUEST,
+                    error.errors.join(', ')
+                );
             }
             if (error.name === 'SequelizeValidationError') {
                 throw new BusonException(
@@ -88,6 +95,8 @@ class CursoService {
     async atualizarCurso(id, dados) {
         try {
 
+            await cursoSchema.validate(dados, { abortEarly: false });
+
             if (dados.instituicaoId) {
                 await this.validarInstituicao(dados.instituicaoId);
             }
@@ -104,6 +113,12 @@ class CursoService {
         } catch (error) {
             if (error instanceof BusonException) {
                 throw error;
+            }
+            if (error.name === 'ValidationError') {
+                throw new BusonException(
+                    StatusCodes.BAD_REQUEST,
+                    error.errors.join(', ')
+                );
             }
             if (error.name === 'SequelizeValidationError') {
                 throw new BusonException(
@@ -131,6 +146,9 @@ class CursoService {
                 throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
             }
         } catch (error) {
+            if (error instanceof BusonException) {
+                throw error;
+            }
             if (error.name === 'SequelizeForeignKeyConstraintError') {
                 throw new BusonException(
                     StatusCodes.CONFLICT,

@@ -8,6 +8,7 @@ const SequelizeException = require('../exceptions/SequelizeException');
 const { StatusCodes } = require('http-status-codes');
 const fs = require('fs/promises');
 const path = require('path');
+const instituicaoSchema = require('../validators/InstituicaoSchema');
 
 class InstituicaoService {
     async obterInstituicaoPorId(id) {
@@ -45,12 +46,7 @@ class InstituicaoService {
         try {
             const instituicaoBody = dados.data ? JSON.parse(dados.data) : dados;
 
-            if (!instituicaoBody.nome) {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'O nome da instituição é obrigatório.'
-                );
-            }
+            await instituicaoSchema.validate(instituicaoBody, { abortEarly: false });
 
             return await Instituicao.create({
                 ...instituicaoBody,
@@ -59,6 +55,12 @@ class InstituicaoService {
         } catch (error) {
             if (error instanceof BusonException) {
                 throw error;
+            }
+            if (error.name === 'ValidationError') {
+                throw new BusonException(
+                    StatusCodes.BAD_REQUEST,
+                    error.errors.join(', ')
+                );
             }
             if (error.name === 'SyntaxError') {
                 throw new BusonException(
@@ -94,6 +96,9 @@ class InstituicaoService {
     async atualizarInstituicao(id, dados, arquivo) {
         try {
             const instituicaoBody = dados.data ? JSON.parse(dados.data) : dados;
+
+            await instituicaoSchema.validate(instituicaoBody, { abortEarly: false });
+
             const instituicaoExistente = await this.obterInstituicaoPorId(id);
 
             const [atualizado] = await Instituicao.update(
@@ -117,6 +122,12 @@ class InstituicaoService {
             if (error instanceof BusonException) {
                 throw error;
             }
+            if (error.name === 'ValidationError') {
+                throw new BusonException(
+                    StatusCodes.BAD_REQUEST,
+                    error.errors.join(', ')
+                );
+            }
             if (error.name === 'SyntaxError') {
                 throw new BusonException(
                     StatusCodes.BAD_REQUEST,
@@ -138,7 +149,7 @@ class InstituicaoService {
             if (error.name === 'SequelizeForeignKeyConstraintError') {
                 throw new BusonException(
                     StatusCodes.BAD_REQUEST,
-                    'Não pode excluir porque há registros dependentes na tabela instituicaos.'
+                    'Não foi possível criar a instituição. Associação não encontrada.'
                 );
             }
             if (error.name && error.name.startsWith('Sequelize')) {
