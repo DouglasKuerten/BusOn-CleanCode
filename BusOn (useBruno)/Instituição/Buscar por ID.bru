@@ -1,0 +1,15 @@
+meta {
+  name: Buscar por ID
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{API_URL}}/instituicao/1
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}

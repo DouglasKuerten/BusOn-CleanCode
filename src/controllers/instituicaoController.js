@@ -1,102 +1,53 @@
 'use strict';
 
-const Instituicao = require('../models/instituicao');
-const getFormattedSequelizeExceptions = require('../utils/Exceptions');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const { buildWhereClause } = require('../utils/buildWhereClause');
-const fs = require('fs/promises');
-const path = require('path');
+const InstituicaoService = require('../services/InstituicaoService');
+const { StatusCodes } = require('http-status-codes');
 
-// Controller para obter uma instituição pelo ID
-const obterInstituicaoPorId = async (req, res) => {
+const obterInstituicaoPorId = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const instituicao = await Instituicao.findByPk(id);
-        if (instituicao) {
-            return res.status(200).json(instituicao);
-        }
-        throw new Error('Instituição não encontrada.');
+        const instituicao = await InstituicaoService.obterInstituicaoPorId(id);
+        res.status(StatusCodes.OK).json(instituicao);
     } catch (error) {
-        return res.status(500).json({ message: 'Erro ao obter instituição', error: error.message });
+        next(error);
     }
 };
 
-// Controller para obter todas as instituições
-const obterTodasInstituicoes = async (req, res) => {
+const obterTodasInstituicoes = async (req, res, next) => {
     try {
-        const whereClause = buildWhereClause(req.query.filters);
-        const orderClause = buildOrderByClause(req.query.orderBy)
-
-        const instituicoes = await Instituicao.findAll({
-            where: whereClause,
-            order: orderClause
-        });
-        res.status(200).json(instituicoes);
+        const instituicoes = await InstituicaoService.obterTodasInstituicoes(req.query);
+        res.status(StatusCodes.OK).json(instituicoes);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao obter todas as instituições', error: error.message });
+        next(error);
     }
 };
 
-// Controller para criar uma nova instituição
-const criarInstituicao = async (req, res) => {
+const criarInstituicao = async (req, res, next) => {
     try {
-        const instituicaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
-        const instituicaoFile = req.file;
-        const novaInstituicao = await Instituicao.create({ ...instituicaoBody, logoUrl: instituicaoFile?.filename || null });
-        res.status(201).json(novaInstituicao);
+        const novaInstituicao = await InstituicaoService.criarInstituicao(req.body, req.file);
+        res.status(StatusCodes.CREATED).json(novaInstituicao);
     } catch (error) {
-        const erro = getFormattedSequelizeExceptions(error)
-        console.error(erro);
-        res.status(500).json({ message: 'Erro ao criar nova instituição', error: erro.message });
+        next(error);
     }
 };
 
-// Controller para atualizar uma instituição existente
-const atualizarInstituicao = async (req, res) => {
+const atualizarInstituicao = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const instituicaoBody = req.body.data ? JSON.parse(req.body.data) : req.body;
-        const instituicaoFile = req.file;
-        const instituicaoExistente = await Instituicao.findByPk(id);
-
-        const [atualizado] = await Instituicao.update({ ...instituicaoBody, logoUrl: instituicaoFile?.filename || null }, {
-            where: { id: id }
-        });
-        if (atualizado) {
-            try {
-                if (instituicaoExistente.logoUrl) {
-                    const caminhoImagemAntiga = path.join(__dirname, '..', '..', 'uploads', instituicaoExistente.logoUrl);
-                    await fs.unlink(caminhoImagemAntiga);
-                }
-            } catch (error) {
-                console.log(error)
-            }
-            return res.status(200).json({ message: 'Instituição atualizada com sucesso!' });
-        }
-        throw new Error('Instituição não encontrada ou não atualizada.');
+        const instituicaoAtualizada = await InstituicaoService.atualizarInstituicao(id, req.body, req.file);
+        res.status(StatusCodes.OK).json(instituicaoAtualizada);
     } catch (error) {
-        const erro = getFormattedSequelizeExceptions(error)
-        console.error(erro);
-        res.status(500).json({ message: 'Erro ao atualizar instituição', error: erro.message });
+        next(error);
     }
 };
 
-// Controller para excluir uma instituição
-const excluirInstituicao = async (req, res) => {
+const excluirInstituicao = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const excluido = await Instituicao.destroy({
-            where: { id: id }
-        });
-        if (excluido) {
-            return res.status(200).json({ message: 'Instituição excluída com sucesso.' });
-        }
-        throw new Error('Instituição não encontrada ou não excluída.');
+        await InstituicaoService.excluirInstituicao(id);
+        res.status(StatusCodes.NO_CONTENT).send();
     } catch (error) {
-        const erro = getFormattedSequelizeExceptions(error)
-        console.error(erro);
-        res.status(500).json({ title: 'Erro ao excluir instituição', message: erro.message });
+        next(error);
     }
 };
 

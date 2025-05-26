@@ -1,0 +1,15 @@
+meta {
+  name: Deletar
+  type: http
+  seq: 3
+}
+
+delete {
+  url: {{API_URL}}/curso/3
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}

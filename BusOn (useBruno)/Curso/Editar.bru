@@ -1,0 +1,23 @@
+meta {
+  name: Editar
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/curso/3
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "instituicaoId": 6,
+    "nome": "Jornalismo",
+    "situacao": "ATIVO"
+  }
+}

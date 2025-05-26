@@ -1,0 +1,15 @@
+meta {
+  name: Buscar Todas
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{API_URL}}/curso
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
