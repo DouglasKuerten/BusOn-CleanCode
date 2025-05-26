@@ -1,0 +1,32 @@
+meta {
+  name: Cadastrar Gestão
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{API_URL}}/usuario
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "nome": "Usuário Gestão",
+    "email": "usuario@gestao.com",
+    "telefone": "5548999999999",
+    "endereco": null,
+    "matricula": null,
+    "cursoId": null,
+    "associacaoId": 1,
+    "tipoAcesso": "GESTAO",
+    "senha": "gestao",
+    "situacao": "ATIVO",
+    "diasUsoTransporte": ["SEGUNDA", "TERCA", "SEXTA"],
+    "exigirRedefinicaoSenha": true
+  }
+}

@@ -1,0 +1,31 @@
+meta {
+  name: Deletar
+  type: http
+  seq: 5
+}
+
+delete {
+  url: {{API_URL}}/usuario/2
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "nome": "Usuário Aluno",
+    "email": "usuario@aluno.com",
+    "telefone": "5548999999999",
+    "endereco": null,
+    "matricula": null,
+    "cursoId": null,
+    "associacaoId": 1,
+    "tipoAcesso": "ALUNO",
+    "senha": "aluno",
+    "situacao": "ATIVO",
+    "diasUsoTransporte": ["TERCA"]
+  }
+}

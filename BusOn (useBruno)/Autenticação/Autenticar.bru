@@ -1,0 +1,18 @@
+meta {
+  name: Autenticar
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_URL}}/autenticacao/autenticar
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email": "admin@admin.com",
+    "senha": "admin"
+  }
+}

@@ -1,0 +1,17 @@
+meta {
+  name: Atualizar Token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{API_URL}}/autenticacao/atualizar-token
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "refreshToken": "254eab23-0753-4fc8-b87f-d8523a69d86c"
+  }
+}

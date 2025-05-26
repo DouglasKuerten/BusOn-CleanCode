@@ -1,0 +1,21 @@
+meta {
+  name: Atualizar Senha
+  type: http
+  seq: 6
+}
+
+put {
+  url: {{API_URL}}/usuario/atualizar-senha/2
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "senhaNova": "dgk"
+  }
+}
