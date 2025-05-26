@@ -1,12 +1,12 @@
 'use strict';
 
 const { Sequelize } = require('sequelize');
-const Pagamento = require('../models/pagamento');
+const Pagamento = require('../models/Pagamento');
 const Usuario = require('../models/usuario');
-const Associacao = require('../models/associacao');
+const Associacao = require('../models/Associacao');
 const Curso = require('../models/curso');
 const Instituicao = require('../models/instituicao');
-const Parametro = require('../models/parametro');
+const Parametro = require('../models/Parametro');
 const { buildOrderByClause } = require('../utils/buildOrderByClause');
 const { buildWhereClause } = require('../utils/buildWhereClause');
 const getFormattedSequelizeExceptions = require('../utils/Exceptions');
@@ -16,7 +16,7 @@ const { StatusCodes } = require('http-status-codes');
 const SequelizeException = require('../exceptions/SequelizeException');
 const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
-const pagamentoSchema = require('../validators/pagamentoSchema');
+const pagamentoSchema = require('../validators/PagamentoSchema');
 
 class PagamentoService {
   async obterPagamentoPorId(id) {

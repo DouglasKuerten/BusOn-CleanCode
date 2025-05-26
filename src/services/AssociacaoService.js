@@ -2,6 +2,7 @@ const Associacao = require('../models/associacao');
 const fs = require('fs/promises');
 const path = require('path');
 const associacaoSchema = require('../validators/AssociacaoSchema');
+const BusonException = require('../exceptions/BusonException');
 
 class AssociacaoService {
   async obterAssociacaoPorId(id) {
@@ -42,7 +43,7 @@ class AssociacaoService {
     const [updated] = await Associacao.update({ ...associacaoData, logoUrl, logoDeclaracaoUrl }, { where: { id } });
 
     if (!updated) {
-      throw new Error('Falha ao atualizar associação');
+      throw new BusonException(StatusCodes.NOT_FOUND, 'Pagamento não encontrado.');
     }
 
     await this.deletarImagensAntigas(associacaoExistente, files);

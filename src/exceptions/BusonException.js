@@ -1,8 +1,10 @@
 class BusonException extends Error {
-    constructor(statusCode = 500, message) {
-        super(message);
-        this.statusCode = statusCode;
-    }
+  constructor(statusCode = 500, message, originalError) {
+    super(message);
+    this.name = 'BusonException';
+    this.statusCode = statusCode;
+    this.originalError = originalError;
+  }
 }
 
 module.exports = BusonException;

@@ -1,108 +1,69 @@
-'use strict';
+const { StatusCodes } = require('http-status-codes');
+const ParametroService = require('../services/ParametroService');
 
-const Parametro = require('../models/parametro');
-
-// Controller para obter um parâmetro pelo ID
-const obterParametroPorId = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const parametro = await Parametro.findByPk(id);
-        if (parametro) {
-            return res.status(200).json(parametro);
-        }
-        const error = new Error("Erro ao obter parâmetros")
-        error.data = {
-            title: 'Parâmetros da associação não foram encontrados!',
-            message: 'Cadastre os parâmetros da associação para prosseguir.'
-        }
-        throw error;
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({ title: error?.data?.title || 'Erro ao buscar os parâmetros', message: error?.data?.message || error.message });
-    }
-};
-// Controller para obter um parâmetro pelo ID
-const obterParametroDaAssociacao = async (req, res) => {
-    try {
-        const { associacaoId } = req.params;
-        const parametro = await Parametro.findOne({ where: { associacaoId: associacaoId } });
-        if (parametro) {
-            return res.status(200).json(parametro);
-        }
-        const error = new Error("Erro ao obter parâmetros")
-        error.data = {
-            title: 'Parâmetros da associação não foram encontrados!',
-            message: 'Cadastre os parâmetros da associação para prosseguir.'
-        }
-        throw error;
-    } catch (error) {
-        console.error(error)
-        return res.status(500).json({ title: error?.data?.title || 'Erro ao buscar os parâmetros', message: error?.data?.message || error.message });
-    }
+const obterParametroPorId = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const parametro = await ParametroService.obterParametroPorId(id);
+    res.status(StatusCodes.OK).json(parametro);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Controller para obter todos os parâmetros
-const obterTodosParametros = async (req, res) => {
-    try {
-        const parametros = await Parametro.findAll();
-        res.status(200).json(parametros);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao obter todos os parâmetros', error: error.message });
-    }
+const obterParametroDaAssociacaoPorId = async (req, res, next) => {
+  try {
+    const { associacaoId } = req.params;
+    const parametro = await ParametroService.obterParametroDaAssociacaoPorId(associacaoId);
+    res.status(StatusCodes.OK).json(parametro);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Controller para criar um novo parâmetro
-const criarParametro = async (req, res) => {
-    try {
-        const novoParametro = await Parametro.create(req.body);
-        res.status(201).json(novoParametro);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao criar novo parâmetro', error: error.message });
-    }
+const obterTodosParametros = async (req, res, next) => {
+  try {
+    const parametros = await ParametroService.listarTodosParametros();
+    res.status(StatusCodes.OK).json(parametros);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Controller para atualizar um parâmetro existente
-const atualizarParametro = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const [atualizado] = await Parametro.update(req.body, {
-            where: { id: id }
-        });
-        if (atualizado) {
-            const parametroAtualizado = await Parametro.findByPk(id);
-            return res.status(200).json(parametroAtualizado);
-        }
-        throw new Error('Parâmetro não encontrado ou não atualizado.');
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao atualizar parâmetro', error: error.message });
-    }
+const criarParametro = async (req, res, next) => {
+  try {
+    const novoParametro = await ParametroService.criarParametro(req.body);
+    res.status(StatusCodes.CREATED).json(novoParametro);
+  } catch (error) {
+    next(error);
+  }
 };
 
-// Controller para excluir um parâmetro
-const excluirParametro = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const excluido = await Parametro.destroy({
-            where: { id: id }
-        });
-        if (excluido) {
-            return res.status(200).json({ message: 'Parâmetro excluído com sucesso.' });
-        }
-        throw new Error('Parâmetro não encontrado ou não excluído.');
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erro ao excluir parâmetro', error: error.message });
-    }
+const atualizarParametro = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const parametroAtualizado = await ParametroService.atualizarParametro(id, req.body);
+    res.status(StatusCodes.OK).json(parametroAtualizado);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const excluirParametro = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    await ParametroService.excluirParametro(id);
+    return res.status(StatusCodes.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
-    obterParametroPorId,
-    obterTodosParametros,
-    obterParametroDaAssociacao,
-    criarParametro,
-    atualizarParametro,
-    excluirParametro
+  obterParametroPorId,
+  obterTodosParametros,
+  obterParametroDaAssociacaoPorId,
+  criarParametro,
+  atualizarParametro,
+  excluirParametro,
 };

@@ -4,13 +4,13 @@ const { storage } = require('../../multerConfig');
 
 const router = express.Router();
 
-const associacaoController = require('../controllers/associacaoController');
+const associacaoController = require('../controllers/AssociacaoController');
 const instituicaoController = require('../controllers/instituicaoController');
 const cursoController = require('../controllers/cursoController');
 const autenticacaoController = require('../controllers/autenticacaoController');
 const usuarioController = require('../controllers/usuarioController');
-const pagamentoController = require('../controllers/pagamentoController');
-const parametroController = require('../controllers/parametroController');
+const pagamentoController = require('../controllers/PagamentoController');
+const parametroController = require('../controllers/ParametroController');
 const chatbotController = require('../controllers/chatbotController');
 const templateDocumentosController = require('../controllers/templateDocumentosController');
 const { validarAutenticacao, logout } = require('../middleware/autenticacao.middleware');
@@ -88,7 +88,7 @@ router.post('/pagamento/gerar-manualmente/:associacaoId', pagamentoController.ge
 
 // Rotas para Parâmetro
 router.get('/parametro/:id', parametroController.obterParametroPorId);
-router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacao);
+router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacaoPorId);
 router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
 router.put('/parametro/:id', parametroController.atualizarParametro);

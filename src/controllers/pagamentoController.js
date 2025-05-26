@@ -1,4 +1,3 @@
-const BusonException = require('../exceptions/BusonException');
 const PagamentoService = require('../services/PagamentoService');
 const { StatusCodes } = require('http-status-codes');
 
@@ -32,7 +31,8 @@ const criarPagamento = async (req, res, next) => {
 
 const atualizarPagamento = async (req, res, next) => {
   try {
-    const resultado = await PagamentoService.atualizarPagamento(req.params.id, req.body);
+    const { id } = req.params;
+    const resultado = await PagamentoService.atualizarPagamento(id, req.body);
     res.status(StatusCodes.OK).json(resultado);
   } catch (error) {
     next(error);
