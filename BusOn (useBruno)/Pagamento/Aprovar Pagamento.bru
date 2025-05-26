@@ -1,11 +1,11 @@
 meta {
-  name: Buscar Todos
+  name: Aprovar Pagamento
   type: http
-  seq: 8
+  seq: 6
 }
 
-get {
-  url: {{API_URL}}/usuario
+put {
+  url: {{API_URL}}/pagamento/aprovar/3
   body: none
   auth: bearer
 }

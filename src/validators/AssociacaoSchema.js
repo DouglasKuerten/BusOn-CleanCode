@@ -1,14 +1,24 @@
 const yup = require('yup');
+const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
 
 const associacaoSchema = yup.object().shape({
+  cnpj: yup
+    .string()
+    .required('CNPJ é obrigatório')
+    .matches(/^\d{14}$/, 'CNPJ deve conter 14 dígitos numéricos'),
   nome: yup.string().required('Nome é obrigatório'),
-  cnpj: yup.string().required('CNPJ é obrigatório'),
-  email: yup.string().email('Email inválido').required('Email é obrigatório'),
-  telefone: yup.string().required('Telefone é obrigatório'),
-  endereco: yup.string().required('Endereço é obrigatório'),
+  sigla: yup.string().required('Sigla é obrigatória'),
   cidade: yup.string().required('Cidade é obrigatória'),
-  estado: yup.string().required('Estado é obrigatório'),
-  cep: yup.string().required('CEP é obrigatório'),
+  bairro: yup.string().required('Bairro é obrigatório'),
+  endereco: yup.string().required('Endereço é obrigatório'),
+  cep: yup
+    .string()
+    .required('CEP é obrigatório')
+    .matches(/^\d{8}$/, 'CEP deve conter 8 dígitos numéricos'),
+  uf: yup.string().required('UF é obrigatório').length(2, 'UF deve conter 2 letras').uppercase(),
+  situacao: yup.mixed().oneOf(Object.keys(AtivoInativoEnum), 'Situação inválida').required('Situação é obrigatória'),
+  logoUrl: yup.string().url('URL do logo inválida').nullable(),
+  logoDeclaracaoUrl: yup.string().url('URL do logo da declaração inválida').nullable(),
 });
 
 module.exports = associacaoSchema;

@@ -3,86 +3,89 @@ const PagamentoService = require('../services/PagamentoService');
 const { StatusCodes } = require('http-status-codes');
 
 const obterPagamentoPorId = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        const pagamento = await PagamentoService.obterPagamentoPorId(id);
-        res.status(StatusCodes.OK).json(pagamento);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { id } = req.params;
+    const pagamento = await PagamentoService.obterPagamentoPorId(id);
+    res.status(StatusCodes.OK).json(pagamento);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const obterTodosPagamentos = async (req, res, next) => {
-    try {
-        const pagamentos = await PagamentoService.obterTodosPagamentos(req.query);
-        res.status(StatusCodes.OK).json(pagamentos);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const pagamentos = await PagamentoService.obterTodosPagamentos(req.query);
+    res.status(StatusCodes.OK).json(pagamentos);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const criarPagamento = async (req, res, next) => {
-    try {
-        const pagamento = await PagamentoService.criarPagamento(req.body);
-        res.status(StatusCodes.CREATED).json(pagamento);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const pagamento = await PagamentoService.criarPagamento(req.body);
+    res.status(StatusCodes.CREATED).json(pagamento);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const atualizarPagamento = async (req, res, next) => {
-    try {
-        const resultado = await PagamentoService.atualizarPagamento(req.params.id, req.body);
-        res.status(StatusCodes.OK).json(resultado);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const resultado = await PagamentoService.atualizarPagamento(req.params.id, req.body);
+    res.status(StatusCodes.OK).json(resultado);
+  } catch (error) {
+    next(error);
+  }
 };
 
 const excluirPagamento = async (req, res, next) => {
-    try {
-        const { id } = req.params;
-        await PagamentoService.excluirPagamento(id);
-        res.status(StatusCodes.NO_CONTENT).send();
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { id } = req.params;
+    await PagamentoService.excluirPagamento(id);
+    res.status(StatusCodes.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const aprovarPagamento = async (req, res, next) => {
-    try {
-        const resultado = await PagamentoService.aprovarPagamento(req.params.id);
-        res.status(200).json(resultado);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { id } = req.params;
+    await PagamentoService.aprovarPagamento(id);
+    res.status(StatusCodes.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const reprovarPagamento = async (req, res, next) => {
-    try {
-        const resultado = await PagamentoService.reprovarPagamento(req.params.id);
-        res.status(200).json(resultado);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { id } = req.params;
+    await PagamentoService.reprovarPagamento(id);
+    res.status(StatusCodes.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
 const gerarPagamentosMensaisManualmente = async (req, res, next) => {
-    try {
-        await PagamentoService.gerarPagamentosMensaisManualmente(req.body.associacaoId);
-        res.status(200);
-    } catch (error) {
-        next(error);
-    }
+  try {
+    const { associacaoId } = req.params;
+    await PagamentoService.gerarPagamentosMensaisManualmente(associacaoId);
+    res.status(StatusCodes.NO_CONTENT).send();
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
-    obterPagamentoPorId,
-    obterTodosPagamentos,
-    criarPagamento,
-    atualizarPagamento,
-    excluirPagamento,
-    aprovarPagamento,
-    reprovarPagamento,
-    gerarPagamentosMensaisManualmente
+  obterPagamentoPorId,
+  obterTodosPagamentos,
+  criarPagamento,
+  atualizarPagamento,
+  excluirPagamento,
+  aprovarPagamento,
+  reprovarPagamento,
+  gerarPagamentosMensaisManualmente,
 };

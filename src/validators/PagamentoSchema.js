@@ -1,17 +1,23 @@
-const { z } = require('zod');
+const yup = require('yup');
+const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
+const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
 
-const pagamentoBodySchema = z.object({
-    usuarioId: z.number({ required_error: 'usuarioId é obrigatório.' }),
-    tipo: z.enum(['PIX', 'DINHEIRO', 'CARTAO']),
-    valor: z.number().positive(),
-    multa: z.number().nullable().optional(),
-    dataVencimento: z.string().datetime().nullable().optional(),
-    dataPagamento: z.string().datetime().nullable().optional(),
-    situacao: z.enum(['PENDENTE', 'PAGO', 'ATRASADO']),
-    txId: z.string().nullable().optional(),
-    pixCopiaCola: z.string().nullable().optional(),
+const pagamentoSchema = yup.object().shape({
+  txId: yup.string().nullable(),
+  pixCopiaCola: yup.string().nullable(),
+  usuarioId: yup.number().integer().required('Usuário ID é obrigatório.'),
+  tipo: yup
+    .string()
+    .oneOf(Object.keys(TipoPagamentoEnum), `Tipo de pagamento inválido. Valores possíveis: ${Object.values(TipoPagamentoEnum).join(', ')}`)
+    .required('Tipo de pagamento é obrigatório.'),
+  valor: yup.number().required('Valor é obrigatório.'),
+  multa: yup.number().nullable(),
+  dataVencimento: yup.date().nullable(),
+  dataPagamento: yup.date().nullable(),
+  situacao: yup
+    .string()
+    .oneOf(Object.keys(SituacaoPagamentoEnum), `Situação inválida. Valores possíveis: ${Object.values(SituacaoPagamentoEnum).join(', ')}`)
+    .required('Situação é obrigatória.'),
 });
 
-module.exports = {
-    pagamentoBodySchema,
-}
+module.exports = pagamentoSchema;

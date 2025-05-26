@@ -1,0 +1,29 @@
+meta {
+  name: Editar
+  type: http
+  seq: 2
+}
+
+put {
+  url: {{API_URL}}/associacao/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "cnpj": "07253212000120",
+    "nome": "UNISL",
+    "endereco": "Rua Centro",
+    "situacao": "ATIVO",
+    "uf": "SC",
+    "cep": "88750000",
+    "bairro": "Centro",
+    "cidade": "São Ludgero",
+    "sigla": "UNISL"
+  }
+}

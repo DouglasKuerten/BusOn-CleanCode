@@ -1,0 +1,29 @@
+meta {
+  name: Cadastrar
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_URL}}/pagamento
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "txId": null,
+    "pixCopiaCola": null,
+    "usuarioId": 1,
+    "tipo": "PIX",
+    "valor": 80,
+    "multa": 0,
+    "dataVencimento": "2024-06-10T14:30:09.954Z",
+    "dataPagamento": null,
+    "situacao": "ABERTO"
+  }
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Cadastrar
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_URL}}/associacao
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "cnpj": "07253212000120",
+    "nome": "UNISL",
+    "endereco": "São Ludgero",
+    "situacao": "ATIVO",
+    "uf": "SC",
+    "cep": "88750000",
+    "bairro": "Centro",
+    "cidade": "São Ludgero",
+    "sigla": "UNISL"
+  }
+}

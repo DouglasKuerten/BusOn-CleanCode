@@ -1,11 +1,11 @@
 meta {
-  name: Buscar Todos
+  name: Deletar
   type: http
-  seq: 8
+  seq: 3
 }
 
-get {
-  url: {{API_URL}}/usuario
+delete {
+  url: {{API_URL}}/pagamento/2
   body: none
   auth: bearer
 }

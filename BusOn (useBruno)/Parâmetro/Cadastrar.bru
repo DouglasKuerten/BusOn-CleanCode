@@ -1,0 +1,32 @@
+meta {
+  name: Cadastrar
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{API_URL}}/parametro
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "associacaoId": 1,
+    "valor1": 20,
+    "valor2": 35,
+    "valor3": 50,
+    "valor4": 65,
+    "valor5": 80,
+    "valor6": 100,
+    "valorMulta": 5,
+    "diaVencimento": 10,
+    "diasToleranciaMulta": 3,
+    "liberaAlteracaoDadosPessoais": "LIBERADO",
+    "gerarPagamentosAutomatico": "NAO"
+  }
+}
