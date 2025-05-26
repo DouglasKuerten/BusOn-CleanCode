@@ -31,7 +31,8 @@
     "pg": "^8.11.3",
     "sequelize": "^6.37.1",
     "swagger-autogen": "^2.23.7",
-    "swagger-ui-express": "^5.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "yup": "^1.6.1"
   },
   "devDependencies": {
