@@ -14,13 +14,15 @@ const config = {
 };
 const sequelize = new Sequelize(config);
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Conexão com o banco de dados realizado com sucesso!');
-  })
-  .catch((err) => {
-    console.error('Falha ao conectar com o banco de dados: ', err);
-  });
+if (process.env.NODE_ENV !== 'test') {
+  sequelize
+    .authenticate()
+    .then(() => {
+      console.log('Conexão com o banco de dados realizado com sucesso!');
+    })
+    .catch((err) => {
+      console.error('Falha ao conectar com o banco de dados: ', err);
+    });
+}
 
 export default sequelize;
