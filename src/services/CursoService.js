@@ -19,124 +19,41 @@ class CursoService {
     }
 
     async obterTodosCursos(query) {
-        try {
-            const whereClause = buildWhereClause(query.filters);
-            const orderClause = buildOrderByClause(query.orderBy);
+        const whereClause = buildWhereClause(query.filters);
+        const orderClause = buildOrderByClause(query.orderBy);
 
-            return await Curso.findAll({
-                include: [{
-                    model: Instituicao,
-                    attributes: ['id', 'nome']
-                }],
-                attributes: ['id', 'nome', 'situacao'],
-                where: whereClause,
-                order: orderClause
-            });
-        } catch (error) {
-            if (error.name === 'SequelizeValidationError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'Filtros inválidos para buscar cursos.'
-                );
-            }
-            if (error.name && error.name.startsWith('Sequelize')) {
-                throw new SequelizeException(error);
-            }
-            throw error;
-        }
+        return await Curso.findAll({
+            include: [{
+                model: Instituicao,
+                attributes: ['id', 'nome']
+            }],
+            attributes: ['id', 'nome', 'situacao'],
+            where: whereClause,
+            order: orderClause
+        });
     }
 
     async validarInstituicao(instituicaoId) {
         const instituicao = await Instituicao.findByPk(instituicaoId);
         if (!instituicao) {
-            throw new BusonException(
-                StatusCodes.BAD_REQUEST,
-                'A instituição informada não existe.'
-            );
+            throw new BusonException(StatusCodes.BAD_REQUEST, 'A instituição informada não existe.');
         }
     }
 
     async criarCurso(dados) {
-        try {
-            await cursoSchema.validate(dados, { abortEarly: false });
-
-            await this.validarInstituicao(dados.instituicaoId);
-
-            return await Curso.create(dados);
-        } catch (error) {
-            if (error instanceof BusonException) {
-                throw error;
-            }
-            if (error.name === 'ValidationError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    error.errors.join(', ')
-                );
-            }
-            if (error.name === 'SequelizeValidationError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'Dados inválidos para criar o curso.'
-                );
-            }
-            if (error.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'A instituição informada não existe.'
-                );
-            }
-            if (error.name && error.name.startsWith('Sequelize')) {
-                throw new SequelizeException(error);
-            }
-            throw error;
-        }
+        await cursoSchema.validate(dados);
+        await this.validarInstituicao(dados.instituicaoId);
+        return await Curso.create(dados);
     }
 
     async atualizarCurso(id, dados) {
-        try {
-
-            await cursoSchema.validate(dados, { abortEarly: false });
-
-            if (dados.instituicaoId) {
-                await this.validarInstituicao(dados.instituicaoId);
-            }
-
-            const [atualizado] = await Curso.update(dados, {
-                where: { id }
-            });
-
-            if (!atualizado) {
-                throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
-            }
-
-            return await this.obterCursoPorId(id);
-        } catch (error) {
-            if (error instanceof BusonException) {
-                throw error;
-            }
-            if (error.name === 'ValidationError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    error.errors.join(', ')
-                );
-            }
-            if (error.name === 'SequelizeValidationError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'Dados inválidos para atualizar o curso.'
-                );
-            }
-            if (error.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BusonException(
-                    StatusCodes.BAD_REQUEST,
-                    'A instituição informada não existe.'
-                );
-            }
-            if (error.name && error.name.startsWith('Sequelize')) {
-                throw new SequelizeException(error);
-            }
-            throw error;
+        await cursoSchema.validate(dados);
+        await this.validarInstituicao(dados.instituicaoId);
+        const [atualizado] = await Curso.update(dados, { where: { id } });
+        if (!atualizado) {
+            throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
         }
+        return await this.obterCursoPorId(id);
     }
 
     async excluirCurso(id) {
@@ -146,15 +63,6 @@ class CursoService {
                 throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
             }
         } catch (error) {
-            if (error instanceof BusonException) {
-                throw error;
-            }
-            if (error.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BusonException(
-                    StatusCodes.CONFLICT,
-                    'Não é possível excluir o curso porque existem registros vinculados a ele.'
-                );
-            }
             if (error.name && error.name.startsWith('Sequelize')) {
                 throw new SequelizeException(error);
             }
