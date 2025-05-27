@@ -33,44 +33,6 @@ describe('InstituicaoService', () => {
       }),
     );
   });
-  /* 
-        test('obterTodasInstituicoes retorna lista de instituições', async () => {
-            const instituicoesFake = [
-                {
-                    id: 1,
-                    nome: 'Faculdade A',
-                    endereco: 'Rua A, 123',
-                    situacao: 'ATIVO',
-                    associacaoId: 1
-                },
-                {
-                    id: 2,
-                    nome: 'Faculdade B',
-                    endereco: 'Rua B, 456',
-                    situacao: 'ATIVO',
-                    associacaoId: 1
-                }
-            ];
-    
-            const findAllSpy = jest.spyOn(Instituicao, 'findAll')
-                .mockResolvedValue(instituicoesFake);
-    
-            const whereClause = { situacao: 'ATIVO' };
-            const orderClause = [['nome', 'ASC']];
-    
-            const result = await InstituicaoService.obterTodasInstituicoes({
-                filters: JSON.stringify(whereClause),
-                orderBy: JSON.stringify(orderClause)
-            });
-    
-            expect(result).toEqual(instituicoesFake);
-    
-            const callOptions = findAllSpy.mock.calls[0][0];
-            expect(callOptions).toEqual(expect.objectContaining({
-                where: whereClause,
-                order: orderClause
-            }));
-        }); */
 
   test('criarInstituicao cria nova instituição com logo', async () => {
     const novaInstituicao = {

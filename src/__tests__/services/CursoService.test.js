@@ -29,43 +29,6 @@ describe('CursoService', () => {
     );
   });
 
-  /* test('obterTodosCursos retorna lista de cursos com instituições', async () => {
-        const cursosFake = [
-            {
-                id: 1,
-                nome: 'Engenharia de Software',
-                situacao: 'ATIVO',
-                instituicao: {
-                    id: 1,
-                    nome: 'Faculdade Teste'
-                }
-            }
-        ];
-
-        const query = {
-            filters: { situacao: 'ATIVO' },
-            orderBy: [['nome', 'ASC']]
-        };
-
-        jest.spyOn(Curso, 'findAll')
-            .mockResolvedValue(cursosFake);
-
-        await expect(CursoService.obterTodosCursos(query))
-            .resolves
-            .toEqual(cursosFake);
-
-        expect(Curso.findAll)
-            .toHaveBeenCalledWith(expect.objectContaining({
-                include: [
-                    expect.objectContaining({
-                        model: Instituicao,
-                        attributes: ['id', 'nome']
-                    })
-                ],
-                attributes: ['id', 'nome', 'situacao']
-            }));
-    }); */
-
   test('validarInstituicao passa quando instituição existe', async () => {
     const instituicaoFake = {
       id: 1,
