@@ -1,15 +1,14 @@
 'use strict';
 
-import Instituicao from '../models/Instituicao.js';
-import { buildOrderByClause } from '../utils/buildOrderByClause.js';
-import { buildWhereClause } from '../utils/buildWhereClause.js';
+import fs from 'fs/promises';
+import { StatusCodes } from 'http-status-codes';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import InstituicaoQueryBuilder from '../builder/IntituicaoQueryBuilder.js';
 import BusonException from '../exceptions/BusonException.js';
 import SequelizeException from '../exceptions/SequelizeException.js';
-import { StatusCodes } from 'http-status-codes';
-import fs from 'fs/promises';
-import path from 'path';
+import Instituicao from '../models/Instituicao.js';
 import instituicaoSchema from '../validators/InstituicaoSchema.js';
-import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,15 +24,11 @@ class InstituicaoService {
     }
     return instituicao;
   }
-
   async obterTodasInstituicoes(query) {
-    const whereClause = buildWhereClause(query.filters);
-    const orderClause = buildOrderByClause(query.orderBy);
-
-    return await Instituicao.findAll({
-      where: whereClause,
-      order: orderClause,
-    });
+    return await new InstituicaoQueryBuilder()
+      .withFiltros(query.filters)
+      .withOrdenacao(query.orderBy)
+      .findAll();
   }
 
   async criarInstituicao(dados, arquivo) {

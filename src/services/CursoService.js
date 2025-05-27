@@ -1,14 +1,12 @@
 'use strict';
 
-import Curso from '../models/Curso.js';
-import Instituicao from '../models/Instituicao.js';
-import { buildOrderByClause } from '../utils/buildOrderByClause.js';
-import { buildWhereClause } from '../utils/buildWhereClause.js';
+import { StatusCodes } from 'http-status-codes';
 import BusonException from '../exceptions/BusonException.js';
 import SequelizeException from '../exceptions/SequelizeException.js';
-import { StatusCodes } from 'http-status-codes';
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import CursoQueryBuilder from '../builder/CursoQueryBuilder.js';
 import cursoSchema from '../validators/CursoSchema.js';
-import CursoQueryBuilder from '../queryBuilder/CursoQueryBuilder.js';
 
 class CursoService {
   async obterCursoPorId(id) {
