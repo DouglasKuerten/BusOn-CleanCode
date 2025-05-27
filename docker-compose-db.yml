@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  db:
+    image: 'postgres:14.1-alpine'
+    container_name: buson_db
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: buson_db
+    volumes:
+      - postgres_data:/data/postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ['CMD', 'pg_isready', '-U', 'postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

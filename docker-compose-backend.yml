@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: buson_backend
+    ports:
+      - '3000:3000'
+    environment:
+      - JWT_SECRET=SUA_CHAVE_SECRETA
+      - JWT_EXPIRATION=3600
+      - JWT_REFRESH_EXPIRATION=86400
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=buson_db
+      - POSTGRES_PORT=5432
+      - PG_DIALECT=postgres
+      - SERVER_PORT=3000
+    restart: always
+    command: npm run start
