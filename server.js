@@ -12,11 +12,11 @@ import routes from './src/routes/Routes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger.js';
 import sequelize from './databaseConnection.js';
-import { Assistant, Thread, Associacao, TemplateDocumento, Parametro, Instituicao, Curso, Usuario, Pagamento } from './src/models/associationsModels.js';
+import { Assistant, Thread, Associacao, TemplateDocumento, Parametro, Instituicao, Curso, Usuario, Pagamento } from './src/models/AssociationsModels.js';
 import { gerarUsuarioAdmin } from './src/scripts/gerarUsuarioAdmin.js';
 import * as Job from './src/jobs/job.js';
 const app = express();
-console.log(`PORTAAAA` + process.env.SERVER_PORT);
+
 const port = process.env.SERVER_PORT;
 
 sequelize

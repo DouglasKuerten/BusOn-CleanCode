@@ -1,11 +1,11 @@
-import Assistant from './assistant.js';
-import Thread from './thread.js';
+import Assistant from './Assistant.js';
+import Thread from './Thread.js';
 import Associacao from './Associacao.js';
-import TemplateDocumento from './templateDocumento.js';
+import TemplateDocumento from './TemplateDocumento.js';
 import Parametro from './Parametro.js';
 import Instituicao from './Instituicao.js';
 import Curso from './Curso.js';
-import Usuario from './usuario.js';
+import Usuario from './Usuario.js';
 import Pagamento from './Pagamento.js';
 
 Associacao.hasOne(Parametro, { foreignKey: 'associacaoId', onDelete: 'CASCADE' });
@@ -28,7 +28,6 @@ Curso.hasMany(Usuario, { foreignKey: 'cursoId', onDelete: 'RESTRICT', });
 
 Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
 Usuario.hasMany(Pagamento, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
-
 
 export {
     Assistant,
