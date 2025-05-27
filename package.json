@@ -13,7 +13,11 @@
     "dev-docker": "docker compose -f docker-compose-dev.yml up -d",
     "db-docker": "docker compose -f docker-compose-db.yml up -d",
     "ai": "node openai.js",
-    "assistant": "node aiAssistant.js"
+    "assistant": "node aiAssistant.js",
+    "format": "prettier --write .",
+    "lint": "eslint . --ext .ts,.tsx,.js",
+    "lint:check": "eslint . --ext .ts,.tsx,.js --max-warnings=0",
+    "format:check": "prettier --check ."
   },
   "author": "",
   "license": "ISC",
@@ -36,7 +40,13 @@
     "yup": "^1.6.1"
   },
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.4.0",
     "nodemon": "^3.1.0",
+    "prettier": "^3.5.3",
     "sequelize-cli": "^6.6.2"
   }
 }
