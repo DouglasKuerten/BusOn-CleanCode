@@ -4,7 +4,7 @@ import sequelize from '../../databaseConnection.js';
 import SituacaoPagamentoEnum from '../enum/SituacaoPagamentoEnum.js';
 import TipoPagamentoEnum from '../enum/TipoPagamentoEnum.js';
 
-import Usuario from './usuario.js';
+import Usuario from './Usuario.js';
 
 const Pagamento = sequelize.define('pagamento', {
     txId: {

@@ -1,7 +1,7 @@
 'use strict';
 
 import bcrypt from 'bcrypt';
-import Usuario from '../models/usuario.js';
+import Usuario from '../models/Usuario.js';
 import { buildWhereClause } from '../utils/buildWhereClause.js';
 import { buildOrderByClause } from '../utils/buildOrderByClause.js';
 import Associacao from '../models/Associacao.js';

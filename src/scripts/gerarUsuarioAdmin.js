@@ -1,4 +1,4 @@
-import Usuario from '../models/usuario.js';
+import Usuario from '../models/Usuario.js';
 import bcrypt from 'bcrypt';
 
 export const gerarUsuarioAdmin = async () => {

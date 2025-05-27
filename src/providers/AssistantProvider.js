@@ -1,4 +1,4 @@
-import Assistant from '../models/assistant.js';
+import Assistant from '../models/Assistant.js';
 import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 class AssistantProvider {

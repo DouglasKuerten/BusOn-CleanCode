@@ -1,4 +1,4 @@
-import TemplateDocumento from '../models/templateDocumento.js';
+import TemplateDocumento from '../models/TemplateDocumento.js';
 import Associacao from '../models/Associacao.js';
 import getFormattedSequelizeExceptions from '../utils/Exceptions.js';
 

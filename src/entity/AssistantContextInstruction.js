@@ -1,6 +1,6 @@
 import Curso from '../models/Curso.js';
 import Instituicao from '../models/Instituicao.js';
-import Usuario from '../models/usuario.js';
+import Usuario from '../models/Usuario.js';
 import Associacao from '../models/Associacao.js';
 import Pagamento from '../models/Pagamento.js';
 

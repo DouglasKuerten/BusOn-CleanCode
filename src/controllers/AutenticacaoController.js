@@ -2,8 +2,8 @@
 
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import Usuario from '../models/usuario.js';
-import TokenAutenticacao from '../models/tokenAutenticacao.js';
+import Usuario from '../models/Usuario.js';
+import TokenAutenticacao from '../models/TokenAutenticacao.js';
 import Associacao from '../models/Associacao.js';
 import Curso from '../models/Curso.js';
 import Instituicao from '../models/Instituicao.js';
@@ -11,6 +11,7 @@ import Instituicao from '../models/Instituicao.js';
 // Função para autenticar o usuário e gerar um token JWT
 const authenticateUsuario = async (req, res) => {
     try {
+        console.log('req.body', req.body);
         const { email, senha } = req.body;
 
         // Verificar se o usuário existe

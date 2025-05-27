@@ -1,4 +1,4 @@
-import Thread from "../models/thread.js";
+import Thread from "../models/Thread.js";
 
 class ThreadProvider {
 
