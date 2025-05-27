@@ -1,5 +1,5 @@
 import Parametro from '../../models/Parametro.js';
-import Usuario from '../../models/usuario.js';
+import Usuario from '../../models/Usuario.js';
 import Pagamento from '../../models/Pagamento.js';
 import { Op } from 'sequelize';
 import { convertDateToUTC } from '../../utils/converterDateToUtc.js';

@@ -3,6 +3,7 @@ import multer from 'multer';
 import { storage } from '../../multerConfig.js';
 
 const router = express.Router();
+const upload = multer({ storage: storage });
 
 import associacaoController from '../controllers/AssociacaoController.js';
 import instituicaoController from '../controllers/InstituicaoController.js';
@@ -13,12 +14,9 @@ import pagamentoController from '../controllers/PagamentoController.js';
 import parametroController from '../controllers/ParametroController.js';
 import templateDocumentosController from '../controllers/TemplateDocumentosController.js';
 import { validarAutenticacao, logout } from '../middleware/autenticacao.middleware.js';
-import { validate } from '../middleware/validate.middleware.js';
-const upload = multer({ storage: storage });
 
 router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/template-documento'], validarAutenticacao);
 
-// Rotas para cadastro de usuário
 router.get('/usuario/completo', usuarioController.obterUsuariosCompleto);
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
 router.get('/usuario', usuarioController.obterTodosUsuarios);
@@ -28,13 +26,11 @@ router.put('/usuario/atualizar-senha/:id', usuarioController.atualizarSenhaUsuar
 router.put('/usuario/resetar-senha/:id', usuarioController.resetarSenhaUsuario);
 router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
-// Rota para autenticar o usuário e gerar um token JWT
 router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
 router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
 router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoController.validateToken);
 router.post('/autenticacao/logout', validarAutenticacao, logout);
 
-// Rotas para Associação
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
 router.get('/associacao', associacaoController.obterTodasAssociacoes);
 router.post(
@@ -61,21 +57,18 @@ router.post('/template-documento', templateDocumentosController.criarTemplateDoc
 router.put('/template-documento/:id', templateDocumentosController.atualizarTemplateDocumento);
 router.delete('/template-documento/:id', templateDocumentosController.excluirTemplateDocumento);
 
-// Rotas para Instituição
 router.get('/instituicao/:id', instituicaoController.obterInstituicaoPorId);
 router.get('/instituicao', instituicaoController.obterTodasInstituicoes);
 router.post('/instituicao', upload.single('logo'), instituicaoController.criarInstituicao);
 router.put('/instituicao/:id', upload.single('logo'), instituicaoController.atualizarInstituicao);
 router.delete('/instituicao/:id', instituicaoController.excluirInstituicao);
 
-// Rotas para Curso
 router.get('/curso/:id', cursoController.obterCursoPorId);
 router.get('/curso', cursoController.obterTodosCursos);
 router.post('/curso', cursoController.criarCurso);
 router.put('/curso/:id', cursoController.atualizarCurso);
 router.delete('/curso/:id', cursoController.excluirCurso);
 
-// Rotas para Pagamento
 router.get('/pagamento/:id', pagamentoController.obterPagamentoPorId);
 router.get('/pagamento', pagamentoController.obterTodosPagamentos);
 router.post('/pagamento', pagamentoController.criarPagamento);
@@ -85,7 +78,6 @@ router.put('/pagamento/reprovar/:id', pagamentoController.reprovarPagamento);
 router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
 router.post('/pagamento/gerar-manualmente/:associacaoId', pagamentoController.gerarPagamentosMensaisManualmente);
 
-// Rotas para Parâmetro
 router.get('/parametro/:id', parametroController.obterParametroPorId);
 router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacaoPorId);
 router.get('/parametro', parametroController.obterTodosParametros);
