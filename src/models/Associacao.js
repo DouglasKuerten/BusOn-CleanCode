@@ -1,7 +1,7 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 const Associacao = sequelize.define('associacao', {
   cnpj: {
@@ -50,4 +50,4 @@ const Associacao = sequelize.define('associacao', {
   },
 });
 
-module.exports = Associacao;
+export default Associacao;

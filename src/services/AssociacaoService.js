@@ -1,8 +1,13 @@
-const Associacao = require('../models/associacao');
-const fs = require('fs/promises');
-const path = require('path');
-const associacaoSchema = require('../validators/AssociacaoSchema');
-const BusonException = require('../exceptions/BusonException');
+import Associacao from '../models/Associacao.js';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import associacaoSchema from '../validators/AssociacaoSchema.js';
+import BusonException from '../exceptions/BusonException.js';
+import { StatusCodes } from 'http-status-codes';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 class AssociacaoService {
   async obterAssociacaoPorId(id) {
@@ -83,4 +88,4 @@ class AssociacaoService {
   }
 }
 
-module.exports = new AssociacaoService();
+export default new AssociacaoService();

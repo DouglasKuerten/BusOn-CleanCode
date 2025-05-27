@@ -1,6 +1,6 @@
 'use strict';
-const AiChatAdapter = require('../adapters/aiChatAdapter');
-const ChatService = require('../services/ChatService');
+import AiChatAdapter from '../adapters/aiChatAdapter.js';
+import ChatService from '../services/ChatService.js';
 
 // Controller para obter uma resposta do chatbot
 const getChatbotResponse = async (req, res) => {
@@ -38,7 +38,7 @@ const postConversation = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     getChatbotResponse,
     postConversation
 };

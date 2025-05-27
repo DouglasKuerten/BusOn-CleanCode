@@ -1,10 +1,10 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
-const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import SituacaoPagamentoEnum from '../enum/SituacaoPagamentoEnum.js';
+import TipoPagamentoEnum from '../enum/TipoPagamentoEnum.js';
 
-const Usuario = require('./usuario');
+import Usuario from './usuario.js';
 
 const Pagamento = sequelize.define('pagamento', {
     txId: {
@@ -51,4 +51,4 @@ const Pagamento = sequelize.define('pagamento', {
 
 });
 
-module.exports = Pagamento;
+export default Pagamento;

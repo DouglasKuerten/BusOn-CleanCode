@@ -1,8 +1,8 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const Associacao = require('./Associacao');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import Associacao from './Associacao.js';
 
 const Instituicao = sequelize.define('instituicao', {
   nome: {
@@ -32,4 +32,4 @@ const Instituicao = sequelize.define('instituicao', {
   },
 });
 
-module.exports = Instituicao;
+export default Instituicao;

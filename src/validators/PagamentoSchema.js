@@ -1,6 +1,6 @@
-const yup = require('yup');
-const TipoPagamentoEnum = require('../enum/TipoPagamentoEnum');
-const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
+import yup from 'yup';
+import TipoPagamentoEnum from '../enum/TipoPagamentoEnum.js';
+import SituacaoPagamentoEnum from '../enum/SituacaoPagamentoEnum.js';
 
 const pagamentoSchema = yup.object().shape({
   txId: yup.string().nullable(),
@@ -20,4 +20,4 @@ const pagamentoSchema = yup.object().shape({
     .required('Situação é obrigatória.'),
 });
 
-module.exports = pagamentoSchema;
+export default pagamentoSchema;

@@ -1,7 +1,7 @@
-const Parametro = require('../../models/parametro');
-const Usuario = require('../../models/usuario');
-const Pagamento = require('../../models/pagamento');
-const { convertDateToUTC } = require('../../utils/converterDateToUtc');
+import Parametro from '../../models/Parametro.js';
+import Usuario from '../../models/usuario.js';
+import Pagamento from '../../models/Pagamento.js';
+import { convertDateToUTC } from '../../utils/converterDateToUtc.js';
 
 async function gerarPagamentosMensais(req, res) {
     try {
@@ -71,6 +71,6 @@ async function gerarPagamentosMensais(req, res) {
     }
 };
 
-module.exports = async () => {
-    await gerarPagamentosMensais()
+export default async () => {
+    await gerarPagamentosMensais();
 }

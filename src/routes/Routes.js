@@ -1,20 +1,20 @@
-const express = require('express');
-const multer = require('multer');
-const { storage } = require('../../multerConfig');
+import express from 'express';
+import multer from 'multer';
+import { storage } from '../../multerConfig.js';
 
 const router = express.Router();
 
-const associacaoController = require('../controllers/AssociacaoController');
-const instituicaoController = require('../controllers/instituicaoController');
-const cursoController = require('../controllers/cursoController');
-const autenticacaoController = require('../controllers/autenticacaoController');
-const usuarioController = require('../controllers/usuarioController');
-const pagamentoController = require('../controllers/PagamentoController');
-const parametroController = require('../controllers/ParametroController');
-const chatbotController = require('../controllers/chatbotController');
-const templateDocumentosController = require('../controllers/templateDocumentosController');
-const { validarAutenticacao, logout } = require('../middleware/autenticacao.middleware');
-const { validate } = require('../middleware/validate.middleware');
+import associacaoController from '../controllers/AssociacaoController.js';
+import instituicaoController from '../controllers/InstituicaoController.js';
+import cursoController from '../controllers/CursoController.js';
+import autenticacaoController from '../controllers/AutenticacaoController.js';
+import usuarioController from '../controllers/UsuarioController.js';
+import pagamentoController from '../controllers/PagamentoController.js';
+import parametroController from '../controllers/ParametroController.js';
+import chatbotController from '../controllers/ChatbotController.js';
+import templateDocumentosController from '../controllers/TemplateDocumentosController.js';
+import { validarAutenticacao, logout } from '../middleware/autenticacao.middleware.js';
+import { validate } from '../middleware/validate.middleware.js';
 const upload = multer({ storage: storage });
 
 router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/template-documento'], validarAutenticacao);
@@ -98,4 +98,4 @@ router.delete('/parametro/:id', parametroController.excluirParametro);
 router.get('/chatbot/completion', chatbotController.getChatbotResponse);
 router.post('/chatbot/conversation', chatbotController.postConversation);
 
-module.exports = router;
+export default router;

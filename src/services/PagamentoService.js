@@ -1,22 +1,20 @@
 'use strict';
 
-const { Sequelize } = require('sequelize');
-const Pagamento = require('../models/Pagamento');
-const Usuario = require('../models/usuario');
-const Associacao = require('../models/Associacao');
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const Parametro = require('../models/Parametro');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const { buildWhereClause } = require('../utils/buildWhereClause');
-const getFormattedSequelizeExceptions = require('../utils/Exceptions');
-const { convertDateToUTC } = require('../utils/converterDateToUtc');
-const BusonException = require('../exceptions/BusonException');
-const { StatusCodes } = require('http-status-codes');
-const SequelizeException = require('../exceptions/SequelizeException');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const SituacaoPagamentoEnum = require('../enum/SituacaoPagamentoEnum');
-const pagamentoSchema = require('../validators/PagamentoSchema');
+import { Sequelize } from 'sequelize';
+import Pagamento from '../models/Pagamento.js';
+import Usuario from '../models/usuario.js';
+import Associacao from '../models/Associacao.js';
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import Parametro from '../models/Parametro.js';
+import { buildOrderByClause } from '../utils/buildOrderByClause.js';
+import { buildWhereClause } from '../utils/buildWhereClause.js';
+import { StatusCodes } from 'http-status-codes';
+import BusonException from '../exceptions/BusonException.js';
+import SequelizeException from '../exceptions/SequelizeException.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import SituacaoPagamentoEnum from '../enum/SituacaoPagamentoEnum.js';
+import pagamentoSchema from '../validators/PagamentoSchema.js';
 
 class PagamentoService {
   async obterPagamentoPorId(id) {
@@ -157,4 +155,4 @@ class PagamentoService {
     }
   }
 }
-module.exports = new PagamentoService();
+export default new PagamentoService();

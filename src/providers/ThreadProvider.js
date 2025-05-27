@@ -1,4 +1,4 @@
-const Thread = require("../models/thread");
+import Thread from "../models/thread.js";
 
 class ThreadProvider {
 
@@ -66,4 +66,4 @@ class ThreadProvider {
     }
 }
 
-module.exports = ThreadProvider;
+export default ThreadProvider;

@@ -1,8 +1,8 @@
-const Parametro = require('../../models/parametro');
-const Usuario = require('../../models/usuario');
-const Pagamento = require('../../models/pagamento');
-const { Op } = require('sequelize');
-const { convertDateToUTC } = require('../../utils/converterDateToUtc');
+import Parametro from '../../models/Parametro.js';
+import Usuario from '../../models/usuario.js';
+import Pagamento from '../../models/Pagamento.js';
+import { Op } from 'sequelize';
+import { convertDateToUTC } from '../../utils/converterDateToUtc.js';
 
 async function verificarPagamentosAtrasados() {
     try {
@@ -54,6 +54,6 @@ function calcularDiferencaDias(dataInicial, dataFinal) {
     return diferencaEmDias;
 }
 
-module.exports = async () => {
-    await verificarPagamentosAtrasados()
+export default async () => {
+    await verificarPagamentosAtrasados();
 }

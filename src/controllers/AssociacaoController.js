@@ -1,9 +1,9 @@
 'use strict';
 
-const { StatusCodes } = require('http-status-codes');
-const AssociacaoService = require('../services/AssociacaoService');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const { buildWhereClause } = require('../utils/buildWhereClause');
+import { StatusCodes } from 'http-status-codes';
+import * as AssociacaoService from '../services/AssociacaoService.js';
+import { buildOrderByClause } from '../utils/buildOrderByClause.js';
+import { buildWhereClause } from '../utils/buildWhereClause.js';
 
 const obterAssociacaoPorId = async (req, res, next) => {
   try {
@@ -56,7 +56,7 @@ const excluirAssociacao = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export default {
   obterAssociacaoPorId,
   obterTodasAssociacoes,
   criarAssociacao,

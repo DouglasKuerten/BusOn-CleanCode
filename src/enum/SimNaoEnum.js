@@ -3,4 +3,4 @@ const SimNaoEnum = {
     NAO: "NAO",
 }
 
-module.exports = SimNaoEnum;
+export default SimNaoEnum;

@@ -1,10 +1,10 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import LiberadoBloqueadoEnum from '../enum/LiberadoBloqueadoEnum.js';
 
-const Associacao = require('./Associacao');
-const SimNaoEnum = require('../enum/SimNaoEnum');
+import Associacao from './Associacao.js';
+import SimNaoEnum from '../enum/SimNaoEnum.js';
 
 const Parametro = sequelize.define('parametro', {
   associacaoId: {
@@ -63,4 +63,4 @@ const Parametro = sequelize.define('parametro', {
   },
 });
 
-module.exports = Parametro;
+export default Parametro;

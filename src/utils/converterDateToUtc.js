@@ -1,7 +1,7 @@
-const moment = require('moment');
-require('moment/locale/pt-br');
+import moment from 'moment';
+import 'moment/locale/pt-br.js';
 
-exports.convertDateToUTC = (date) => {
+export const convertDateToUTC = (date) => {
     moment.locale('pt-br');
     return moment(date);
 }

@@ -1,7 +1,7 @@
-const { ValidationError } = require('yup');
-const BusonException = require('../exceptions/BusonException');
-const SequelizeException = require('../exceptions/SequelizeException');
-const { StatusCodes } = require('http-status-codes');
+import { ValidationError } from 'yup';
+import BusonException from '../exceptions/BusonException.js';
+import SequelizeException from '../exceptions/SequelizeException.js';
+import { StatusCodes } from 'http-status-codes';
 
 function errorHandler(err, req, res, next) {
   if (err instanceof BusonException) {
@@ -18,4 +18,4 @@ function errorHandler(err, req, res, next) {
   return res.status(500).json({ message: 'Erro interno no servidor.', error: err.message });
 }
 
-module.exports = errorHandler;
+export default errorHandler;

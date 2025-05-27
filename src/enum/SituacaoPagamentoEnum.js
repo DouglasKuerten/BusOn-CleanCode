@@ -4,4 +4,4 @@ const SituacaoPagamentoEnum = {
     ATRASADO: "ATRASADO"
 }
 
-module.exports = SituacaoPagamentoEnum;
+export default SituacaoPagamentoEnum;

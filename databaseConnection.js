@@ -1,4 +1,6 @@
-const { Sequelize } = require('sequelize');
+import { Sequelize } from 'sequelize';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const config = {
     "username": process.env.POSTGRES_USER,
@@ -9,14 +11,13 @@ const config = {
     define: {
         underscored: true,
     }
-}
-
+};
 const sequelize = new Sequelize(config);
 
 sequelize.authenticate().then(() => {
     console.log('Conexão com o banco de dados realizado com sucesso!');
 }).catch(err => {
     console.error('Falha ao conectar com o banco de dados: ', err);
-})
+});
 
-module.exports = sequelize;
+export default sequelize;

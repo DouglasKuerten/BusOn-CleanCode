@@ -1,5 +1,5 @@
-const BusonException = require('../exceptions/BusonException');
-const { StatusCodes } = require('http-status-codes');
+import BusonException from '../exceptions/BusonException.js';
+import { StatusCodes } from 'http-status-codes';
 
 const validate = (schema, property = 'body') => (req, res, next) => {
     try {
@@ -15,4 +15,4 @@ const validate = (schema, property = 'body') => (req, res, next) => {
     }
 };
 
-module.exports = { validate };
+export { validate };

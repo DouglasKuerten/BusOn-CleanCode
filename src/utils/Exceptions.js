@@ -23,4 +23,4 @@ const getFormattedSequelizeExceptions = (error) => {
 };
 
 
-module.exports = getFormattedSequelizeExceptions;
+export default getFormattedSequelizeExceptions;

@@ -3,4 +3,4 @@ const TipoPagamentoEnum = {
     DINHEIRO: "DINHEIRO"
 }
 
-module.exports = TipoPagamentoEnum;
+export default TipoPagamentoEnum;

@@ -1,16 +1,16 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
-const Usuario = require('../models/usuario');
-const { buildWhereClause } = require('../utils/buildWhereClause');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const Associacao = require('../models/Associacao');
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const fs = require('fs/promises');
-const path = require('path');
-const getFormattedSequelizeExceptions = require('../utils/Exceptions');
-const Parametro = require('../models/Parametro');
+import bcrypt from 'bcrypt';
+import Usuario from '../models/usuario.js';
+import { buildWhereClause } from '../utils/buildWhereClause.js';
+import { buildOrderByClause } from '../utils/buildOrderByClause.js';
+import Associacao from '../models/Associacao.js';
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import fs from 'fs/promises';
+import path from 'path';
+import getFormattedSequelizeExceptions from '../utils/Exceptions.js';
+import Parametro from '../models/Parametro.js';
 
 const obterUsuarioPorId = async (req, res) => {
   try {
@@ -351,7 +351,7 @@ const obterUsuariosCompleto = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   obterUsuarioPorId,
   obterTodosUsuarios,
   criarUsuario,

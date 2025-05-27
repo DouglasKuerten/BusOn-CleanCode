@@ -1,13 +1,13 @@
 'use strict';
 
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const { buildWhereClause } = require('../utils/buildWhereClause');
-const BusonException = require('../exceptions/BusonException');
-const SequelizeException = require('../exceptions/SequelizeException');
-const { StatusCodes } = require('http-status-codes');
-const cursoSchema = require('../validators/CursoSchema');
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import { buildOrderByClause } from '../utils/buildOrderByClause.js';
+import { buildWhereClause } from '../utils/buildWhereClause.js';
+import BusonException from '../exceptions/BusonException.js';
+import SequelizeException from '../exceptions/SequelizeException.js';
+import { StatusCodes } from 'http-status-codes';
+import cursoSchema from '../validators/CursoSchema.js';
 
 class CursoService {
     async obterCursoPorId(id) {
@@ -163,4 +163,4 @@ class CursoService {
     }
 }
 
-module.exports = new CursoService(); 
+export default new CursoService(); 

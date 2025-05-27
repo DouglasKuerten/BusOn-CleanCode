@@ -1,5 +1,5 @@
-const { StatusCodes } = require('http-status-codes');
-const ParametroService = require('../services/ParametroService');
+import { StatusCodes } from 'http-status-codes';
+import ParametroService from '../services/ParametroService.js';
 
 const obterParametroPorId = async (req, res, next) => {
   try {
@@ -59,7 +59,7 @@ const excluirParametro = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export default {
   obterParametroPorId,
   obterTodosParametros,
   obterParametroDaAssociacaoPorId,

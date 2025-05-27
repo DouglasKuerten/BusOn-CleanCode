@@ -3,4 +3,4 @@ const AtivoInativoEnum = {
     INATIVO: "INATIVO",
 }
 
-module.exports = AtivoInativoEnum;
+export default AtivoInativoEnum;

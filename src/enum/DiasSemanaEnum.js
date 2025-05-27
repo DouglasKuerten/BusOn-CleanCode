@@ -8,4 +8,4 @@ const DiasSemanaEnum = {
     DOMINGO: "Domingo",
 }
 
-module.exports = DiasSemanaEnum;
+export default DiasSemanaEnum;

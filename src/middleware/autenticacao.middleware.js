@@ -1,9 +1,10 @@
-const jwt = require('jsonwebtoken');
-const Usuario = require('../models/usuario');
-const Associacao = require('../models/associacao');
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const TokenAutenticacao = require('../models/tokenAutenticacao');
+import jwt from 'jsonwebtoken';
+import Usuario from '../models/usuario.js';
+import Associacao from '../models/Associacao.js';
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import TokenAutenticacao from '../models/tokenAutenticacao.js';
+
 const jwtDataOptions = {
   secret: process.env.JWT_SECRET,
   jwtExpiration: Number(process.env.JWT_EXPIRATION),
@@ -84,7 +85,7 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   validarAutenticacao,
   logout,
 };

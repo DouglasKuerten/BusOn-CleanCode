@@ -3,4 +3,4 @@ const LiberadoBloqueadoEnum = {
     BLOQUEADO: "BLOQUEADO",
 }
 
-module.exports = LiberadoBloqueadoEnum;
+export default LiberadoBloqueadoEnum;

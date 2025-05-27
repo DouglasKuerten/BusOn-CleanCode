@@ -1,7 +1,7 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 const Assistant = sequelize.define('assistant', {
     api_id: {
@@ -34,4 +34,4 @@ const Assistant = sequelize.define('assistant', {
     },
 })
 
-module.exports = Assistant;
+export default Assistant;

@@ -1,9 +1,9 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const Associacao = require('./associacao');
-const TipoImpressaoEnum = require('../enum/TipoImpressaoEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import Associacao from './Associacao.js';
+import TipoImpressaoEnum from '../enum/TipoImpressaoEnum.js';
 
 const TemplateDocumento = sequelize.define('templateDocumento', {
     associacaoId: {
@@ -34,4 +34,4 @@ const TemplateDocumento = sequelize.define('templateDocumento', {
     }
 })
 
-module.exports = TemplateDocumento;
+export default TemplateDocumento;

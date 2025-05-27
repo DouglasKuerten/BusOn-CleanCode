@@ -1,6 +1,6 @@
-const { Op } = require('sequelize');
+import { Op } from 'sequelize';
 
-exports.buildWhereClause = (filtros) => {
+export const buildWhereClause = (filtros) => {
     let whereClause = {};
 
     if (filtros != undefined && filtros != null && filtros != 'undefined') {

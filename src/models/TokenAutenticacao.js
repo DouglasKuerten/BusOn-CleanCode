@@ -1,7 +1,7 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const { v4: uuidv4 } = require("uuid");
-const sequelize = require('../../databaseConnection');
+import { DataTypes } from 'sequelize';
+import { v4 as uuidv4 } from "uuid";
+import sequelize from '../../databaseConnection.js';
 
 const TokenAutenticacao = sequelize.define('tokenAutenticacao', {
     usuarioId: {
@@ -34,4 +34,4 @@ TokenAutenticacao.verificarDataValidade = (token) => {
     return token.dataValidade.getTime() < new Date().getTime();
 }
 
-module.exports = TokenAutenticacao;
+export default TokenAutenticacao;

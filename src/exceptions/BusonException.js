@@ -7,4 +7,4 @@ class BusonException extends Error {
   }
 }
 
-module.exports = BusonException;
+export default BusonException;

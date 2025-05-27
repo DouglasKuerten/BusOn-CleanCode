@@ -1,5 +1,5 @@
-const yup = require('yup');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import * as yup from 'yup';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 const associacaoSchema = yup.object().shape({
   cnpj: yup
@@ -21,4 +21,4 @@ const associacaoSchema = yup.object().shape({
   logoDeclaracaoUrl: yup.string().url('URL do logo da declaração inválida').nullable(),
 });
 
-module.exports = associacaoSchema;
+export default associacaoSchema;

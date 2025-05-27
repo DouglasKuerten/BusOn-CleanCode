@@ -1,7 +1,7 @@
-const Usuario = require('../models/usuario');
-const bcrypt = require('bcrypt');
+import Usuario from '../models/usuario.js';
+import bcrypt from 'bcrypt';
 
-const gerarUsuarioAdmin = async () => {
+export const gerarUsuarioAdmin = async () => {
     const existingAdmin = await Usuario.findOne({ tipoAcesso: 'ACESSO_ADMIN' });
     if (!existingAdmin) {
         const hashedPassword = await bcrypt.hash('admin', 15);
@@ -25,7 +25,4 @@ const gerarUsuarioAdmin = async () => {
     } else {
         console.log('Usuário admin já existe, não foi gerado nenhum outro!');
     }
-}
-module.exports = {
-    gerarUsuarioAdmin
 }

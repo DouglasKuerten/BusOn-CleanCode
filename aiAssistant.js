@@ -1,5 +1,5 @@
-const { config } = require("dotenv");
-const OpenAI = require("openai");
+import { config } from "dotenv";
+import OpenAI from "openai";
 
 class AiAssistant {
 

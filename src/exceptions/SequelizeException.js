@@ -1,4 +1,4 @@
-const { StatusCodes } = require("http-status-codes");
+import { StatusCodes } from "http-status-codes";
 
 class SequelizeException extends Error {
     constructor(originalError) {
@@ -24,4 +24,4 @@ class SequelizeException extends Error {
     }
 }
 
-module.exports = SequelizeException;
+export default SequelizeException;

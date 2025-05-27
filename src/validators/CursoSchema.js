@@ -1,5 +1,5 @@
-const yup = require('yup');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import yup from 'yup';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 const cursoSchema = yup.object().shape({
     nome: yup.string()
@@ -17,4 +17,4 @@ const cursoSchema = yup.object().shape({
         .positive('ID da instituição deve ser um número positivo')
 });
 
-module.exports = cursoSchema; 
+export default cursoSchema; 

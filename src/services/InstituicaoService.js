@@ -1,14 +1,14 @@
 'use strict';
 
-const Instituicao = require('../models/instituicao');
-const { buildOrderByClause } = require('../utils/buildOrderByClause');
-const { buildWhereClause } = require('../utils/buildWhereClause');
-const BusonException = require('../exceptions/BusonException');
-const SequelizeException = require('../exceptions/SequelizeException');
-const { StatusCodes } = require('http-status-codes');
-const fs = require('fs/promises');
-const path = require('path');
-const instituicaoSchema = require('../validators/InstituicaoSchema');
+import Instituicao from '../models/Instituicao.js';
+import { buildOrderByClause } from '../utils/buildOrderByClause.js';
+import { buildWhereClause } from '../utils/buildWhereClause.js';
+import BusonException from '../exceptions/BusonException.js';
+import SequelizeException from '../exceptions/SequelizeException.js';
+import { StatusCodes } from 'http-status-codes';
+import fs from 'fs/promises';
+import path from 'path';
+import instituicaoSchema from '../validators/InstituicaoSchema.js';
 
 class InstituicaoService {
     async obterInstituicaoPorId(id) {
@@ -194,4 +194,4 @@ class InstituicaoService {
     }
 }
 
-module.exports = new InstituicaoService(); 
+export default new InstituicaoService(); 

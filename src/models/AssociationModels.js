@@ -1,12 +1,12 @@
-const Assistant = require('./assistant');
-const Thread = require('./thread');
-const Associacao = require('./associacao');
-const TemplateDocumento = require('./templateDocumento');
-const Parametro = require('./parametro');
-const Instituicao = require('./instituicao');
-const Curso = require('./curso');
-const Usuario = require('./usuario');
-const Pagamento = require('./pagamento');
+import Assistant from './assistant.js';
+import Thread from './thread.js';
+import Associacao from './Associacao.js';
+import TemplateDocumento from './templateDocumento.js';
+import Parametro from './Parametro.js';
+import Instituicao from './Instituicao.js';
+import Curso from './Curso.js';
+import Usuario from './usuario.js';
+import Pagamento from './Pagamento.js';
 
 Associacao.hasOne(Parametro, { foreignKey: 'associacaoId', onDelete: 'CASCADE' });
 Parametro.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'CASCADE' });
@@ -30,7 +30,7 @@ Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', })
 Usuario.hasMany(Pagamento, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
 
 
-module.exports = {
+export {
     Assistant,
     Thread,
     Associacao,

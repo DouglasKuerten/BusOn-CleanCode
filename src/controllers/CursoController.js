@@ -1,7 +1,7 @@
 'use strict';
 
-const CursoService = require('../services/CursoService');
-const { StatusCodes } = require('http-status-codes');
+import CursoService from '../services/CursoService.js';
+import { StatusCodes } from 'http-status-codes';
 
 const obterCursoPorId = async (req, res, next) => {
     try {
@@ -51,7 +51,7 @@ const excluirCurso = async (req, res, next) => {
     }
 };
 
-module.exports = {
+export default {
     obterCursoPorId,
     obterTodosCursos,
     criarCurso,

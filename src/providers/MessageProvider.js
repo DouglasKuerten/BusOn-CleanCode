@@ -105,4 +105,4 @@ class MessageProvider {
     }
 }
 
-module.exports = MessageProvider;
+export default MessageProvider;

@@ -1,11 +1,11 @@
-const { config } = require("dotenv");
-const OpenAI = require("openai");
-const AssistantProvider = require('../providers/AssistantProvider');
-const ThreadProvider = require("../providers/ThreadProvider");
-const MessageProvider = require("../providers/MessageProvider");
-const AssistantContextInstruction = require('../entity/AssistantContextInstruction');
-const AssistantQueryResponse = require("../entity/AssistantQueryResponse");
-const AssistantQueryDataInstructions = require("../entity/AssistantQueryDataInstructions");
+import { config } from "dotenv";
+import OpenAI from "openai";
+import AssistantProvider from '../providers/AssistantProvider.js';
+import ThreadProvider from "../providers/ThreadProvider.js";
+import MessageProvider from "../providers/MessageProvider.js";
+import AssistantContextInstruction from '../entity/AssistantContextInstruction.js';
+import AssistantQueryResponse from "../entity/AssistantQueryResponse.js";
+import AssistantQueryDataInstructions from "../entity/AssistantQueryDataInstructions.js";
 
 /**
  * Represents a chat service for a personal assistant.
@@ -105,4 +105,4 @@ class ChatService {
     }
 }
 
-module.exports = ChatService;
+export default ChatService;

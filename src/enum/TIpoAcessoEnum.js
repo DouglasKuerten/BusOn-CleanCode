@@ -4,4 +4,4 @@ const TipoAcessoEnum = {
     ADMIN: "ADMIN"
 }
 
-module.exports = TipoAcessoEnum;
+export default TipoAcessoEnum;

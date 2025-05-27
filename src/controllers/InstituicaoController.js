@@ -1,7 +1,7 @@
 'use strict';
 
-const InstituicaoService = require('../services/InstituicaoService');
-const { StatusCodes } = require('http-status-codes');
+import InstituicaoService from '../services/InstituicaoService.js';
+import { StatusCodes } from 'http-status-codes';
 
 const obterInstituicaoPorId = async (req, res, next) => {
     try {
@@ -51,7 +51,7 @@ const excluirInstituicao = async (req, res, next) => {
     }
 };
 
-module.exports = {
+export default {
     obterInstituicaoPorId,
     obterTodasInstituicoes,
     criarInstituicao,

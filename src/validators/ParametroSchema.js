@@ -1,6 +1,6 @@
-const yup = require('yup');
-const LiberadoBloqueadoEnum = require('../enum/LiberadoBloqueadoEnum');
-const SimNaoEnum = require('../enum/SimNaoEnum');
+import yup from 'yup';
+import LiberadoBloqueadoEnum from '../enum/LiberadoBloqueadoEnum.js';
+import SimNaoEnum from '../enum/SimNaoEnum.js';
 
 const parametroSchema = yup.object().shape({
   associacaoId: yup.number().integer().required('Associação ID é obrigatório.'),
@@ -26,4 +26,4 @@ const parametroSchema = yup.object().shape({
     .required('Geração de pagamentos automatico é obrigatório.'),
 });
 
-module.exports = parametroSchema;
+export default parametroSchema;

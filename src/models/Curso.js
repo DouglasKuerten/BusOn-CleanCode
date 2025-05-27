@@ -1,9 +1,9 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
 
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const Instituicao = require('./instituicao');
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import Instituicao from './Instituicao.js';
 
 const Curso = sequelize.define('curso', {
     nome: {
@@ -26,4 +26,4 @@ const Curso = sequelize.define('curso', {
 })
 
 
-module.exports = Curso;
+export default Curso;

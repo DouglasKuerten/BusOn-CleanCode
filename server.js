@@ -1,26 +1,23 @@
-const express = require('express');
-const multer = require('multer');
-const { storage } = require('./multerConfig');
-const errorHandler = require('./src/middleware/errorHandler.middleware');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const app = express();
-const dotenv = require('dotenv');
+import dotenv from 'dotenv';
 dotenv.config();
+
+console.log('Environment Variables:', process.env);
+import express from 'express';
+import multer from 'multer';
+import { storage } from './multerConfig.js';
+import errorHandler from './src/middleware/errorHandler.middleware.js';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import routes from './src/routes/Routes.js';
+import swaggerUi from 'swagger-ui-express';
+import swaggerSpec from './config/swagger.js';
+import sequelize from './databaseConnection.js';
+import { Assistant, Thread, Associacao, TemplateDocumento, Parametro, Instituicao, Curso, Usuario, Pagamento } from './src/models/associationsModels.js';
+import { gerarUsuarioAdmin } from './src/scripts/gerarUsuarioAdmin.js';
+import * as Job from './src/jobs/job.js';
+const app = express();
+console.log(`PORTAAAA` + process.env.SERVER_PORT);
 const port = process.env.SERVER_PORT;
-
-const routes = require('./src/routes/routes');
-
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger');
-const sequelize = require('./databaseConnection');
-
-app.use(bodyParser.json());
-app.use(cors());
-
-const { Assistant, Thread, Associacao, TemplateDocumento, Parametro, Instituicao, Curso, Usuario, Pagamento } = require('./src/models/associationsModels');
-
-const { gerarUsuarioAdmin } = require('./src/scripts/gerarUsuarioAdmin');
 
 sequelize
   .sync({ force: false })
@@ -68,4 +65,3 @@ process.on('SIGINT', function () {
   process.exit(0);
 });
 app.use(errorHandler);
-const Job = require('./src/jobs/job');

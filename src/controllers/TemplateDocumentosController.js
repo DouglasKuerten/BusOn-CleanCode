@@ -1,6 +1,6 @@
-const TemplateDocumento = require('../models/templateDocumento');
-const Associacao = require('../models/associacao');
-const { getFormattedSequelizeExceptions } = require('../utils/Exceptions');
+import TemplateDocumento from '../models/templateDocumento.js';
+import Associacao from '../models/Associacao.js';
+import getFormattedSequelizeExceptions from '../utils/Exceptions.js';
 
 const criarTemplateDocumento = async (req, res) => {
     try {
@@ -78,7 +78,7 @@ const excluirTemplateDocumento = async (req, res) => {
     }
 };
 
-module.exports = {
+export default {
     criarTemplateDocumento,
     obterTodosTemplatesDocumentos,
     obterTemplateDocumentoPorId,

@@ -3,4 +3,4 @@ const TipoImpressaoEnum = {
     UM_DOCUMENTO_PARA_UM_USUARIO: "UM_DOCUMENTO_PARA_UM_USUARIO",
 }
 
-module.exports = TipoImpressaoEnum;
+export default TipoImpressaoEnum;

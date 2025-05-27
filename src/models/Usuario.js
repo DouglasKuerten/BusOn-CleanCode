@@ -1,11 +1,11 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
-const TipoAcessoEnum = require('../enum/TIpoAcessoEnum');
-const Curso = require('./curso');
-const Associacao = require('./Associacao');
-const DiasSemanaEnum = require('../enum/DiasSemanaEnum');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import TipoAcessoEnum from '../enum/TIpoAcessoEnum.js';
+import Curso from './Curso.js';
+import Associacao from './Associacao.js';
+import DiasSemanaEnum from '../enum/DiasSemanaEnum.js';
 
 const Usuario = sequelize.define('usuario', {
   nome: {
@@ -86,4 +86,4 @@ const Usuario = sequelize.define('usuario', {
   },
 });
 
-module.exports = Usuario;
+export default Usuario;

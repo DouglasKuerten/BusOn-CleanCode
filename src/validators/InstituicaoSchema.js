@@ -1,5 +1,5 @@
-const yup = require('yup');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import yup from 'yup';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 const instituicaoSchema = yup.object().shape({
     nome: yup.string()
@@ -24,4 +24,4 @@ const instituicaoSchema = yup.object().shape({
         .nullable()
 });
 
-module.exports = instituicaoSchema; 
+export default instituicaoSchema; 

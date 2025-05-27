@@ -1,5 +1,5 @@
-const Assistant = require('../models/assistant');
-const AtivoInativoEnum = require('../enum/AtivoInativoEnum');
+import Assistant from '../models/assistant.js';
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
 
 class AssistantProvider {
 
@@ -86,4 +86,4 @@ class AssistantProvider {
     }
 }
 
-module.exports = AssistantProvider;
+export default AssistantProvider;

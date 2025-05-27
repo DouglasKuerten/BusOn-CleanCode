@@ -1,4 +1,4 @@
-exports.buildOrderByClause = (orderBy) => {
+export const buildOrderByClause = (orderBy) => {
     let orderClause = [];
     if (orderBy) {
         const orders = JSON.parse(orderBy);

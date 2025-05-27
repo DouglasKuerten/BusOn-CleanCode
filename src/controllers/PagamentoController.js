@@ -1,5 +1,5 @@
-const PagamentoService = require('../services/PagamentoService');
-const { StatusCodes } = require('http-status-codes');
+import PagamentoService from '../services/PagamentoService.js';
+import { StatusCodes } from 'http-status-codes';
 
 const obterPagamentoPorId = async (req, res, next) => {
   try {
@@ -79,7 +79,7 @@ const gerarPagamentosMensaisManualmente = async (req, res, next) => {
   }
 };
 
-module.exports = {
+export default {
   obterPagamentoPorId,
   obterTodosPagamentos,
   criarPagamento,

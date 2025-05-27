@@ -1,12 +1,12 @@
 'use strict';
 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const Usuario = require('../models/usuario');
-const TokenAutenticacao = require('../models/tokenAutenticacao');
-const Associacao = require('../models/associacao');
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import Usuario from '../models/usuario.js';
+import TokenAutenticacao from '../models/tokenAutenticacao.js';
+import Associacao from '../models/Associacao.js';
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
 
 // Função para autenticar o usuário e gerar um token JWT
 const authenticateUsuario = async (req, res) => {
@@ -139,7 +139,7 @@ const validateToken = async (req, res) => {
     })
 }
 
-module.exports = {
+export default {
     authenticateUsuario,
     refreshToken,
     validateToken

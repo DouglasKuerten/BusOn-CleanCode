@@ -1,6 +1,6 @@
 'use strict';
-const { DataTypes } = require('sequelize');
-const sequelize = require('../../databaseConnection');
+import { DataTypes } from 'sequelize';
+import sequelize from '../../databaseConnection.js';
 
 const Thread = sequelize.define('thread', {
     api_id: {
@@ -13,4 +13,4 @@ const Thread = sequelize.define('thread', {
     }
 })
 
-module.exports = Thread;
+export default Thread;

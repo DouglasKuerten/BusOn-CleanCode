@@ -1,8 +1,8 @@
-const Curso = require('../models/curso');
-const Instituicao = require('../models/instituicao');
-const Usuario = require('../models/usuario');
-const Associacao = require('../models/associacao');
-const Pagamento = require('../models/pagamento');
+import Curso from '../models/Curso.js';
+import Instituicao from '../models/Instituicao.js';
+import Usuario from '../models/usuario.js';
+import Associacao from '../models/Associacao.js';
+import Pagamento from '../models/Pagamento.js';
 
 /**
  * Represents a context instruction for the assistant.
@@ -167,4 +167,4 @@ class AssistantContextInstruction {
     }
 }
 
-module.exports = AssistantContextInstruction;
+export default AssistantContextInstruction;

@@ -21,4 +21,4 @@ class AssistantQueryDataInstructions {
 
 }
 
-module.exports = AssistantQueryDataInstructions;
+export default AssistantQueryDataInstructions;

@@ -1,10 +1,10 @@
 'use strict';
 
-const Parametro = require('../models/Parametro');
-const BusonException = require('../exceptions/BusonException');
-const { StatusCodes } = require('http-status-codes');
-const SequelizeException = require('../exceptions/SequelizeException');
-const parametroSchema = require('../validators/ParametroSchema');
+import Parametro from '../models/Parametro.js';
+import BusonException from '../exceptions/BusonException.js';
+import { StatusCodes } from 'http-status-codes';
+import SequelizeException from '../exceptions/SequelizeException.js';
+import parametroSchema from '../validators/ParametroSchema.js';
 
 class ParametroService {
   async obterParametroPorId(id) {
@@ -66,4 +66,4 @@ class ParametroService {
   }
 }
 
-module.exports = new ParametroService();
+export default new ParametroService();
