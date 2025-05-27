@@ -1,24 +1,35 @@
-version: '3'
+version: '3.8'
 
 services:
-  server:
-    build: ./
-    container_name: express
+  app:
+    build: .
+    container_name: buson_backend
     ports:
-      - 3000:3000
+      - '3000:3000'
+    environment:
+      - JWT_SECRET=SUA_CHAVE_SECRETA
+      - JWT_EXPIRATION=3600
+      - JWT_REFRESH_EXPIRATION=86400
+      - POSTGRES_HOST=db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=buson_db
+      - POSTGRES_PORT=5432
+      - PG_DIALECT=postgres
     depends_on:
-      - db
-    restart: always
-    tty: true
-    stdin_open: true
+      db:
+        condition: service_healthy
+    command: npm run start
 
   db:
-    container_name: 'postgres'
-    image: 'postgres:14.1-alpine'
-    env_file:
-      - .env
+    image: postgres:latest
+    container_name: buson_db
     ports:
       - '5432:5432'
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: buson_db
     volumes:
       - postgres_data:/data/postgres
     restart: unless-stopped
