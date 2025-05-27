@@ -10,65 +10,73 @@ import { StatusCodes } from 'http-status-codes';
 import cursoSchema from '../validators/CursoSchema.js';
 
 class CursoService {
-    async obterCursoPorId(id) {
-        const curso = await Curso.findByPk(id);
-        if (!curso) {
-            throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
-        }
-        return curso;
+  async obterCursoPorId(id) {
+    const curso = await Curso.findByPk(id);
+    if (!curso) {
+      throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
     }
+    return curso;
+  }
 
-    async obterTodosCursos(query) {
-        const whereClause = buildWhereClause(query.filters);
-        const orderClause = buildOrderByClause(query.orderBy);
+  async obterTodosCursos(query) {
+    const whereClause = buildWhereClause(query.filters);
+    const orderClause = buildOrderByClause(query.orderBy);
 
-        return await Curso.findAll({
-            include: [{
-                model: Instituicao,
-                attributes: ['id', 'nome']
-            }],
-            attributes: ['id', 'nome', 'situacao'],
-            where: whereClause,
-            order: orderClause
-        });
+    return await Curso.findAll({
+      include: [
+        {
+          model: Instituicao,
+          attributes: ['id', 'nome'],
+        },
+      ],
+      attributes: ['id', 'nome', 'situacao'],
+      where: whereClause,
+      order: orderClause,
+    });
+  }
+
+  async validarInstituicao(instituicaoId) {
+    const instituicao = await Instituicao.findByPk(instituicaoId);
+    if (!instituicao) {
+      throw new BusonException(
+        StatusCodes.BAD_REQUEST,
+        'A instituição informada não existe.',
+      );
     }
+  }
 
-    async validarInstituicao(instituicaoId) {
-        const instituicao = await Instituicao.findByPk(instituicaoId);
-        if (!instituicao) {
-            throw new BusonException(StatusCodes.BAD_REQUEST, 'A instituição informada não existe.');
-        }
-    }
+  async criarCurso(dados) {
+    await cursoSchema.validate(dados);
+    await this.validarInstituicao(dados.instituicaoId);
+    return await Curso.create(dados);
+  }
 
-    async criarCurso(dados) {
-        await cursoSchema.validate(dados);
-        await this.validarInstituicao(dados.instituicaoId);
-        return await Curso.create(dados);
+  async atualizarCurso(id, dados) {
+    await cursoSchema.validate(dados);
+    await this.validarInstituicao(dados.instituicaoId);
+    const [atualizado] = await Curso.update(dados, { where: { id } });
+    if (!atualizado) {
+      throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
     }
+    return await this.obterCursoPorId(id);
+  }
 
-    async atualizarCurso(id, dados) {
-        await cursoSchema.validate(dados);
-        await this.validarInstituicao(dados.instituicaoId);
-        const [atualizado] = await Curso.update(dados, { where: { id } });
-        if (!atualizado) {
-            throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
-        }
-        return await this.obterCursoPorId(id);
+  async excluirCurso(id) {
+    try {
+      const excluido = await Curso.destroy({ where: { id } });
+      if (!excluido) {
+        throw new BusonException(
+          StatusCodes.NOT_FOUND,
+          'Curso não encontrado.',
+        );
+      }
+    } catch (error) {
+      if (error.name && error.name.startsWith('Sequelize')) {
+        throw new SequelizeException(error);
+      }
+      throw error;
     }
-
-    async excluirCurso(id) {
-        try {
-            const excluido = await Curso.destroy({ where: { id } });
-            if (!excluido) {
-                throw new BusonException(StatusCodes.NOT_FOUND, 'Curso não encontrado.');
-            }
-        } catch (error) {
-            if (error.name && error.name.startsWith('Sequelize')) {
-                throw new SequelizeException(error);
-            }
-            throw error;
-        }
-    }
+  }
 }
 
-export default new CursoService(); 
+export default new CursoService();

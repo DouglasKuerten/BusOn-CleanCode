@@ -12,17 +12,24 @@ const parametroSchema = yup.object().shape({
   valor6: yup.number().required('Valor 6 é obrigatório.'),
   valorMulta: yup.number().required('Valor da multa é obrigatório.'),
   diaVencimento: yup.number().required('Dia de vencimento é obrigatório.'),
-  diasToleranciaMulta: yup.number().required('Dias de tolerância da multa é obrigatório.'),
+  diasToleranciaMulta: yup
+    .number()
+    .required('Dias de tolerância da multa é obrigatório.'),
   liberaAlteracaoDadosPessoais: yup
     .string()
     .oneOf(
       Object.values(LiberadoBloqueadoEnum),
-      'Liberação de alteração de dados pessoais inválida. Valores possíveis: ' + Object.values(LiberadoBloqueadoEnum).join(', ')
+      'Liberação de alteração de dados pessoais inválida. Valores possíveis: ' +
+        Object.values(LiberadoBloqueadoEnum).join(', '),
     )
     .required('Liberação de alteração de dados pessoais é obrigatório.'),
   gerarPagamentosAutomatico: yup
     .string()
-    .oneOf(Object.values(SimNaoEnum), 'Geração de pagamentos automatico inválida. Valores possíveis: ' + Object.values(SimNaoEnum).join(', '))
+    .oneOf(
+      Object.values(SimNaoEnum),
+      'Geração de pagamentos automatico inválida. Valores possíveis: ' +
+        Object.values(SimNaoEnum).join(', '),
+    )
     .required('Geração de pagamentos automatico é obrigatório.'),
 });
 

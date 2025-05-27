@@ -10,6 +10,10 @@ export default [
       ecmaVersion: 2020,
       sourceType: 'module',
       parser: eslintParserTs,
+      globals: {
+        console: 'readonly',
+        process: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': eslintPluginTs,

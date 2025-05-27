@@ -1,7 +1,7 @@
 const TipoAcessoEnum = {
-    ALUNO: "ALUNO",
-    GESTAO: "GESTAO",
-    ADMIN: "ADMIN"
-}
+  ALUNO: 'ALUNO',
+  GESTAO: 'GESTAO',
+  ADMIN: 'ADMIN',
+};
 
 export default TipoAcessoEnum;

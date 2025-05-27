@@ -20,7 +20,10 @@ const obterTodasAssociacoes = async (req, res, next) => {
     const whereClause = buildWhereClause(req.query.filters);
     const orderClause = buildOrderByClause(req.query.orderBy);
 
-    const associacoes = await AssociacaoService.obterTodasAssociacoes(whereClause, orderClause);
+    const associacoes = await AssociacaoService.obterTodasAssociacoes(
+      whereClause,
+      orderClause,
+    );
     res.status(StatusCodes.OK).json(associacoes);
   } catch (error) {
     next(error);
@@ -30,7 +33,10 @@ const obterTodasAssociacoes = async (req, res, next) => {
 const criarAssociacao = async (req, res, next) => {
   try {
     const associacaoData = req.body.data ? JSON.parse(req.body.data) : req.body;
-    const novaAssociacao = await AssociacaoService.criarAssociacao(associacaoData, req.files);
+    const novaAssociacao = await AssociacaoService.criarAssociacao(
+      associacaoData,
+      req.files,
+    );
     res.status(StatusCodes.CREATED).json(novaAssociacao);
   } catch (error) {
     next(error);
@@ -40,7 +46,11 @@ const criarAssociacao = async (req, res, next) => {
 const atualizarAssociacao = async (req, res, next) => {
   try {
     const associacaoData = req.body.data ? JSON.parse(req.body.data) : req.body;
-    const resultado = await AssociacaoService.atualizarAssociacao(req.params.id, associacaoData, req.files);
+    const resultado = await AssociacaoService.atualizarAssociacao(
+      req.params.id,
+      associacaoData,
+      req.files,
+    );
     res.status(StatusCodes.OK).json(resultado);
   } catch (error) {
     next(error);
@@ -49,7 +59,7 @@ const atualizarAssociacao = async (req, res, next) => {
 
 const excluirAssociacao = async (req, res, next) => {
   try {
-    const resultado = await AssociacaoService.excluirAssociacao(req.params.id);
+    await AssociacaoService.excluirAssociacao(req.params.id);
     res.status(StatusCodes.NO_CONTENT).send();
   } catch (error) {
     next(error);

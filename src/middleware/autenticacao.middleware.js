@@ -13,7 +13,9 @@ const jwtDataOptions = {
 const { TokenExpiredError } = jwt;
 const catchError = (err, res) => {
   if (err instanceof TokenExpiredError) {
-    return res.status(401).send({ message: 'Unauthorized! Access Token expired!' });
+    return res
+      .status(401)
+      .send({ message: 'Unauthorized! Access Token expired!' });
   } else {
     return res.status(401).send({ message: 'Unauthorized!' });
   }
@@ -32,8 +34,13 @@ const validarAutenticacao = (req, res, next) => {
           where: { token: decoded.refreshToken },
         });
 
-        if (!storedToken || TokenAutenticacao.verificarDataValidade(storedToken)) {
-          return res.status(403).send({ message: 'Token not found or expired!' });
+        if (
+          !storedToken ||
+          TokenAutenticacao.verificarDataValidade(storedToken)
+        ) {
+          return res
+            .status(403)
+            .send({ message: 'Token not found or expired!' });
         }
         const dadosUsuario = await Usuario.findOne({
           include: [
@@ -85,7 +92,4 @@ const logout = async (req, res) => {
   }
 };
 
-export {
-  validarAutenticacao,
-  logout,
-};
+export { validarAutenticacao, logout };

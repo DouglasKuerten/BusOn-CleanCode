@@ -11,7 +11,6 @@ import routes from './src/routes/Routes.js';
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './config/swagger.js';
 import sequelize from './databaseConnection.js';
-import * as Job from './src/jobs/job.js';
 const app = express();
 
 const port = process.env.SERVER_PORT;
@@ -19,11 +18,23 @@ const port = process.env.SERVER_PORT;
 app.use(express.json());
 app.use(cors());
 
-import { Associacao, TemplateDocumento, Parametro, Instituicao, Curso, Usuario, Pagamento } from './src/models/AssociationsModels.js';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import * as Job from './src/jobs/job.js';
+import {
+  Associacao,
+  TemplateDocumento,
+  Parametro,
+  Instituicao,
+  Curso,
+  Usuario,
+  Pagamento,
+} from './src/models/AssociationsModels.js';
+/* eslint-enable @typescript-eslint/no-unused-vars */
 
 import { gerarUsuarioAdmin } from './src/scripts/gerarUsuarioAdmin.js';
 
-sequelize.sync({ force: false })
+sequelize
+  .sync({ force: false })
   .then(() => {
     console.log('Todos os modelos foram sincronizados com sucesso');
     gerarUsuarioAdmin().catch((err) => console.error(err));
@@ -32,9 +43,6 @@ sequelize.sync({ force: false })
     console.log('Ocorreu um erro durante a sincronização dos modelos: ', error);
   });
 
-
-
-
 app.use(
   '/api/docs',
   swaggerUi.serve,
@@ -42,13 +50,13 @@ app.use(
     swaggerOptions: {
       persistAuthorization: true,
     },
-  })
+  }),
 );
 
 app.use(
   bodyParser.urlencoded({
     extended: true,
-  })
+  }),
 );
 
 app.listen(port, () => {

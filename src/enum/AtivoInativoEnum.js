@@ -1,6 +1,6 @@
 const AtivoInativoEnum = {
-    ATIVO: "ATIVO",
-    INATIVO: "INATIVO",
-}
+  ATIVO: 'ATIVO',
+  INATIVO: 'INATIVO',
+};
 
 export default AtivoInativoEnum;

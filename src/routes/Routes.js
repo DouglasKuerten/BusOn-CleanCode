@@ -13,22 +13,53 @@ import usuarioController from '../controllers/UsuarioController.js';
 import pagamentoController from '../controllers/PagamentoController.js';
 import parametroController from '../controllers/ParametroController.js';
 import templateDocumentosController from '../controllers/TemplateDocumentosController.js';
-import { validarAutenticacao, logout } from '../middleware/autenticacao.middleware.js';
+import {
+  validarAutenticacao,
+  logout,
+} from '../middleware/autenticacao.middleware.js';
 
-router.use(['/usuario', '/associacao', '/instituicao', '/curso', '/pagamento', '/parametro', '/template-documento'], validarAutenticacao);
+router.use(
+  [
+    '/usuario',
+    '/associacao',
+    '/instituicao',
+    '/curso',
+    '/pagamento',
+    '/parametro',
+    '/template-documento',
+  ],
+  validarAutenticacao,
+);
 
 router.get('/usuario/completo', usuarioController.obterUsuariosCompleto);
 router.get('/usuario/:id', usuarioController.obterUsuarioPorId);
 router.get('/usuario', usuarioController.obterTodosUsuarios);
 router.post('/usuario', upload.single('foto'), usuarioController.criarUsuario);
-router.put('/usuario/:id', upload.single('foto'), usuarioController.atualizarUsuario);
-router.put('/usuario/atualizar-senha/:id', usuarioController.atualizarSenhaUsuario);
+router.put(
+  '/usuario/:id',
+  upload.single('foto'),
+  usuarioController.atualizarUsuario,
+);
+router.put(
+  '/usuario/atualizar-senha/:id',
+  usuarioController.atualizarSenhaUsuario,
+);
 router.put('/usuario/resetar-senha/:id', usuarioController.resetarSenhaUsuario);
 router.delete('/usuario/:id', usuarioController.excluirUsuario);
 
-router.post('/autenticacao/autenticar', autenticacaoController.authenticateUsuario);
-router.post('/autenticacao/atualizar-token', autenticacaoController.refreshToken);
-router.post('/autenticacao/validar-token', validarAutenticacao, autenticacaoController.validateToken);
+router.post(
+  '/autenticacao/autenticar',
+  autenticacaoController.authenticateUsuario,
+);
+router.post(
+  '/autenticacao/atualizar-token',
+  autenticacaoController.refreshToken,
+);
+router.post(
+  '/autenticacao/validar-token',
+  validarAutenticacao,
+  autenticacaoController.validateToken,
+);
 router.post('/autenticacao/logout', validarAutenticacao, logout);
 
 router.get('/associacao/:id', associacaoController.obterAssociacaoPorId);
@@ -39,7 +70,7 @@ router.post(
     { name: 'logo', maxCount: 1 },
     { name: 'logoDeclaracao', maxCount: 1 },
   ]),
-  associacaoController.criarAssociacao
+  associacaoController.criarAssociacao,
 );
 router.put(
   '/associacao/:id',
@@ -47,20 +78,43 @@ router.put(
     { name: 'logo', maxCount: 1 },
     { name: 'logoDeclaracao', maxCount: 1 },
   ]),
-  associacaoController.atualizarAssociacao
+  associacaoController.atualizarAssociacao,
 );
 router.delete('/associacao/:id', associacaoController.excluirAssociacao);
 
-router.get('/template-documento/:id', templateDocumentosController.obterTemplateDocumentoPorId);
-router.get('/template-documento', templateDocumentosController.obterTodosTemplatesDocumentos);
-router.post('/template-documento', templateDocumentosController.criarTemplateDocumento);
-router.put('/template-documento/:id', templateDocumentosController.atualizarTemplateDocumento);
-router.delete('/template-documento/:id', templateDocumentosController.excluirTemplateDocumento);
+router.get(
+  '/template-documento/:id',
+  templateDocumentosController.obterTemplateDocumentoPorId,
+);
+router.get(
+  '/template-documento',
+  templateDocumentosController.obterTodosTemplatesDocumentos,
+);
+router.post(
+  '/template-documento',
+  templateDocumentosController.criarTemplateDocumento,
+);
+router.put(
+  '/template-documento/:id',
+  templateDocumentosController.atualizarTemplateDocumento,
+);
+router.delete(
+  '/template-documento/:id',
+  templateDocumentosController.excluirTemplateDocumento,
+);
 
 router.get('/instituicao/:id', instituicaoController.obterInstituicaoPorId);
 router.get('/instituicao', instituicaoController.obterTodasInstituicoes);
-router.post('/instituicao', upload.single('logo'), instituicaoController.criarInstituicao);
-router.put('/instituicao/:id', upload.single('logo'), instituicaoController.atualizarInstituicao);
+router.post(
+  '/instituicao',
+  upload.single('logo'),
+  instituicaoController.criarInstituicao,
+);
+router.put(
+  '/instituicao/:id',
+  upload.single('logo'),
+  instituicaoController.atualizarInstituicao,
+);
 router.delete('/instituicao/:id', instituicaoController.excluirInstituicao);
 
 router.get('/curso/:id', cursoController.obterCursoPorId);
@@ -76,10 +130,16 @@ router.put('/pagamento/:id', pagamentoController.atualizarPagamento);
 router.put('/pagamento/aprovar/:id', pagamentoController.aprovarPagamento);
 router.put('/pagamento/reprovar/:id', pagamentoController.reprovarPagamento);
 router.delete('/pagamento/:id', pagamentoController.excluirPagamento);
-router.post('/pagamento/gerar-manualmente/:associacaoId', pagamentoController.gerarPagamentosMensaisManualmente);
+router.post(
+  '/pagamento/gerar-manualmente/:associacaoId',
+  pagamentoController.gerarPagamentosMensaisManualmente,
+);
 
 router.get('/parametro/:id', parametroController.obterParametroPorId);
-router.get('/parametro/associacao/:associacaoId', parametroController.obterParametroDaAssociacaoPorId);
+router.get(
+  '/parametro/associacao/:associacaoId',
+  parametroController.obterParametroDaAssociacaoPorId,
+);
 router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
 router.put('/parametro/:id', parametroController.atualizarParametro);

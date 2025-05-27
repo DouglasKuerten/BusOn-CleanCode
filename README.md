@@ -7,14 +7,18 @@
 </div>
 
 # Sobre o Projeto
+
 ## Oque é:
+
 - O Aplicativo foi desenvolvido com o intuito de facilitar o gerenciamento dos pagamentos mensais dos acadêmicos que utilizam o serviço de transporte para deslocamento até as universidades. Além disso, o aplicativo fornece informações detalhadas sobre a associação e, situação dos acadêmicos e seus pagamentos, por meio de um chat com inteligência artificial.
 
 ## Oque procuramos resolver:
+
 - Controle manual por meio de uma planilha de controle;
 - Preenchimento de documentos de forma manual;
-  
+
 ## Objetivos:
+
 - Facilitar a cobrança/conferência/consulta de pagamentos dos acadêmicos;
 - Facilitar emissão de documentos para os acadêmicos em nome da associação;
 - Gerenciamento dos dias de utilização do transporte por cada universitário e manter seus dados atualizados;
@@ -24,42 +28,53 @@
 ---
 
 # Inicialização do Projeto
+
 ### Clonar o projeto:
+
 ```bash
   git clone https://github.com/BrunoDimon/BusOn.git
 ```
+
 ### Navegar até a pasta do projeto
 
 #### Instalar as dependências:
+
 ```bash
-  npm i 
+  npm i
 ```
 
 #### Iniciar o servidor
+
 Tem duas opções para inicializar o servidor que irão funcionar normalmente:
+
 ##### 1 - Manualmente:
+
 ```bash
-  npm start 
+  npm start
 ```
+
 > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
 
 ##### 2 - Com Docker:
+
 ```bash
   npm run docker
 ```
-> Necessário somente ter o docker instalado, o comando irá executar tudo oque for necessário e configurar, apenas deverá passar a conexão nas variáveis de ambiente (dotenv)
 
+> Necessário somente ter o docker instalado, o comando irá executar tudo oque for necessário e configurar, apenas deverá passar a conexão nas variáveis de ambiente (dotenv)
 
 ---
 
 # Variáveis de Ambiente
 
 Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de ambiente no seu arquivo .env
+
 > O arquivo [.env.example](https://github.com/BrunoDimon/BusOn/blob/main/.env.example) foi deixado no projeto para usar de modelo
 
 ---
 
 ### Variáveis do banco de dados
+
 ##### **Configurações para conexção com o banco de dados**
 
 `POSTGRES_HOST` (Endereço do banco de dados. Ex: "localhost")
@@ -76,28 +91,31 @@ Para rodar esse projeto, você vai precisar adicionar as seguintes variáveis de
 
 `POSTGRES_PORT` -> (Porta que irá rodar o postgres. Ex (Padrão): "5432")
 
-`DATABASE_URL` -> (Url do database.) 
+`DATABASE_URL` -> (Url do database.)
 Ex:
+
 ```
 postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@$POSTGRES_HOST:$POSTGRES_PORT/$POSTGRES_DB)
 ```
 
-
 ---
 
 ### Variáveis do servidor
+
 ##### **Define em qual porta irá rodar o servidor.**
 
-`SERVER_PORT`  (Normalmente o node roda na porta 3000. Ex: 3000)
+`SERVER_PORT` (Normalmente o node roda na porta 3000. Ex: 3000)
 
 ---
 
 ### Variáveis da autenticação
+
 ##### **Chave Secreta utilizada na autenticação.**
 
 `JWT_SECRET` -> (Gerar uma chave aleatória. Ex:"cHavEgErAdA1234")
 
 Comando:
+
 ```bash
 node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 ```
@@ -111,6 +129,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 ---
 
 ### **Variáveis da IA**
+
 `OPENAI_API_KEY` -> (Chave usada para acesso a API do OpenAI)
 
 Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) para vizualizar mais detalhes sobre a implemetação da IA dentro desse projeto
@@ -118,7 +137,9 @@ Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) p
 ---
 
 # Tecnologias utilizadas
+
 ### Tecnologias usadas para a execução em produção
+
 [![JavaScript][JavaScript.js]][JavaScript-url]
 [![NodeJS][NodeJS.js]][NodeJS-url]
 [![Express][Express.js]][Express-url]
@@ -129,26 +150,28 @@ Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) p
 [![Docker][Docker.js]][Docker-url]
 
 ### Tecnologias usadas em desenvolvimento apenas
+
 [![Insomnia][Insomnia.js]][Insomnia-url]
 
 # Autores
 
-* **Bruno Dimon** - [https://github.com/BrunoDimon](https://github.com/BrunoDimon)
-* **Douglas Kuerten** - [https://github.com/DouglasKuerten](https://github.com/DouglasKuerten)
-* **Lucas Zanoni** - [https://github.com/Castrozan](https://github.com/Castrozan)
-* **Thiago Dimon** - [https://github.com/thiagoDimon](https://github.com/thiagoDimon)
-* **Vinicius Milanez** - [https://github.com/viniciusmilanez](https://github.com/viniciusmilanez)
-  
+- **Bruno Dimon** - [https://github.com/BrunoDimon](https://github.com/BrunoDimon)
+- **Douglas Kuerten** - [https://github.com/DouglasKuerten](https://github.com/DouglasKuerten)
+- **Lucas Zanoni** - [https://github.com/Castrozan](https://github.com/Castrozan)
+- **Thiago Dimon** - [https://github.com/thiagoDimon](https://github.com/thiagoDimon)
+- **Vinicius Milanez** - [https://github.com/viniciusmilanez](https://github.com/viniciusmilanez)
+
 ---
 
 # Repositórios Relacionados
 
- #### - [Buson Front-End App (Mobile)](https://github.com/BrunoDimon/BusOnApp)
- #### - [Buson Back-End](https://github.com/BrunoDimon/BusOn)
+#### - [Buson Front-End App (Mobile)](https://github.com/BrunoDimon/BusOnApp)
 
+#### - [Buson Back-End](https://github.com/BrunoDimon/BusOn)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+
 [JavaScript.js]: https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black
 [JavaScript-url]: https://developer.mozilla.org/en-US/docs/Web/JavaScript
 [ReactNative.js]: https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB

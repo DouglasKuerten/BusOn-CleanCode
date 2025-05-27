@@ -15,7 +15,10 @@ const obterUsuarioPorId = async (req, res, next) => {
 
 const obterTodosUsuarios = async (req, res, next) => {
   try {
-    const usuarios = await UsuarioService.obterTodosUsuarios(req.query.filters, req.query.orderBy);
+    const usuarios = await UsuarioService.obterTodosUsuarios(
+      req.query.filters,
+      req.query.orderBy,
+    );
     res.status(StatusCodes.OK).json(usuarios);
   } catch (error) {
     next(error);
@@ -36,7 +39,11 @@ const atualizarUsuario = async (req, res, next) => {
   try {
     const { id } = req.params;
     const dados = req.body.data ? JSON.parse(req.body.data) : req.body;
-    const resultado = await UsuarioService.atualizarUsuario(id, dados, req.file);
+    const resultado = await UsuarioService.atualizarUsuario(
+      id,
+      dados,
+      req.file,
+    );
     res.status(StatusCodes.OK).json(resultado);
   } catch (error) {
     next(error);
@@ -75,7 +82,10 @@ const excluirUsuario = async (req, res, next) => {
 
 const obterUsuariosCompleto = async (req, res, next) => {
   try {
-    const usuarios = await UsuarioService.obterUsuariosCompleto(req.query.filters, req.query.orderBy);
+    const usuarios = await UsuarioService.obterUsuariosCompleto(
+      req.query.filters,
+      req.query.orderBy,
+    );
     res.status(StatusCodes.OK).json(usuarios);
   } catch (error) {
     next(error);
@@ -90,5 +100,5 @@ export default {
   atualizarSenhaUsuario,
   resetarSenhaUsuario,
   excluirUsuario,
-  obterUsuariosCompleto
+  obterUsuariosCompleto,
 };

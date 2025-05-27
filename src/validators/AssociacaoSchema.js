@@ -15,10 +15,20 @@ const associacaoSchema = yup.object().shape({
     .string()
     .required('CEP é obrigatório')
     .matches(/^\d{8}$/, 'CEP deve conter 8 dígitos numéricos'),
-  uf: yup.string().required('UF é obrigatório').length(2, 'UF deve conter 2 letras').uppercase(),
-  situacao: yup.mixed().oneOf(Object.keys(AtivoInativoEnum), 'Situação inválida').required('Situação é obrigatória'),
+  uf: yup
+    .string()
+    .required('UF é obrigatório')
+    .length(2, 'UF deve conter 2 letras')
+    .uppercase(),
+  situacao: yup
+    .mixed()
+    .oneOf(Object.keys(AtivoInativoEnum), 'Situação inválida')
+    .required('Situação é obrigatória'),
   logoUrl: yup.string().url('URL do logo inválida').nullable(),
-  logoDeclaracaoUrl: yup.string().url('URL do logo da declaração inválida').nullable(),
+  logoDeclaracaoUrl: yup
+    .string()
+    .url('URL do logo da declaração inválida')
+    .nullable(),
 });
 
 export default associacaoSchema;

@@ -1,6 +1,6 @@
 const TipoPagamentoEnum = {
-    PIX: "PIX",
-    DINHEIRO: "DINHEIRO"
-}
+  PIX: 'PIX',
+  DINHEIRO: 'DINHEIRO',
+};
 
 export default TipoPagamentoEnum;

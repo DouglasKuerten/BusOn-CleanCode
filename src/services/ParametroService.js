@@ -10,7 +10,10 @@ class ParametroService {
   async obterParametroPorId(id) {
     const parametro = await Parametro.findByPk(id);
     if (!parametro) {
-      throw new BusonException(StatusCodes.NOT_FOUND, 'Parâmetros da associação não foram encontrados!');
+      throw new BusonException(
+        StatusCodes.NOT_FOUND,
+        'Parâmetros da associação não foram encontrados!',
+      );
     }
     return parametro;
   }
@@ -18,7 +21,10 @@ class ParametroService {
   async obterParametroDaAssociacaoPorId(associacaoId) {
     const parametro = await Parametro.findOne({ where: { associacaoId } });
     if (!parametro) {
-      throw new BusonException(StatusCodes.NOT_FOUND, 'Parâmetros da associação não foram encontrados!');
+      throw new BusonException(
+        StatusCodes.NOT_FOUND,
+        'Parâmetros da associação não foram encontrados!',
+      );
     }
     return parametro;
   }
@@ -40,7 +46,10 @@ class ParametroService {
     });
 
     if (!atualizado) {
-      throw new BusonException(StatusCodes.NOT_FOUND, 'Parâmetro não encontrado');
+      throw new BusonException(
+        StatusCodes.NOT_FOUND,
+        'Parâmetro não encontrado',
+      );
     }
 
     return await this.obterParametroPorId(id);
@@ -53,7 +62,10 @@ class ParametroService {
       });
 
       if (!excluido) {
-        throw new BusonException(StatusCodes.NOT_FOUND, 'Parâmetro não encontrado');
+        throw new BusonException(
+          StatusCodes.NOT_FOUND,
+          'Parâmetro não encontrado',
+        );
       }
 
       return true;

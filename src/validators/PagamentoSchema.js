@@ -8,7 +8,10 @@ const pagamentoSchema = yup.object().shape({
   usuarioId: yup.number().integer().required('Usuário ID é obrigatório.'),
   tipo: yup
     .string()
-    .oneOf(Object.keys(TipoPagamentoEnum), `Tipo de pagamento inválido. Valores possíveis: ${Object.values(TipoPagamentoEnum).join(', ')}`)
+    .oneOf(
+      Object.keys(TipoPagamentoEnum),
+      `Tipo de pagamento inválido. Valores possíveis: ${Object.values(TipoPagamentoEnum).join(', ')}`,
+    )
     .required('Tipo de pagamento é obrigatório.'),
   valor: yup.number().required('Valor é obrigatório.'),
   multa: yup.number().nullable(),
@@ -16,7 +19,10 @@ const pagamentoSchema = yup.object().shape({
   dataPagamento: yup.date().nullable(),
   situacao: yup
     .string()
-    .oneOf(Object.keys(SituacaoPagamentoEnum), `Situação inválida. Valores possíveis: ${Object.values(SituacaoPagamentoEnum).join(', ')}`)
+    .oneOf(
+      Object.keys(SituacaoPagamentoEnum),
+      `Situação inválida. Valores possíveis: ${Object.values(SituacaoPagamentoEnum).join(', ')}`,
+    )
     .required('Situação é obrigatória.'),
 });
 

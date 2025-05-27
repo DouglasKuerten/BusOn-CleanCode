@@ -200,4 +200,4 @@
  *         description: Dados inválidos ou instituição não encontrada
  *       500:
  *         description: Erro interno do servidor
- */ 
+ */

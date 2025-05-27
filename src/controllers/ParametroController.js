@@ -14,7 +14,8 @@ const obterParametroPorId = async (req, res, next) => {
 const obterParametroDaAssociacaoPorId = async (req, res, next) => {
   try {
     const { associacaoId } = req.params;
-    const parametro = await ParametroService.obterParametroDaAssociacaoPorId(associacaoId);
+    const parametro =
+      await ParametroService.obterParametroDaAssociacaoPorId(associacaoId);
     res.status(StatusCodes.OK).json(parametro);
   } catch (error) {
     next(error);
@@ -42,7 +43,10 @@ const criarParametro = async (req, res, next) => {
 const atualizarParametro = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const parametroAtualizado = await ParametroService.atualizarParametro(id, req.body);
+    const parametroAtualizado = await ParametroService.atualizarParametro(
+      id,
+      req.body,
+    );
     res.status(StatusCodes.OK).json(parametroAtualizado);
   } catch (error) {
     next(error);
