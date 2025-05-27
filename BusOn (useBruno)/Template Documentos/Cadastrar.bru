@@ -1,0 +1,25 @@
+meta {
+  name: Cadastrar
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{API_URL}}/template-documento
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "nome": "Lista Associados",
+    "situacao": "ATIVO",
+    "associacaoId": 1,
+    "htmlTemplate": "divdiv",
+    "tipoImpressao": "UM_DOCUMENTO_PARA_MUITOS_USUARIOS"
+  }
+}

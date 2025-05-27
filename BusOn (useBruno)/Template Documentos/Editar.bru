@@ -1,0 +1,25 @@
+meta {
+  name: Editar
+  type: http
+  seq: 4
+}
+
+put {
+  url: {{API_URL}}/template-documento/1
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
+
+body:json {
+  {
+    "nome": "Lista Associados",
+    "situacao": "ATIVO",
+    "associacaoId": 1,
+    "htmlTemplate": "texttext",
+    "tipoImpressao": "UM_DOCUMENTO_PARA_MUITOS_USUARIOS"
+  }
+}
