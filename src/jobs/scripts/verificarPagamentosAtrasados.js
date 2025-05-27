@@ -3,57 +3,63 @@ import Usuario from '../../models/Usuario.js';
 import Pagamento from '../../models/Pagamento.js';
 import { Op } from 'sequelize';
 import { convertDateToUTC } from '../../utils/converterDateToUtc.js';
+import SituacaoPagamentoEnum from '../../enum/SituacaoPagamentoEnum.js';
+
+function calcularDiferencaDias(dataInicial, dataFinal) {
+    const MILISSEGUNDOS_POR_DIA = 24 * 60 * 60 * 1000;
+    return Math.round((dataInicial - dataFinal) / MILISSEGUNDOS_POR_DIA);
+}
+
+function calcularDataComTolerancia(dataVencimento, diasTolerancia) {
+    const data = new Date(dataVencimento);
+    data.setDate(data.getDate() + diasTolerancia);
+    return data;
+}
+
+async function atualizarPagamentoComoAtrasado(pagamento, parametro, dataHojeUTC) {
+    pagamento.situacao = SituacaoPagamentoEnum.ATRASADO;
+
+    const dataComTolerancia = calcularDataComTolerancia(pagamento.dataVencimento, parametro.diasToleranciaMulta);
+
+    if (dataComTolerancia < dataHojeUTC) {
+        const diasAtraso = calcularDiferencaDias(dataHojeUTC.getTime(), dataComTolerancia.getTime());
+        pagamento.multa = parametro.valorMulta * diasAtraso;
+    }
+
+    await pagamento.save();
+}
+
+async function processarPagamentosDaAssociacao(parametro, dataHojeUTC) {
+    const pagamentos = await Pagamento.findAll({
+        include: [{
+            model: Usuario,
+            attributes: ['id', 'associacaoId'],
+            where: { associacaoId: parametro.associacaoId }
+        }],
+        where: {
+            situacao: { [Op.or]: [SituacaoPagamentoEnum.ABERTO, SituacaoPagamentoEnum.ATRASADO] },
+            dataVencimento: { [Op.lt]: dataHojeUTC }
+        }
+    });
+
+    for (const pagamento of pagamentos) {
+        await atualizarPagamentoComoAtrasado(pagamento, parametro, dataHojeUTC);
+    }
+}
 
 async function verificarPagamentosAtrasados() {
     try {
-        const parametrosPagamento = await Parametro.findAll();
-        for (const parametroPagamento of parametrosPagamento) {
+        const parametros = await Parametro.findAll();
+        const dataHojeUTC = new Date(convertDateToUTC(new Date()));
 
-            const pagamentos = await Pagamento.findAll({
-                include: [{
-                    model: Usuario,
-                    attributes: ['id', 'associacaoId'],
-                    where: { associacaoId: parametroPagamento.dataValues.associacaoId }
-                }],
-                where: {
-                    situacao: {
-                        [Op.or]: ['ABERTO', 'ATRASADO']
-                    },
-                    dataVencimento: {
-                        [Op.lt]: convertDateToUTC(new Date())
-                    }
-                }
-            });
-
-            for (const pagamento of pagamentos) {
-                let diasToleranciaMulta = parametroPagamento.dataValues.diasToleranciaMulta;
-                let valorMultaPorDia = parametroPagamento.dataValues.valorMulta;
-                let dataVencimento = pagamento.dataValues.dataVencimento;
-                let dataComToleranciaDeMulta = dataVencimento.setDate(dataVencimento.getDate() + diasToleranciaMulta);
-
-                if (dataVencimento < convertDateToUTC(new Date())) {
-                    pagamento.situacao = 'ATRASADO';
-                    if (dataComToleranciaDeMulta < convertDateToUTC(new Date())) {
-                        pagamento.multa = valorMultaPorDia * calcularDiferencaDias(new Date().getTime(), new Date(dataComToleranciaDeMulta).getTime());
-                    }
-                    await pagamento.save();
-                }
-            }
+        for (const parametro of parametros) {
+            await processarPagamentosDaAssociacao(parametro, dataHojeUTC);
         }
-        console.log('Pagamentos atrasados verificados! ');
+
+        console.log('Pagamentos atrasados verificados!');
     } catch (error) {
-        console.error(error);
-        console.log('Erro ao verificar pagamentos atrasados');
+        console.error('Erro ao verificar pagamentos atrasados:', error);
     }
-};
-
-function calcularDiferencaDias(dataInicial, dataFinal) {
-    const umDiaEmMilissegundos = 24 * 60 * 60 * 1000;
-    const diferencaEmMilissegundos = dataInicial - dataFinal;
-    const diferencaEmDias = Math.round(diferencaEmMilissegundos / umDiaEmMilissegundos);
-    return diferencaEmDias;
 }
 
-export default async () => {
-    await verificarPagamentosAtrasados();
-}
+export default verificarPagamentosAtrasados;

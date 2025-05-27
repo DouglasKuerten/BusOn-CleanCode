@@ -1,11 +1,17 @@
+import AtivoInativoEnum from '../enum/AtivoInativoEnum.js';
+import TipoAcessoEnum from '../enum/TIpoAcessoEnum.js';
 import Usuario from '../models/Usuario.js';
 import bcrypt from 'bcrypt';
 
 export const gerarUsuarioAdmin = async () => {
-    const existingAdmin = await Usuario.findOne({ tipoAcesso: 'ACESSO_ADMIN' });
+    const existingAdmin = await Usuario.findOne({
+        where: {
+            tipoAcesso: TipoAcessoEnum.ADMIN
+        }
+    });
     if (!existingAdmin) {
         const hashedPassword = await bcrypt.hash('admin', 15);
-        const adminUser = await Usuario.create({
+        await Usuario.create({
             nome: 'Admin',
             email: 'admin@admin.com',
             telefone: '00000000000',
@@ -14,10 +20,10 @@ export const gerarUsuarioAdmin = async () => {
             cpf: null,
             cursoId: null,
             associacaoId: null,
-            tipoAcesso: 'ADMIN',
+            tipoAcesso: TipoAcessoEnum.ADMIN,
             cargo: null,
             senha: hashedPassword,
-            situacao: 'ATIVO',
+            situacao: AtivoInativoEnum.ATIVO,
             diasUsoTransporte: [],
             exigirRedefinicaoSenha: true
         });
