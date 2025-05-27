@@ -8,7 +8,7 @@
     "start": "nodemon server.js",
     "prod": "node server.js",
     "swagger": "node config/swagger.js",
-    "docker": "docker compose -f docker-compose.yml up -d",
+    "docker": "docker compose -f docker-compose.yml up --build",
     "format": "prettier --write .",
     "lint": "eslint . --ext .ts,.tsx,.js",
     "lint:check": "eslint . --ext .ts,.tsx,.js --max-warnings=0",
