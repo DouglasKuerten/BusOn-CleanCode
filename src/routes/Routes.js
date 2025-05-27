@@ -11,7 +11,6 @@ import autenticacaoController from '../controllers/AutenticacaoController.js';
 import usuarioController from '../controllers/UsuarioController.js';
 import pagamentoController from '../controllers/PagamentoController.js';
 import parametroController from '../controllers/ParametroController.js';
-import chatbotController from '../controllers/ChatbotController.js';
 import templateDocumentosController from '../controllers/TemplateDocumentosController.js';
 import { validarAutenticacao, logout } from '../middleware/autenticacao.middleware.js';
 import { validate } from '../middleware/validate.middleware.js';
@@ -93,9 +92,5 @@ router.get('/parametro', parametroController.obterTodosParametros);
 router.post('/parametro', parametroController.criarParametro);
 router.put('/parametro/:id', parametroController.atualizarParametro);
 router.delete('/parametro/:id', parametroController.excluirParametro);
-
-// Rotas para chatbot
-router.get('/chatbot/completion', chatbotController.getChatbotResponse);
-router.post('/chatbot/conversation', chatbotController.postConversation);
 
 export default router;

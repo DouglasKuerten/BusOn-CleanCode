@@ -1,5 +1,3 @@
-import Assistant from './Assistant.js';
-import Thread from './Thread.js';
 import Associacao from './Associacao.js';
 import TemplateDocumento from './TemplateDocumento.js';
 import Parametro from './Parametro.js';
@@ -30,8 +28,6 @@ Pagamento.belongsTo(Usuario, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', })
 Usuario.hasMany(Pagamento, { foreignKey: 'usuarioId', onDelete: 'RESTRICT', });
 
 export {
-    Assistant,
-    Thread,
     Associacao,
     TemplateDocumento,
     Parametro,
