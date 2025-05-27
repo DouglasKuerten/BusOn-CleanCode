@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import InstituicaoService from '../../services/InstituicaoService.js';
 import InstituicaoController from '../../controllers/InstituicaoController.js';
 import httpMocks from 'node-mocks-http';
@@ -7,195 +7,181 @@ import { StatusCodes } from 'http-status-codes';
 process.env.NODE_ENV = 'test';
 
 describe('InstituicaoController', () => {
-    test('obterInstituicaoPorId retorna instituição com status 200', async () => {
-        const instituicaoFake = {
-            id: 1,
-            nome: 'Escola Teste',
-            endereco: 'Rua Teste, 123',
-            situacao: 'ATIVO',
-            associacaoId: 1
-        };
+  test('obterInstituicaoPorId retorna instituição com status 200', async () => {
+    const instituicaoFake = {
+      id: 1,
+      nome: 'Escola Teste',
+      endereco: 'Rua Teste, 123',
+      situacao: 'ATIVO',
+      associacaoId: 1,
+    };
 
-        jest.spyOn(InstituicaoService, 'obterInstituicaoPorId')
-            .mockResolvedValue(instituicaoFake);
+    jest
+      .spyOn(InstituicaoService, 'obterInstituicaoPorId')
+      .mockResolvedValue(instituicaoFake);
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
-
-        await InstituicaoController.obterInstituicaoPorId(req, res, next);
-
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
-
-        expect(JSON.parse(res._getData()))
-            .toEqual(instituicaoFake);
-
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('obterTodasInstituicoes retorna lista de instituições com status 200', async () => {
-        const instituicoesFake = [
-            {
-                id: 1,
-                nome: 'Escola 1',
-                endereco: 'Endereço 1',
-                situacao: 'ATIVO',
-                associacaoId: 1
-            },
-            {
-                id: 2,
-                nome: 'Escola 2',
-                endereco: 'Endereço 2',
-                situacao: 'ATIVO',
-                associacaoId: 1
-            }
-        ];
+    await InstituicaoController.obterInstituicaoPorId(req, res, next);
 
-        jest.spyOn(InstituicaoService, 'obterTodasInstituicoes')
-            .mockResolvedValue(instituicoesFake);
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        const req = httpMocks.createRequest({
-            query: {
-                filters: JSON.stringify({ situacao: 'ATIVO' }),
-                orderBy: JSON.stringify([['nome', 'ASC']])
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(instituicaoFake);
 
-        await InstituicaoController.obterTodasInstituicoes(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('obterTodasInstituicoes retorna lista de instituições com status 200', async () => {
+    const instituicoesFake = [
+      {
+        id: 1,
+        nome: 'Escola 1',
+        endereco: 'Endereço 1',
+        situacao: 'ATIVO',
+        associacaoId: 1,
+      },
+      {
+        id: 2,
+        nome: 'Escola 2',
+        endereco: 'Endereço 2',
+        situacao: 'ATIVO',
+        associacaoId: 1,
+      },
+    ];
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(instituicoesFake);
+    jest
+      .spyOn(InstituicaoService, 'obterTodasInstituicoes')
+      .mockResolvedValue(instituicoesFake);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      query: {
+        filters: JSON.stringify({ situacao: 'ATIVO' }),
+        orderBy: JSON.stringify([['nome', 'ASC']]),
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('criarInstituicao cria nova instituição com status 201', async () => {
-        const novaInstituicao = {
-            nome: 'Nova Escola',
-            endereco: 'Rua Nova, 123',
-            situacao: 'ATIVO',
-            associacaoId: 1
-        };
+    await InstituicaoController.obterTodasInstituicoes(req, res, next);
 
-        const instituicaoCriada = {
-            id: 1,
-            ...novaInstituicao
-        };
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        jest.spyOn(InstituicaoService, 'criarInstituicao')
-            .mockResolvedValue(instituicaoCriada);
+    expect(JSON.parse(res._getData())).toEqual(instituicoesFake);
 
-        const req = httpMocks.createRequest({
-            method: 'POST',
-            body: {
-                data: JSON.stringify(novaInstituicao)
-            },
-            file: {
-                filename: 'logo.png'
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        await InstituicaoController.criarInstituicao(req, res, next);
+  test('criarInstituicao cria nova instituição com status 201', async () => {
+    const novaInstituicao = {
+      nome: 'Nova Escola',
+      endereco: 'Rua Nova, 123',
+      situacao: 'ATIVO',
+      associacaoId: 1,
+    };
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.CREATED);
+    const instituicaoCriada = {
+      id: 1,
+      ...novaInstituicao,
+    };
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(expect.objectContaining(novaInstituicao));
+    jest
+      .spyOn(InstituicaoService, 'criarInstituicao')
+      .mockResolvedValue(instituicaoCriada);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      body: {
+        data: JSON.stringify(novaInstituicao),
+      },
+      file: {
+        filename: 'logo.png',
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('atualizarInstituicao atualiza instituição existente com status 200', async () => {
-        const instituicaoAtualizada = {
-            id: 1,
-            nome: 'Escola Atualizada',
-            endereco: 'Rua Atualizada, 123',
-            situacao: 'ATIVO',
-            associacaoId: 1
-        };
+    await InstituicaoController.criarInstituicao(req, res, next);
 
-        jest.spyOn(InstituicaoService, 'atualizarInstituicao')
-            .mockResolvedValue(instituicaoAtualizada);
+    expect(res._getStatusCode()).toBe(StatusCodes.CREATED);
 
-        const req = httpMocks.createRequest({
-            method: 'PUT',
-            params: { id: 1 },
-            body: {
-                data: JSON.stringify({ nome: 'Escola Atualizada' })
-            },
-            file: {
-                filename: 'nova_logo.png'
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(
+      expect.objectContaining(novaInstituicao),
+    );
 
-        await InstituicaoController.atualizarInstituicao(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('atualizarInstituicao atualiza instituição existente com status 200', async () => {
+    const instituicaoAtualizada = {
+      id: 1,
+      nome: 'Escola Atualizada',
+      endereco: 'Rua Atualizada, 123',
+      situacao: 'ATIVO',
+      associacaoId: 1,
+    };
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(instituicaoAtualizada);
+    jest
+      .spyOn(InstituicaoService, 'atualizarInstituicao')
+      .mockResolvedValue(instituicaoAtualizada);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'PUT',
+      params: { id: 1 },
+      body: {
+        data: JSON.stringify({ nome: 'Escola Atualizada' }),
+      },
+      file: {
+        filename: 'nova_logo.png',
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('excluirInstituicao remove instituição com status 204', async () => {
-        jest.spyOn(InstituicaoService, 'excluirInstituicao')
-            .mockResolvedValue();
+    await InstituicaoController.atualizarInstituicao(req, res, next);
 
-        const req = httpMocks.createRequest({
-            method: 'DELETE',
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        await InstituicaoController.excluirInstituicao(req, res, next);
+    expect(JSON.parse(res._getData())).toEqual(instituicaoAtualizada);
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.NO_CONTENT);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+  test('excluirInstituicao remove instituição com status 204', async () => {
+    jest.spyOn(InstituicaoService, 'excluirInstituicao').mockResolvedValue();
+
+    const req = httpMocks.createRequest({
+      method: 'DELETE',
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('manipula erro quando serviço falha', async () => {
-        const error = new Error('Erro de teste');
+    await InstituicaoController.excluirInstituicao(req, res, next);
 
-        jest.spyOn(InstituicaoService, 'obterInstituicaoPorId')
-            .mockRejectedValue(error);
+    expect(res._getStatusCode()).toBe(StatusCodes.NO_CONTENT);
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        await InstituicaoController.obterInstituicaoPorId(req, res, next);
+  test('manipula erro quando serviço falha', async () => {
+    const error = new Error('Erro de teste');
 
-        expect(next)
-            .toHaveBeenCalledWith(error);
+    jest
+      .spyOn(InstituicaoService, 'obterInstituicaoPorId')
+      .mockRejectedValue(error);
+
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
-}); 
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
+
+    await InstituicaoController.obterInstituicaoPorId(req, res, next);
+
+    expect(next).toHaveBeenCalledWith(error);
+  });
+});

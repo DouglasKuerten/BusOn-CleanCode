@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import AssociacaoService from '../../services/AssociacaoService.js';
 import AssociacaoController from '../../controllers/AssociacaoController.js';
 import httpMocks from 'node-mocks-http';
@@ -7,181 +7,167 @@ import { StatusCodes } from 'http-status-codes';
 process.env.NODE_ENV = 'test';
 
 describe('AssociacaoController', () => {
-    test('obterAssociacaoPorId retorna associação com status 200', async () => {
-        const associacaoFake = {
-            id: 1,
-            nome: 'Testando Ltda'
-        };
+  test('obterAssociacaoPorId retorna associação com status 200', async () => {
+    const associacaoFake = {
+      id: 1,
+      nome: 'Testando Ltda',
+    };
 
-        jest.spyOn(AssociacaoService, 'obterAssociacaoPorId')
-            .mockResolvedValue(associacaoFake);
+    jest
+      .spyOn(AssociacaoService, 'obterAssociacaoPorId')
+      .mockResolvedValue(associacaoFake);
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
-
-        await AssociacaoController.obterAssociacaoPorId(req, res, next);
-
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
-
-        expect(JSON.parse(res._getData()))
-            .toEqual(associacaoFake);
-
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('obterTodasAssociacoes retorna lista de associações com status 200', async () => {
-        const associacoesFake = [
-            { id: 1, nome: 'Associação 1' },
-            { id: 2, nome: 'Associação 2' }
-        ];
+    await AssociacaoController.obterAssociacaoPorId(req, res, next);
 
-        jest.spyOn(AssociacaoService, 'obterTodasAssociacoes')
-            .mockResolvedValue(associacoesFake);
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        const req = httpMocks.createRequest({
-            query: {
-                filters: JSON.stringify({ situacao: 'ATIVO' }),
-                orderBy: JSON.stringify([['nome', 'ASC']])
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(associacaoFake);
 
-        await AssociacaoController.obterTodasAssociacoes(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('obterTodasAssociacoes retorna lista de associações com status 200', async () => {
+    const associacoesFake = [
+      { id: 1, nome: 'Associação 1' },
+      { id: 2, nome: 'Associação 2' },
+    ];
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(associacoesFake);
+    jest
+      .spyOn(AssociacaoService, 'obterTodasAssociacoes')
+      .mockResolvedValue(associacoesFake);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      query: {
+        filters: JSON.stringify({ situacao: 'ATIVO' }),
+        orderBy: JSON.stringify([['nome', 'ASC']]),
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('criarAssociacao cria nova associação com status 201', async () => {
-        const novaAssociacao = {
-            nome: 'Nova Associação',
-            cnpj: '12345678901234',
-            sigla: 'NA',
-            cidade: 'Test City',
-            cep: '12345678',
-            uf: 'SP',
-            bairro: 'Test',
-            endereco: 'Rua Test, 123',
-            situacao: 'ATIVO'
-        };
+    await AssociacaoController.obterTodasAssociacoes(req, res, next);
 
-        const associacaoCriada = {
-            id: 1,
-            ...novaAssociacao
-        };
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        jest.spyOn(AssociacaoService, 'criarAssociacao')
-            .mockResolvedValue(associacaoCriada);
+    expect(JSON.parse(res._getData())).toEqual(associacoesFake);
 
-        const req = httpMocks.createRequest({
-            method: 'POST',
-            body: {
-                data: JSON.stringify(novaAssociacao)
-            },
-            files: {
-                logo: [{ filename: 'logo.png' }],
-                logoDeclaracao: [{ filename: 'logo_dec.png' }]
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        await AssociacaoController.criarAssociacao(req, res, next);
+  test('criarAssociacao cria nova associação com status 201', async () => {
+    const novaAssociacao = {
+      nome: 'Nova Associação',
+      cnpj: '12345678901234',
+      sigla: 'NA',
+      cidade: 'Test City',
+      cep: '12345678',
+      uf: 'SP',
+      bairro: 'Test',
+      endereco: 'Rua Test, 123',
+      situacao: 'ATIVO',
+    };
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.CREATED);
+    const associacaoCriada = {
+      id: 1,
+      ...novaAssociacao,
+    };
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(expect.objectContaining(novaAssociacao));
+    jest
+      .spyOn(AssociacaoService, 'criarAssociacao')
+      .mockResolvedValue(associacaoCriada);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      body: {
+        data: JSON.stringify(novaAssociacao),
+      },
+      files: {
+        logo: [{ filename: 'logo.png' }],
+        logoDeclaracao: [{ filename: 'logo_dec.png' }],
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('atualizarAssociacao atualiza associação existente com status 200', async () => {
-        const associacaoAtualizada = {
-            id: 1,
-            nome: 'Associação Atualizada',
-            situacao: 'ATIVO'
-        };
+    await AssociacaoController.criarAssociacao(req, res, next);
 
-        jest.spyOn(AssociacaoService, 'atualizarAssociacao')
-            .mockResolvedValue(associacaoAtualizada);
+    expect(res._getStatusCode()).toBe(StatusCodes.CREATED);
 
-        const req = httpMocks.createRequest({
-            method: 'PUT',
-            params: { id: 1 },
-            body: {
-                data: JSON.stringify({ nome: 'Associação Atualizada' })
-            }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(
+      expect.objectContaining(novaAssociacao),
+    );
 
-        await AssociacaoController.atualizarAssociacao(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('atualizarAssociacao atualiza associação existente com status 200', async () => {
+    const associacaoAtualizada = {
+      id: 1,
+      nome: 'Associação Atualizada',
+      situacao: 'ATIVO',
+    };
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(associacaoAtualizada);
+    jest
+      .spyOn(AssociacaoService, 'atualizarAssociacao')
+      .mockResolvedValue(associacaoAtualizada);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'PUT',
+      params: { id: 1 },
+      body: {
+        data: JSON.stringify({ nome: 'Associação Atualizada' }),
+      },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('excluirAssociacao remove associação com status 204', async () => {
-        jest.spyOn(AssociacaoService, 'excluirAssociacao')
-            .mockResolvedValue();
+    await AssociacaoController.atualizarAssociacao(req, res, next);
 
-        const req = httpMocks.createRequest({
-            method: 'DELETE',
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        await AssociacaoController.excluirAssociacao(req, res, next);
+    expect(JSON.parse(res._getData())).toEqual(associacaoAtualizada);
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.NO_CONTENT);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+  test('excluirAssociacao remove associação com status 204', async () => {
+    jest.spyOn(AssociacaoService, 'excluirAssociacao').mockResolvedValue();
+
+    const req = httpMocks.createRequest({
+      method: 'DELETE',
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('manipula erro quando serviço falha', async () => {
-        const error = new Error('Erro de teste');
+    await AssociacaoController.excluirAssociacao(req, res, next);
 
-        jest.spyOn(AssociacaoService, 'obterAssociacaoPorId')
-            .mockRejectedValue(error);
+    expect(res._getStatusCode()).toBe(StatusCodes.NO_CONTENT);
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        await AssociacaoController.obterAssociacaoPorId(req, res, next);
+  test('manipula erro quando serviço falha', async () => {
+    const error = new Error('Erro de teste');
 
-        expect(next)
-            .toHaveBeenCalledWith(error);
+    jest
+      .spyOn(AssociacaoService, 'obterAssociacaoPorId')
+      .mockRejectedValue(error);
+
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
+
+    await AssociacaoController.obterAssociacaoPorId(req, res, next);
+
+    expect(next).toHaveBeenCalledWith(error);
+  });
 });

@@ -1,4 +1,4 @@
-import { jest } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 import ParametroService from '../../services/ParametroService.js';
 import ParametroController from '../../controllers/ParametroController.js';
 import httpMocks from 'node-mocks-http';
@@ -7,257 +7,240 @@ import { StatusCodes } from 'http-status-codes';
 process.env.NODE_ENV = 'test';
 
 describe('ParametroController', () => {
-    test('obterParametroPorId retorna parâmetro com status 200', async () => {
-        const parametroFake = {
-            id: 1,
-            associacaoId: 1,
-            valor1: 50.00,
-            valor2: 100.00,
-            valor3: 150.00,
-            valor4: 200.00,
-            valor5: 250.00,
-            valor6: 300.00,
-            valorMulta: 10.00,
-            diaVencimento: 10,
-            diasToleranciaMulta: 5,
-            liberaAlteracaoDadosPessoais: 'LIBERADO',
-            gerarPagamentosAutomatico: 'SIM'
-        };
+  test('obterParametroPorId retorna parâmetro com status 200', async () => {
+    const parametroFake = {
+      id: 1,
+      associacaoId: 1,
+      valor1: 50.0,
+      valor2: 100.0,
+      valor3: 150.0,
+      valor4: 200.0,
+      valor5: 250.0,
+      valor6: 300.0,
+      valorMulta: 10.0,
+      diaVencimento: 10,
+      diasToleranciaMulta: 5,
+      liberaAlteracaoDadosPessoais: 'LIBERADO',
+      gerarPagamentosAutomatico: 'SIM',
+    };
 
-        jest.spyOn(ParametroService, 'obterParametroPorId')
-            .mockResolvedValue(parametroFake);
+    jest
+      .spyOn(ParametroService, 'obterParametroPorId')
+      .mockResolvedValue(parametroFake);
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
-
-        await ParametroController.obterParametroPorId(req, res, next);
-
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
-
-        expect(JSON.parse(res._getData()))
-            .toEqual(parametroFake);
-
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('obterParametroDaAssociacaoPorId retorna parâmetro da associação com status 200', async () => {
-        const parametroFake = {
-            id: 1,
-            associacaoId: 1,
-            valor1: 50.00,
-            valor2: 100.00,
-            valor3: 150.00,
-            valor4: 200.00,
-            valor5: 250.00,
-            valor6: 300.00,
-            valorMulta: 10.00,
-            diaVencimento: 10,
-            diasToleranciaMulta: 5,
-            liberaAlteracaoDadosPessoais: 'LIBERADO',
-            gerarPagamentosAutomatico: 'SIM'
-        };
+    await ParametroController.obterParametroPorId(req, res, next);
 
-        jest.spyOn(ParametroService, 'obterParametroDaAssociacaoPorId')
-            .mockResolvedValue(parametroFake);
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        const req = httpMocks.createRequest({
-            params: { associacaoId: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(parametroFake);
 
-        await ParametroController.obterParametroDaAssociacaoPorId(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('obterParametroDaAssociacaoPorId retorna parâmetro da associação com status 200', async () => {
+    const parametroFake = {
+      id: 1,
+      associacaoId: 1,
+      valor1: 50.0,
+      valor2: 100.0,
+      valor3: 150.0,
+      valor4: 200.0,
+      valor5: 250.0,
+      valor6: 300.0,
+      valorMulta: 10.0,
+      diaVencimento: 10,
+      diasToleranciaMulta: 5,
+      liberaAlteracaoDadosPessoais: 'LIBERADO',
+      gerarPagamentosAutomatico: 'SIM',
+    };
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(parametroFake);
+    jest
+      .spyOn(ParametroService, 'obterParametroDaAssociacaoPorId')
+      .mockResolvedValue(parametroFake);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      params: { associacaoId: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('obterTodosParametros retorna lista de parâmetros com status 200', async () => {
-        const parametrosFake = [
-            {
-                id: 1,
-                associacaoId: 1,
-                valor1: 50.00,
-                valorMulta: 10.00,
-                diaVencimento: 10,
-                liberaAlteracaoDadosPessoais: 'LIBERADO'
-            },
-            {
-                id: 2,
-                associacaoId: 2,
-                valor1: 60.00,
-                valorMulta: 15.00,
-                diaVencimento: 15,
-                liberaAlteracaoDadosPessoais: 'BLOQUEADO'
-            }
-        ];
+    await ParametroController.obterParametroDaAssociacaoPorId(req, res, next);
 
-        jest.spyOn(ParametroService, 'listarTodosParametros')
-            .mockResolvedValue(parametrosFake);
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        const req = httpMocks.createRequest();
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(parametroFake);
 
-        await ParametroController.obterTodosParametros(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('obterTodosParametros retorna lista de parâmetros com status 200', async () => {
+    const parametrosFake = [
+      {
+        id: 1,
+        associacaoId: 1,
+        valor1: 50.0,
+        valorMulta: 10.0,
+        diaVencimento: 10,
+        liberaAlteracaoDadosPessoais: 'LIBERADO',
+      },
+      {
+        id: 2,
+        associacaoId: 2,
+        valor1: 60.0,
+        valorMulta: 15.0,
+        diaVencimento: 15,
+        liberaAlteracaoDadosPessoais: 'BLOQUEADO',
+      },
+    ];
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(parametrosFake);
+    jest
+      .spyOn(ParametroService, 'listarTodosParametros')
+      .mockResolvedValue(parametrosFake);
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest();
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
+
+    await ParametroController.obterTodosParametros(req, res, next);
+
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
+
+    expect(JSON.parse(res._getData())).toEqual(parametrosFake);
+
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  test('criarParametro cria novo parâmetro com status 201', async () => {
+    const novoParametro = {
+      associacaoId: 1,
+      valor1: 50.0,
+      valor2: 100.0,
+      valor3: 150.0,
+      valor4: 200.0,
+      valor5: 250.0,
+      valor6: 300.0,
+      valorMulta: 10.0,
+      diaVencimento: 10,
+      diasToleranciaMulta: 5,
+      liberaAlteracaoDadosPessoais: 'LIBERADO',
+      gerarPagamentosAutomatico: 'SIM',
+    };
+
+    const parametroCriado = {
+      id: 1,
+      ...novoParametro,
+    };
+
+    jest
+      .spyOn(ParametroService, 'criarParametro')
+      .mockResolvedValue(parametroCriado);
+
+    const req = httpMocks.createRequest({
+      method: 'POST',
+      body: novoParametro,
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('criarParametro cria novo parâmetro com status 201', async () => {
-        const novoParametro = {
-            associacaoId: 1,
-            valor1: 50.00,
-            valor2: 100.00,
-            valor3: 150.00,
-            valor4: 200.00,
-            valor5: 250.00,
-            valor6: 300.00,
-            valorMulta: 10.00,
-            diaVencimento: 10,
-            diasToleranciaMulta: 5,
-            liberaAlteracaoDadosPessoais: 'LIBERADO',
-            gerarPagamentosAutomatico: 'SIM'
-        };
+    await ParametroController.criarParametro(req, res, next);
 
-        const parametroCriado = {
-            id: 1,
-            ...novoParametro
-        };
+    expect(res._getStatusCode()).toBe(StatusCodes.CREATED);
 
-        jest.spyOn(ParametroService, 'criarParametro')
-            .mockResolvedValue(parametroCriado);
+    expect(JSON.parse(res._getData())).toEqual(
+      expect.objectContaining(novoParametro),
+    );
 
-        const req = httpMocks.createRequest({
-            method: 'POST',
-            body: novoParametro
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        await ParametroController.criarParametro(req, res, next);
+  test('atualizarParametro atualiza parâmetro existente com status 200', async () => {
+    const parametroAtualizado = {
+      id: 1,
+      associacaoId: 1,
+      valor1: 55.0,
+      valorMulta: 12.0,
+      diaVencimento: 15,
+      liberaAlteracaoDadosPessoais: 'BLOQUEADO',
+      gerarPagamentosAutomatico: 'NAO',
+    };
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.CREATED);
+    jest
+      .spyOn(ParametroService, 'atualizarParametro')
+      .mockResolvedValue(parametroAtualizado);
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(expect.objectContaining(novoParametro));
-
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'PUT',
+      params: { id: 1 },
+      body: parametroAtualizado,
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('atualizarParametro atualiza parâmetro existente com status 200', async () => {
-        const parametroAtualizado = {
-            id: 1,
-            associacaoId: 1,
-            valor1: 55.00,
-            valorMulta: 12.00,
-            diaVencimento: 15,
-            liberaAlteracaoDadosPessoais: 'BLOQUEADO',
-            gerarPagamentosAutomatico: 'NAO'
-        };
+    await ParametroController.atualizarParametro(req, res, next);
 
-        jest.spyOn(ParametroService, 'atualizarParametro')
-            .mockResolvedValue(parametroAtualizado);
+    expect(res._getStatusCode()).toBe(StatusCodes.OK);
 
-        const req = httpMocks.createRequest({
-            method: 'PUT',
-            params: { id: 1 },
-            body: parametroAtualizado
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(JSON.parse(res._getData())).toEqual(parametroAtualizado);
 
-        await ParametroController.atualizarParametro(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.OK);
+  test('excluirParametro remove parâmetro com status 204', async () => {
+    jest.spyOn(ParametroService, 'excluirParametro').mockResolvedValue(true);
 
-        expect(JSON.parse(res._getData()))
-            .toEqual(parametroAtualizado);
-
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    const req = httpMocks.createRequest({
+      method: 'DELETE',
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('excluirParametro remove parâmetro com status 204', async () => {
-        jest.spyOn(ParametroService, 'excluirParametro')
-            .mockResolvedValue(true);
+    await ParametroController.excluirParametro(req, res, next);
 
-        const req = httpMocks.createRequest({
-            method: 'DELETE',
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+    expect(res._getStatusCode()).toBe(StatusCodes.NO_CONTENT);
 
-        await ParametroController.excluirParametro(req, res, next);
+    expect(next).not.toHaveBeenCalled();
+  });
 
-        expect(res._getStatusCode())
-            .toBe(StatusCodes.NO_CONTENT);
+  test('manipula erro quando serviço falha', async () => {
+    const error = new Error('Erro de teste');
 
-        expect(next)
-            .not
-            .toHaveBeenCalled();
+    jest
+      .spyOn(ParametroService, 'obterParametroPorId')
+      .mockRejectedValue(error);
+
+    const req = httpMocks.createRequest({
+      params: { id: 1 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('manipula erro quando serviço falha', async () => {
-        const error = new Error('Erro de teste');
+    await ParametroController.obterParametroPorId(req, res, next);
 
-        jest.spyOn(ParametroService, 'obterParametroPorId')
-            .mockRejectedValue(error);
+    expect(next).toHaveBeenCalledWith(error);
+  });
 
-        const req = httpMocks.createRequest({
-            params: { id: 1 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
+  test('manipula erro quando parâmetro da associação não é encontrado', async () => {
+    const error = new Error('Parâmetros da associação não foram encontrados!');
 
-        await ParametroController.obterParametroPorId(req, res, next);
+    jest
+      .spyOn(ParametroService, 'obterParametroDaAssociacaoPorId')
+      .mockRejectedValue(error);
 
-        expect(next)
-            .toHaveBeenCalledWith(error);
+    const req = httpMocks.createRequest({
+      params: { associacaoId: 999 },
     });
+    const res = httpMocks.createResponse();
+    const next = jest.fn();
 
-    test('manipula erro quando parâmetro da associação não é encontrado', async () => {
-        const error = new Error('Parâmetros da associação não foram encontrados!');
+    await ParametroController.obterParametroDaAssociacaoPorId(req, res, next);
 
-        jest.spyOn(ParametroService, 'obterParametroDaAssociacaoPorId')
-            .mockRejectedValue(error);
-
-        const req = httpMocks.createRequest({
-            params: { associacaoId: 999 }
-        });
-        const res = httpMocks.createResponse();
-        const next = jest.fn();
-
-        await ParametroController.obterParametroDaAssociacaoPorId(req, res, next);
-
-        expect(next)
-            .toHaveBeenCalledWith(error);
-    });
-}); 
+    expect(next).toHaveBeenCalledWith(error);
+  });
+});
