@@ -66,7 +66,6 @@ app.use('/files', express.static('uploads'));
 
 process.on('SIGINT', function () {
   console.log('\nGracefully shutting down from SIGINT (Ctrl-C)');
-  // exit node.js app
   process.exit(0);
 });
 app.use(errorHandler);

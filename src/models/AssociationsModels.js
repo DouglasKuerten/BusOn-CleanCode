@@ -15,8 +15,8 @@ Associacao.hasMany(TemplateDocumento, { foreignKey: 'associacaoId', onDelete: 'R
 Instituicao.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
 Associacao.hasMany(Instituicao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
 
-Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' }); // Definir a associação
-Instituicao.hasMany(Curso, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' }); // Definir a associação
+Curso.belongsTo(Instituicao, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' });
+Instituicao.hasMany(Curso, { foreignKey: 'instituicaoId', onDelete: 'RESTRICT' });
 
 Usuario.belongsTo(Associacao, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
 Associacao.hasMany(Usuario, { foreignKey: 'associacaoId', onDelete: 'RESTRICT', });
