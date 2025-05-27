@@ -1,7 +1,7 @@
 'use strict';
 
 import { StatusCodes } from 'http-status-codes';
-import * as AssociacaoService from '../services/AssociacaoService.js';
+import AssociacaoService from '../services/AssociacaoService.js';
 import { buildOrderByClause } from '../utils/buildOrderByClause.js';
 import { buildWhereClause } from '../utils/buildWhereClause.js';
 
