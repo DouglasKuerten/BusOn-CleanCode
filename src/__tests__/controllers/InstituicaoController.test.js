@@ -4,8 +4,6 @@ import InstituicaoController from '../../controllers/InstituicaoController.js';
 import httpMocks from 'node-mocks-http';
 import { StatusCodes } from 'http-status-codes';
 
-process.env.NODE_ENV = 'test';
-
 describe('InstituicaoController', () => {
   test('obterInstituicaoPorId retorna instituição com status 200', async () => {
     const instituicaoFake = {

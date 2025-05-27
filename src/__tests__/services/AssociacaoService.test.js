@@ -5,8 +5,6 @@ import path from 'path';
 import Associacao from '../../models/Associacao.js';
 import AssociacaoService from '../../services/AssociacaoService.js';
 
-process.env.NODE_ENV = 'test';
-
 describe('AssociacaoService', () => {
   test('obterAssociacaoPorId retorna associação quando encontrada', async () => {
     const associacaoFake = { id: 1, nome: 'Testando Ltda' };

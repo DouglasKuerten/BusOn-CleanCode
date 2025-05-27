@@ -7,8 +7,6 @@ import Parametro from '../../models/Parametro.js';
 import Usuario from '../../models/Usuario.js';
 import PagamentoService from '../../services/PagamentoService.js';
 
-process.env.NODE_ENV = 'test';
-
 describe('PagamentoService', () => {
   const pagamentoFake = {
     id: 1,

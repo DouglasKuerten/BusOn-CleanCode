@@ -6,8 +6,6 @@ import TipoAcessoEnum from '../../enum/TIpoAcessoEnum.js';
 import Usuario from '../../models/Usuario.js';
 import UsuarioService from '../../services/UsuarioService.js';
 
-process.env.NODE_ENV = 'test';
-
 describe('UsuarioService', () => {
   const usuarioFake = {
     id: 1,

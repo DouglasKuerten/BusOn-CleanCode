@@ -4,8 +4,6 @@ import CursoController from '../../controllers/CursoController.js';
 import httpMocks from 'node-mocks-http';
 import { StatusCodes } from 'http-status-codes';
 
-process.env.NODE_ENV = 'test';
-
 describe('CursoController', () => {
   test('obterCursoPorId retorna curso com status 200', async () => {
     const cursoFake = {

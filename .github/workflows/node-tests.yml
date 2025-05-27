@@ -50,7 +50,6 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_EXPIRATION: 3600
           JWT_REFRESH_EXPIRATION: 86400
-          NODE_ENV: test
           POSTGRES_HOST: localhost
           PG_DIALECT: postgres
           POSTGRES_USER: postgres

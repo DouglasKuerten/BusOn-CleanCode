@@ -4,8 +4,6 @@ import ParametroController from '../../controllers/ParametroController.js';
 import httpMocks from 'node-mocks-http';
 import { StatusCodes } from 'http-status-codes';
 
-process.env.NODE_ENV = 'test';
-
 describe('ParametroController', () => {
   test('obterParametroPorId retorna parâmetro com status 200', async () => {
     const parametroFake = {

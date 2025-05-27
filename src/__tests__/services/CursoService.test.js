@@ -4,8 +4,6 @@ import Curso from '../../models/Curso.js';
 import Instituicao from '../../models/Instituicao.js';
 import CursoService from '../../services/CursoService.js';
 
-process.env.NODE_ENV = 'test';
-
 describe('CursoService', () => {
   test('obterCursoPorId retorna curso quando encontrado', async () => {
     const cursoFake = {

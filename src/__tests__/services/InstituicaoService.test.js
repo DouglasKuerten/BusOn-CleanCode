@@ -5,8 +5,6 @@ import path from 'path';
 import Instituicao from '../../models/Instituicao.js';
 import InstituicaoService from '../../services/InstituicaoService.js';
 
-process.env.NODE_ENV = 'test';
-
 describe('InstituicaoService', () => {
   test('obterInstituicaoPorId retorna instituição quando encontrada', async () => {
     const instituicaoFake = {

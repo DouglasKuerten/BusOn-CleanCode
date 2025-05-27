@@ -3,8 +3,6 @@ import ParametroService from '../../services/ParametroService.js';
 import Parametro from '../../models/Parametro.js';
 import { StatusCodes } from 'http-status-codes';
 
-process.env.NODE_ENV = 'test';
-
 describe('ParametroService', () => {
   test('obterParametroPorId retorna parâmetro quando encontrado', async () => {
     const parametroFake = {

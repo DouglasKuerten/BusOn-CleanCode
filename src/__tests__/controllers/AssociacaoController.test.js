@@ -4,8 +4,6 @@ import AssociacaoController from '../../controllers/AssociacaoController.js';
 import httpMocks from 'node-mocks-http';
 import { StatusCodes } from 'http-status-codes';
 
-process.env.NODE_ENV = 'test';
-
 describe('AssociacaoController', () => {
   test('obterAssociacaoPorId retorna associação com status 200', async () => {
     const associacaoFake = {
