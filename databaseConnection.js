@@ -14,8 +14,8 @@ const config = {
 };
 const sequelize = new Sequelize(config);
 
-if (process.env.NODE_ENV !== 'test') {
-  sequelize
+async function connect() {
+  await sequelize
     .authenticate()
     .then(() => {
       console.log('Conexão com o banco de dados realizado com sucesso!');
@@ -24,5 +24,5 @@ if (process.env.NODE_ENV !== 'test') {
       console.error('Falha ao conectar com o banco de dados: ', err);
     });
 }
-
+await connect();
 export default sequelize;

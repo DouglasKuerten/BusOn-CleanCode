@@ -50,12 +50,13 @@ jobs:
           JWT_SECRET: ${{ secrets.JWT_SECRET }}
           JWT_EXPIRATION: 3600
           JWT_REFRESH_EXPIRATION: 86400
-          DB_HOST: localhost
-          DB_PORT: 5432
-          DB_USER: postgres
-          DB_PASS: postgres
-          DB_NAME: buson_test
           NODE_ENV: test
+          POSTGRES_HOST: localhost
+          PG_DIALECT: postgres
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: buson_test
+          POSTGRES_PORT: 5432
 
       - name: Upload test coverage
         if: always()
