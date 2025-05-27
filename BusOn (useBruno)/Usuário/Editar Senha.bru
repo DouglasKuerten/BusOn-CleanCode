@@ -5,7 +5,7 @@ meta {
 }
 
 put {
-  url: {{API_URL}}/usuario/atualizar-senha/2
+  url: {{API_URL}}/usuario/atualizar-senha/1
   body: json
   auth: bearer
 }
@@ -16,6 +16,7 @@ auth:bearer {
 
 body:json {
   {
-    "senhaNova": "dgk"
+    "senhaAntiga": "1234",
+    "senhaNova": "dgk123"
   }
 }

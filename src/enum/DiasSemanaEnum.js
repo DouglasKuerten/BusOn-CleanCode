@@ -1,11 +1,11 @@
 const DiasSemanaEnum = {
-    SEGUNDA: "Segunda",
-    TERCA: "Terça",
-    QUARTA: "Quarta",
-    QUINTA: "Quinta",
-    SEXTA: "Sexta",
-    SABADO: "Sábado",
-    DOMINGO: "Domingo",
+    SEGUNDA: "SEGUNDA",
+    TERCA: "TERCA",
+    QUARTA: "QUARTA",
+    QUINTA: "QUINTA",
+    SEXTA: "SEXTA",
+    SABADO: "SABADO",
+    DOMINGO: "DOMINGO",
 }
 
 export default DiasSemanaEnum;

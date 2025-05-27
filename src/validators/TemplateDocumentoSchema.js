@@ -11,11 +11,11 @@ export const templateDocumentoSchema = yup.object().shape({
         .required('Nome é obrigatório'),
     situacao: yup
         .string()
-        .oneOf(Object.values(AtivoInativoEnum), 'Situação inválida')
+        .oneOf(Object.values(AtivoInativoEnum), 'Situação inválida. Valores possíveis: ' + Object.values(AtivoInativoEnum).join(', '))
         .required('Situação é obrigatória'),
     tipoImpressao: yup
         .string()
-        .oneOf(Object.values(TipoImpressaoEnum), 'Tipo de impressão inválido')
+        .oneOf(Object.values(TipoImpressaoEnum), 'Tipo de impressão inválido. Valores possíveis: ' + Object.values(TipoImpressaoEnum).join(', '))
         .required('Tipo de impressão é obrigatório'),
     htmlTemplate: yup
         .string()

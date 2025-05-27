@@ -1,0 +1,15 @@
+meta {
+  name: Buscar Todos Completo
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{API_URL}}/usuario/completo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{AUTH_TOKEN}}
+}
