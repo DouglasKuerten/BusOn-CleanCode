@@ -74,7 +74,6 @@ process.on('SIGINT', function () {
 });
 app.listen(port, () => {
   console.info(`API disponível em http://localhost:${port}/api`);
-  console.info(`Swagger disponível em http://localhost:${port}/api/docs`,
-  );
+  console.info(`Swagger disponível em http://localhost:${port}/api/docs`);
 });
 app.use(errorHandler);
