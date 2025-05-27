@@ -8,6 +8,7 @@ import BusonException from '../exceptions/BusonException.js';
 import SequelizeException from '../exceptions/SequelizeException.js';
 import { StatusCodes } from 'http-status-codes';
 import cursoSchema from '../validators/CursoSchema.js';
+import CursoQueryBuilder from '../queryBuilder/CursoQueryBuilder.js';
 
 class CursoService {
   async obterCursoPorId(id) {
@@ -19,20 +20,12 @@ class CursoService {
   }
 
   async obterTodosCursos(query) {
-    const whereClause = buildWhereClause(query.filters);
-    const orderClause = buildOrderByClause(query.orderBy);
-
-    return await Curso.findAll({
-      include: [
-        {
-          model: Instituicao,
-          attributes: ['id', 'nome'],
-        },
-      ],
-      attributes: ['id', 'nome', 'situacao'],
-      where: whereClause,
-      order: orderClause,
-    });
+    return await new CursoQueryBuilder()
+      .withInstituicao()
+      .withFiltros(query.filters)
+      .withOrdenacao(query.orderBy)
+      .selectCampos(['id', 'nome', 'situacao'])
+      .findAll();
   }
 
   async validarInstituicao(instituicaoId) {
