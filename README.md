@@ -7,9 +7,10 @@
 </div>
 
 # Refatoração
+
 Durante o processo de refatoração do projeto, identificamos diversos pontos de melhoria com base nos princípios de **Clean Code**. As alterações focaram na legibilidade, modularização, eliminação de duplicações e na implementação de testes automatizados.
 
-👉 Para uma explicação completa das refatorações aplicadas, *code smells* encontrados, estratégia adotada e o changelog com as mudanças acesse: 
+👉 Para uma explicação completa das refatorações aplicadas, _code smells_ encontrados, estratégia adotada e o changelog com as mudanças acesse:
 
 [📚 README de Refatoração](./README.REFATORACAO.md)
 
@@ -27,8 +28,8 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
 
 ## 🔧 Problemas que solucionamos:
 
-* Controle manual por meio de uma planilha de controle;
-* Preenchimento de documentos de forma manual;
+- Controle manual por meio de uma planilha de controle;
+- Preenchimento de documentos de forma manual;
 
 ---
 
@@ -44,17 +45,18 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
 
 ## 🎡 Funcionalidades Principais
 
-* ✅ Controle e conferência de pagamentos dos acadêmicos
-* ✅ Emissão automatizada de documentos em nome da associação
-* ✅ Gerenciamento dos dias de uso do transporte
-* ✅ Cadastro e atualização dos dados dos acadêmicos
-* ✅ Centralização das informações da associação
+- ✅ Controle e conferência de pagamentos dos acadêmicos
+- ✅ Emissão automatizada de documentos em nome da associação
+- ✅ Gerenciamento dos dias de uso do transporte
+- ✅ Cadastro e atualização dos dados dos acadêmicos
+- ✅ Centralização das informações da associação
 
 ---
 
-
 # Inicialização do Projeto
-* ## Manualmente
+
+- ## Manualmente
+
   #### Clonar o projeto:
 
   ```bash
@@ -70,18 +72,21 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
   ```
 
   #### Iniciar o servidor
+
   ```bash
     npm start
   ```
-  > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o  respectivo nome nas variáveis de ambiente (dotenv)
 
-* ## Docker
+  > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
+
+- ## Docker
+
   #### Banco de Dados + Postgres:
 
   ```bash
     npm run docker
   ```
-  
+
   > Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Banco de Dados:
@@ -89,7 +94,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
   ```bash
     npm run docker:db
   ```
-  
+
   > Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Back-End:
@@ -97,7 +102,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
   ```bash
     npm run docker:backend
   ```
-  
+
   > Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
 ---
@@ -164,7 +169,6 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 `JWT_REFRESH_EXPIRATION` -> (Definir valor em segundos. Ex: 86400)
 
 ---
-
 
 # Tecnologias utilizadas
 

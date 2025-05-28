@@ -1,6 +1,6 @@
 # 📚 Refatoração do Projeto
 
-Este documento detalha as melhorias aplicadas ao projeto **BusOn** com foco em qualidade de código, legibilidade, testabilidade e organização geral. A versão refatorada está disponível neste repositório:  
+Este documento detalha as melhorias aplicadas ao projeto **BusOn** com foco em qualidade de código, legibilidade, testabilidade e organização geral. A versão refatorada está disponível neste repositório:
 
 🔗 [`BusOn-CleanCode`](https://github.com/DouglasKuerten/BusOn-CleanCode)
 
@@ -16,16 +16,18 @@ Foi implementado um **Query Builder** para as entidades de **Instituição** e *
 
 A aplicação agora possui **testes unitários com Jest**, cobrindo os principais serviços e controladores. Foram testados cenários de sucesso e falha, contribuindo para a robustez do sistema.
 
-📁 Exemplo:  
+📁 Exemplo:
+
 - [`src/__tests__`](https://github.com/DouglasKuerten/BusOn-CleanCode/tree/main/src/__tests__)
 
 ---
 
 ## 🚨 Code Smells Identificados e Corrigidos
 
-Durante a refatoração, foram encontrados diversos *code smells* que comprometiam a qualidade da aplicação. A seguir, estão listados os principais com exemplos antes/depois:
+Durante a refatoração, foram encontrados diversos _code smells_ que comprometiam a qualidade da aplicação. A seguir, estão listados os principais com exemplos antes/depois:
 
 ### 🧱 Large Classes (Classes Grandes)
+
 Classes como Controller e Service concentravam muitas responsabilidades.
 
 - 🔴 Antes:  
@@ -39,6 +41,7 @@ Classes como Controller e Service concentravam muitas responsabilidades.
 ---
 
 ### 🔧 Long Methods (Métodos Longos)
+
 Métodos extensos dificultavam compreensão e testes.
 
 - 🔴 Antes:  
@@ -50,6 +53,7 @@ Métodos extensos dificultavam compreensão e testes.
 ---
 
 ### 🚦 Magic Numbers e Strings
+
 Valores fixos estavam espalhados no código, dificultando mudanças.
 
 - 🔴 Antes:  
@@ -61,6 +65,7 @@ Valores fixos estavam espalhados no código, dificultando mudanças.
 ---
 
 ### 🔁 Switch Statements (Switch Grande)
+
 Uso excessivo de `switch` para cálculos.
 
 - 🔴 Antes:  
@@ -72,6 +77,7 @@ Uso excessivo de `switch` para cálculos.
 ---
 
 ### ⚰️ Dead Code (Código Morto)
+
 - Código não utilizado, funções ou variáveis obsoletas foram removidos para evitar confusão e manter o código limpo.
 - 🔴 Removidos códigos que não eram mais utilziados:
 
@@ -80,17 +86,19 @@ Uso excessivo de `switch` para cálculos.
   [`services`](https://github.com/BrunoDimon/BusOn/tree/main/src/services)
 
   [`entitys`](https://github.com/BrunoDimon/BusOn/tree/main/src/entity)
-  
+
   [`adapters`](https://github.com/BrunoDimon/BusOn/tree/main/src/adapters)
 
 ---
 
 ### 🧭 Má Nomenclatura
-  - Variáveis e funções usavam nomes genéricos ou pouco descritivos, foram revisados para representar com clareza sua responsabilidade.
+
+- Variáveis e funções usavam nomes genéricos ou pouco descritivos, foram revisados para representar com clareza sua responsabilidade.
 
 ---
 
 ### 📝 Comments (Comentários Excessivos)
+
 - Comentários que tentavam explicar código confuso foram eliminados ao melhorar a clareza do código.
 
 ---
