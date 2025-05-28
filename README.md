@@ -86,41 +86,45 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
   ```bash
     npm run docker
   ```
-<<<<<<< HEAD
 
-  > Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-=======
-  
+  <<<<<<< HEAD
+
+  > # Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+
   > Comando irá executar tudo o que for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
->>>>>>> 87b53afb32a9386421c362de3871d211ac2a0553
+  >
+  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
 
   #### Banco de Dados:
 
   ```bash
     npm run docker:db
   ```
-<<<<<<< HEAD
 
-  > Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-=======
-  
+  <<<<<<< HEAD
+
+  > # Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+
   > Comando irá executar tudo o que for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
->>>>>>> 87b53afb32a9386421c362de3871d211ac2a0553
+  >
+  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
 
   #### Back-End:
 
   ```bash
     npm run docker:backend
   ```
-<<<<<<< HEAD
 
-  > Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-=======
-  
+  <<<<<<< HEAD
+
+  > # Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+
   > Comando irá executar tudo o que for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
->>>>>>> 87b53afb32a9386421c362de3871d211ac2a0553
+  >
+  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
 
 > As variáveis de ambiente podem ser alteradas no arquivo do docker-compose ou criado um arquivo .env para utilizar no docker
+
 ---
 
 # Variáveis de Ambiente
