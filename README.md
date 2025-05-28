@@ -2,20 +2,35 @@
   <img src="https://github.com/BrunoDimon/BusOnApp/blob/main/assets/busOnFonteBranca.png" alt="BusOn Logo" style='height: 280px;'/>  <hr>
   <h1>
     <br>
-      <p>Back-End Buson - Projeto Integrador IA - Engenharia de Software - UNISATC</p>
+      <p>Projeto Intermediário — Clean Code - Engenharia de Software - UNISATC</p>
   </h1>
 </div>
 
+# Refatoração
+Durante o processo de refatoração do projeto, identificamos diversos pontos de melhoria com base nos princípios de **Clean Code**. As alterações focaram na legibilidade, modularização, eliminação de duplicações e na implementação de testes automatizados.
+
+👉 Para uma explicação completa das refatorações aplicadas, *code smells* encontrados, estratégia adotada e o changelog com as mudanças acesse: 
+
+[📚 README de Refatoração](./README.REFATORACAO.md)
+
+[📘 CHANGELOG](./CHANGELOG.md)
+
+---
+
 # Sobre o Projeto
 
-## Oque é:
+## 🚌 O que é o BusOn?
 
-- O Aplicativo foi desenvolvido com o intuito de facilitar o gerenciamento dos pagamentos mensais dos acadêmicos que utilizam o serviço de transporte para deslocamento até as universidades. Além disso, o aplicativo fornece informações detalhadas sobre a associação e, situação dos acadêmicos e seus pagamentos, por meio de um chat com inteligência artificial.
+O **BusOn** é uma solução digital desenvolvida para modernizar o gerenciamento de pagamentos mensais dos acadêmicos que utilizam o serviço de transporte universitário. O projeto surgiu da necessidade de substituir processos manuais, como controle por planilhas e preenchimento de documentos, trazendo mais agilidade, precisão e facilidade tanto para os alunos quanto para a gestão da associação.
 
-## Oque procuramos resolver:
+Atualmente, o sistema é utilizado pela **Associação de Transporte Universitário de São Ludgero (UNISL)** e mantido pelos autores do projeto.
 
-- Controle manual por meio de uma planilha de controle;
-- Preenchimento de documentos de forma manual;
+## 🔧 Problemas que solucionamos:
+
+* Controle manual por meio de uma planilha de controle;
+* Preenchimento de documentos de forma manual;
+
+---
 
 ## Objetivos:
 
@@ -27,41 +42,63 @@
 
 ---
 
+## 🎡 Funcionalidades Principais
+
+* ✅ Controle e conferência de pagamentos dos acadêmicos
+* ✅ Emissão automatizada de documentos em nome da associação
+* ✅ Gerenciamento dos dias de uso do transporte
+* ✅ Cadastro e atualização dos dados dos acadêmicos
+* ✅ Centralização das informações da associação
+
+---
+
+
 # Inicialização do Projeto
+* ## Manualmente
+  #### Clonar o projeto:
 
-### Clonar o projeto:
+  ```bash
+    git clone https://github.com/DouglasKuerten/BusOn-CleanCode.git
+  ```
 
-```bash
-  git clone https://github.com/BrunoDimon/BusOn.git
-```
+  #### Navegar até a pasta do projeto
 
-### Navegar até a pasta do projeto
+  #### Instalar as dependências:
 
-#### Instalar as dependências:
+  ```bash
+    npm i
+  ```
 
-```bash
-  npm i
-```
+  #### Iniciar o servidor
+  ```bash
+    npm start
+  ```
+  > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o  respectivo nome nas variáveis de ambiente (dotenv)
 
-#### Iniciar o servidor
+* ## Docker
+  #### Banco de Dados + Postgres:
 
-Tem duas opções para inicializar o servidor que irão funcionar normalmente:
+  ```bash
+    npm run docker
+  ```
+  
+  > Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
-##### 1 - Manualmente:
+  #### Banco de Dados:
 
-```bash
-  npm start
-```
+  ```bash
+    npm run docker:db
+  ```
+  
+  > Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
-> Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
+  #### Back-End:
 
-##### 2 - Com Docker:
-
-```bash
-  npm run docker
-```
-
-> Necessário somente ter o docker instalado, o comando irá executar tudo oque for necessário e configurar, apenas deverá passar a conexão nas variáveis de ambiente (dotenv)
+  ```bash
+    npm run docker:backend
+  ```
+  
+  > Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
 ---
 
@@ -128,13 +165,6 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 
 ---
 
-### **Variáveis da IA**
-
-`OPENAI_API_KEY` -> (Chave usada para acesso a API do OpenAI)
-
-Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) para vizualizar mais detalhes sobre a implemetação da IA dentro desse projeto
-
----
 
 # Tecnologias utilizadas
 
@@ -157,9 +187,6 @@ Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) p
 
 - **Bruno Dimon** - [https://github.com/BrunoDimon](https://github.com/BrunoDimon)
 - **Douglas Kuerten** - [https://github.com/DouglasKuerten](https://github.com/DouglasKuerten)
-- **Lucas Zanoni** - [https://github.com/Castrozan](https://github.com/Castrozan)
-- **Thiago Dimon** - [https://github.com/thiagoDimon](https://github.com/thiagoDimon)
-- **Vinicius Milanez** - [https://github.com/viniciusmilanez](https://github.com/viniciusmilanez)
 
 ---
 
@@ -167,7 +194,7 @@ Clique [aqui](https://github.com/BrunoDimon/BusOn/blob/main/DetalhamentoIA.md) p
 
 #### - [Buson Front-End App (Mobile)](https://github.com/BrunoDimon/BusOnApp)
 
-#### - [Buson Back-End](https://github.com/BrunoDimon/BusOn)
+#### - [Buson Back-End Original](https://github.com/BrunoDimon/BusOn)
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
