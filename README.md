@@ -77,7 +77,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm start
   ```
 
-  > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
+  Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
 
 - ## Docker
 
@@ -87,13 +87,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker
   ```
 
-  <<<<<<< HEAD
-
-  > # Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-
-  > Comando irá executar tudo o que for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-  >
-  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
+  > Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Banco de Dados:
 
@@ -101,13 +95,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker:db
   ```
 
-  <<<<<<< HEAD
-
-  > # Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-
-  > Comando irá executar tudo o que for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-  >
-  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
+  > Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Back-End:
 
@@ -115,13 +103,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker:backend
   ```
 
-  <<<<<<< HEAD
-
-  > # Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-
-  > Comando irá executar tudo o que for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
-  >
-  > > > > > > > 87b53afb32a9386421c362de3871d211ac2a0553
+  > Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
 > As variáveis de ambiente podem ser alteradas no arquivo do docker-compose ou criado um arquivo .env para utilizar no docker
 
