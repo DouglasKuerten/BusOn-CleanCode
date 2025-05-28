@@ -82,7 +82,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker
   ```
   
-  > Comando irá executar tudo oque for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+  > Comando irá executar tudo o que for necessário tanto do banco de dados quanto o backend e configurar, com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Banco de Dados:
 
@@ -90,7 +90,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker:db
   ```
   
-  > Comando irá executar tudo oque for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+  > Comando irá executar tudo o que for necessário para inicializar o banco de dados com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
   #### Back-End:
 
@@ -98,8 +98,9 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm run docker:backend
   ```
   
-  > Comando irá executar tudo oque for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
+  > Comando irá executar tudo o que for necessário para inicializar o back-end com variáveis de ambientes pré-definidas e ao fim inicializar em segundo plano;
 
+> As variáveis de ambiente podem ser alteradas no arquivo do docker-compose ou criado um arquivo .env para utilizar no docker
 ---
 
 # Variáveis de Ambiente
@@ -176,12 +177,7 @@ node -e "console.log(require('crypto').randomBytes(32).toString('hex'));"
 [![Sequelize][Sequelize]][Sequelize-url]
 
 [![PostgreSQL][PostgreSQL.js]][PostgreSQL-url]
-[![ChatGPT][ChatGPT]][ChatGPT-url]
 [![Docker][Docker.js]][Docker-url]
-
-### Tecnologias usadas em desenvolvimento apenas
-
-[![Insomnia][Insomnia.js]][Insomnia-url]
 
 # Autores
 
