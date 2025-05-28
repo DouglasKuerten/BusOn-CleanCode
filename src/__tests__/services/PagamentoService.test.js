@@ -40,60 +40,6 @@ describe('PagamentoService', () => {
     );
   });
 
-  /*     test('obterTodosPagamentos retorna lista de pagamentos', async () => {
-            const pagamentosFake = [pagamentoFake];
-            const whereClause = { situacao: SituacaoPagamentoEnum.ABERTO };
-            const whereClauseAssociacao = { id: 1 };
-    
-            const findAllSpy = jest.spyOn(Pagamento, 'findAll')
-                .mockResolvedValue(pagamentosFake);
-    
-            const result = await PagamentoService.obterTodosPagamentos({
-                filters: JSON.stringify(whereClause),
-                filtersAssociacao: JSON.stringify(whereClauseAssociacao)
-            });
-    
-            expect(result).toEqual(pagamentosFake);
-    
-            const expectedQuery = {
-                attributes: {
-                    include: [
-                        [Sequelize.literal('COALESCE(multa, 0) + valor'), 'valorTotal'],
-                        [Sequelize.literal('COALESCE(multa, 0)'), 'multa']
-                    ]
-                },
-                include: [{
-                    model: Usuario,
-                    attributes: ['id', 'nome', 'diasUsoTransporte', 'fotoUrl'],
-                    required: true,
-                    include: [
-                        {
-                            model: Associacao,
-                            attributes: ['id', 'sigla'],
-                            where: whereClauseAssociacao,
-                            required: true
-                        },
-                        {
-                            model: Curso,
-                            attributes: ['id', 'nome'],
-                            include: [{
-                                model: Instituicao,
-                                attributes: ['id', 'nome']
-                            }]
-                        }
-                    ]
-                }],
-                order: [
-                    [Sequelize.literal("CASE WHEN pagamento.situacao = 'ATRASADO' THEN 1 WHEN pagamento.situacao = 'ABERTO' THEN 2 WHEN pagamento.situacao = 'PAGO' THEN 3 ELSE 4 END"), 'ASC'],
-                    [Sequelize.literal('DATE_TRUNC(\'day\', "pagamento"."data_vencimento")'), 'DESC'],
-                    [Sequelize.literal('"usuario"."nome"'), 'ASC']
-                ],
-                where: whereClause
-            };
-    
-            expect(findAllSpy).toHaveBeenCalledWith(expect.objectContaining(expectedQuery));
-        }); */
-
   test('criarPagamento cria novo pagamento', async () => {
     const novoPagamento = {
       usuarioId: 1,

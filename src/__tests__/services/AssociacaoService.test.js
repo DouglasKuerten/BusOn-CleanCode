@@ -160,22 +160,4 @@ describe('AssociacaoService', () => {
 
     expect(fs.unlink).toHaveBeenCalled();
   });
-
-  /* test('excluirAssociacao lança erro quando associação não encontrada', async () => {
-        jest.spyOn(Associacao, 'findByPk')
-            .mockResolvedValue(null);
-
-        const destroySpy = jest.spyOn(Associacao, 'destroy');
-
-        await expect(AssociacaoService.excluirAssociacao(999))
-            .rejects
-            .toEqual(expect.objectContaining({
-                statusCode: StatusCodes.NOT_FOUND,
-                message: 'Associação não encontrada'
-            }));
-
-        expect(destroySpy)
-            .not
-            .toHaveBeenCalled();
-    }); */
 });
