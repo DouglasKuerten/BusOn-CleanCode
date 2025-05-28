@@ -77,7 +77,7 @@ Atualmente, o sistema é utilizado pela **Associação de Transporte Universitá
     npm start
   ```
 
-  Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
+  > Necessário ter o postgres instalado na maquina e criar o banco manualmente dentro da IDE do PG Admin e colocar o respectivo nome nas variáveis de ambiente (dotenv)
 
 - ## Docker
 
